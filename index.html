@@ -27,22 +27,20 @@
                         sans: ['Inter', 'sans-serif'],
                         display: ['Syne', 'sans-serif'],
                     },
-                    cursor: {
-                        none: 'none',
-                    }
                 }
             }
         }
     </script>
 </head>
-<body class="antialiased selection:bg-gold selection:text-darkBg">
+<body class="antialiased selection:bg-gold selection:text-darkBg custom-cursor-active">
 
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
     <div class="thread-line" id="thread-line"></div>
 
     <nav class="fixed w-full top-0 z-50 px-8 py-6 flex justify-between items-center text-lightText bg-darkBg/60 backdrop-blur-lg border-b border-borderColor">
-        <div class="font-display font-medium text-2xl tracking-tighter text-lightText">CONSULT <span class="text-gold italic">NAMU</span></div>
+        <div class="font-display font-medium text-2xl tracking-tighter text-lightText relative z-50">CONSULT <span class="text-gold italic">NAMU</span></div>
+        
         <div class="hidden md:flex space-x-10 text-xs font-medium tracking-[0.15em] text-mutedText">
             <a href="#about" class="hover:text-gold transition-colors magnetic-trigger">ABOUT</a>
             <a href="#services" class="hover:text-gold transition-colors magnetic-trigger">SERVICES</a>
@@ -50,21 +48,24 @@
             <a href="#faq" class="hover:text-gold transition-colors magnetic-trigger">FAQ</a>
             <a href="#contact" class="hover:text-gold transition-colors magnetic-trigger">CONTACT</a>
         </div>
-        <button class="md:hidden text-2xl magnetic-trigger text-gold">☰</button>
+        
+        <button id="mobile-menu-btn" class="md:hidden text-2xl text-gold relative z-50 focus:outline-none">☰</button>
     </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-darkBg/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center space-y-8 opacity-0 pointer-events-none transition-opacity duration-300">
+        <a href="#about" class="text-2xl font-display tracking-widest text-lightText hover:text-gold mobile-link">ABOUT</a>
+        <a href="#services" class="text-2xl font-display tracking-widest text-lightText hover:text-gold mobile-link">SERVICES</a>
+        <a href="#process" class="text-2xl font-display tracking-widest text-lightText hover:text-gold mobile-link">PROCESS</a>
+        <a href="#faq" class="text-2xl font-display tracking-widest text-lightText hover:text-gold mobile-link">FAQ</a>
+        <a href="#contact" class="text-2xl font-display tracking-widest text-lightText hover:text-gold mobile-link">CONTACT</a>
+    </div>
 
     <header id="hero" class="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
         <canvas id="zen-canvas" class="absolute top-0 left-0 w-full h-full z-0 opacity-60"></canvas>
         <div id="hero-text" class="relative z-10 text-center px-4 max-w-5xl mt-20 transition-transform duration-75 ease-out">
-            <p class="reveal-text font-sans text-gold uppercase tracking-[0.3em] text-xs mb-6 font-medium">
-                The Harmony of Global Trade
-            </p>
-            <h1 class="reveal-text font-display text-5xl md:text-8xl font-medium leading-[1.1] text-lightText mb-8 tracking-tight">
-                FIND YOUR<br><i class="text-gold font-light">FLOW.</i>
-            </h1>
-            <p class="reveal-text font-sans text-mutedText max-w-xl mx-auto text-lg mb-12 font-light leading-relaxed">
-                Seamlessly connecting businesses with high-quality goods across borders. Experience sourcing without friction.
-            </p>
+            <p class="reveal-text font-sans text-gold uppercase tracking-[0.3em] text-xs mb-6 font-medium">The Harmony of Global Trade</p>
+            <h1 class="reveal-text font-display text-5xl md:text-8xl font-medium leading-[1.1] text-lightText mb-8 tracking-tight">FIND YOUR<br><i class="text-gold font-light">FLOW.</i></h1>
+            <p class="reveal-text font-sans text-mutedText max-w-xl mx-auto text-lg mb-12 font-light leading-relaxed">Seamlessly connecting businesses with high-quality goods across borders. Experience sourcing without friction.</p>
         </div>
         <div class="absolute bottom-12 flex flex-col items-center animate-bounce opacity-50">
             <span class="block w-[1px] h-10 bg-gold mb-4"></span>
@@ -72,12 +73,12 @@
         </div>
     </header>
 
-    <section id="about" class="w-full min-h-[100vh] bg-darkBg relative border-t border-borderColor overflow-hidden flex items-center justify-center py-32 bg-cover bg-[center_bottom]" style="background-image: url('assets/about_bg2.png');">
-        <div class="absolute inset-0 z-0 bg-darkBg/60 lg:bg-darkBg/30 pointer-events-none"></div>
-        <div class="absolute inset-0 z-0 bg-gradient-to-r from-darkBg via-darkBg/80 to-transparent pointer-events-none"></div>
+    <section id="about" class="w-full min-h-[100vh] pt-32 pb-[40vh] md:py-32 bg-darkBg relative border-t border-borderColor overflow-hidden flex items-center justify-center bg-cover bg-[center_bottom]" style="background-image: url('assets/about_bg2.png');">
+        <div class="absolute inset-0 z-0 bg-darkBg/50 md:bg-darkBg/30 pointer-events-none"></div>
+        <div class="absolute inset-0 z-0 bg-gradient-to-r from-darkBg via-darkBg/80 to-transparent pointer-events-none hidden md:block"></div>
 
-        <div class="relative z-30 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center w-full">
-            <div class="lg:col-span-6 space-y-8 reveal-text bg-darkBg/60 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none p-6 md:p-10 lg:p-0 rounded-2xl">
+        <div class="relative z-30 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center w-full mt-10 md:mt-0">
+            <div class="lg:col-span-6 space-y-8 reveal-text bg-gradient-to-b from-darkBg/95 via-darkBg/70 to-darkBg/10 md:bg-none backdrop-blur-sm md:backdrop-blur-none p-6 md:p-10 lg:p-0 rounded-2xl border border-white/5 md:border-none">
                 <div>
                     <span class="text-gold text-[12px] font-bold tracking-[0.3em] uppercase mb-4 block drop-shadow-md">The Foundation</span>
                     <h2 class="font-display text-4xl md:text-5xl font-medium mb-6 text-lightText drop-shadow-lg">Harmony<br>in Global Trade.</h2>
@@ -113,6 +114,7 @@
             </div>
             
             <div class="flex flex-wrap justify-center gap-6 lg:gap-8 reveal-text">
+                
                 <div class="service-grid-card group flex flex-col justify-start">
                     <div class="card-number">01</div>
                     <div class="relative z-10 flex flex-col h-full">
@@ -178,9 +180,11 @@
     <section id="process" class="w-full py-32 px-6 md:px-20 bg-darkBg border-t border-borderColor relative z-30">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                <div class="order-2 lg:order-1 chart-container bg-[#0E110E] p-10 rounded-full border border-borderColor flex justify-center items-center shadow-[inset_0_0_50px_rgba(0,0,0,0.5)]">
+                
+                <div class="order-2 lg:order-1 chart-container bg-[#0E110E] p-4 md:p-10 rounded-3xl md:rounded-full border border-borderColor flex justify-center items-center shadow-[inset_0_0_50px_rgba(0,0,0,0.5)]">
                     <canvas id="efficiency-chart"></canvas>
                 </div>
+                
                 <div class="order-1 lg:order-2 space-y-8 reveal-text">
                     <span class="text-gold text-[10px] font-medium tracking-[0.3em] uppercase mb-2 block">The NAMU Advantage</span>
                     <h2 class="font-display text-4xl md:text-5xl font-medium text-lightText leading-tight">Mastering<br>the Current.</h2>
@@ -203,7 +207,6 @@
             </div>
             
             <div class="border-t border-borderColor reveal-text" id="faq-list">
-                
                 <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
                     <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-gold text-8xl font-display font-medium transition-opacity duration-700">Q</div>
                     <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
@@ -286,7 +289,7 @@
         </div>
     </section>
 
-    <section id="contact" class="w-full py-32 px-6 md:px-20 bg-[#070807] text-lightText border-t border-borderColor relative z-30">
+    <section id="contact" class="w-full pt-32 pb-8 px-6 md:px-20 bg-[#070807] text-lightText border-t border-borderColor relative z-30">
         <div class="max-w-4xl mx-auto text-center space-y-12">
             <p class="font-sans text-gold text-xs font-medium tracking-[0.3em] uppercase reveal-text">Initiate the Flow</p>
             <h2 class="font-display text-5xl md:text-7xl font-light tracking-tight reveal-text italic">Let's Work Together.</h2>
@@ -295,14 +298,15 @@
                     samy@consultnamu.com
                 </a>
             </div>
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-[11px] font-sans text-mutedText mt-24 pt-16 border-t border-borderColor reveal-text tracking-[0.15em] uppercase">
                 <div class="magnetic-trigger">
                     <span class="block text-gold mb-3 font-medium">THAILAND</span>
-                    +66 6-2109-9935
+                    <a href="tel:+66621099935" class="hover:text-gold transition-colors inline-block">+66 6-2109-9935</a>
                 </div>
                 <div class="magnetic-trigger">
                     <span class="block text-gold mb-3 font-medium">USA</span>
-                    +1 415-900-6873
+                    <a href="tel:+14159006873" class="hover:text-gold transition-colors inline-block">+1 415-900-6873</a>
                 </div>
                 <div>
                     <span class="block text-gold mb-3 font-medium">LOCATIONS</span>
@@ -310,7 +314,8 @@
                 </div>
             </div>
         </div>
-        <footer class="mt-32 text-center text-[10px] text-gray-700 font-sans tracking-[0.3em] uppercase">
+        
+        <footer class="mt-16 text-center text-[10px] text-gray-700 font-sans tracking-[0.3em] uppercase">
             © 2024 CONSULT NAMU. ALL RIGHTS RESERVED.
         </footer>
     </section>

@@ -39,6 +39,38 @@ magneticTriggers.forEach(trigger => {
     });
 });
 
+// --- 2.5 Mobile Menu Toggle Logic ---
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileLinks = document.querySelectorAll('.mobile-link');
+
+if(mobileMenuBtn && mobileMenu) {
+    // เมื่อกดปุ่ม Burger (สามขีด)
+    mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.contains('opacity-100');
+        if(isOpen) {
+            // ปิดเมนู
+            mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            mobileMenuBtn.textContent = '☰';
+        } else {
+            // เปิดเมนู
+            mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+            mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+            mobileMenuBtn.textContent = '✕';
+        }
+    });
+
+    // เมื่อกดลิงก์ในเมนู ให้ปิดเมนูอัตโนมัติ
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            mobileMenuBtn.textContent = '☰';
+        });
+    });
+}
+
 // --- 3. Scroll Logic (Hero Parallax Sinking Effect & Thread Line) ---
 const heroText = document.getElementById('hero-text');
 
@@ -177,10 +209,17 @@ drawWaves();
 
 // --- 8. Chart.js Radar Chart ---
 const ctxChart = document.getElementById('efficiency-chart').getContext('2d');
+
+// เช็คว่าเป็นมือถือหรือไม่ (ความกว้างจอน้อยกว่า 768px)
+const isMobile = window.innerWidth < 768;
+
 const efficiencyChart = new Chart(ctxChart, {
     type: 'radar',
     data: {
-        labels: ['Speed', 'Cost Efficiency', 'Quality', 'Risk Mitigation', 'Transparency'],
+        // ทริค: ถ้าเป็นมือถือ ให้จับคำยาวๆ แยกเป็น Array เพื่อบังคับขึ้นบรรทัดใหม่
+        labels: isMobile ? 
+            ['Speed', ['Cost', 'Efficiency'], 'Quality', ['Risk', 'Mitigation'], 'Transparency'] : 
+            ['Speed', 'Cost Efficiency', 'Quality', 'Risk Mitigation', 'Transparency'],
         datasets: [
             {
                 label: 'Consult NAMU',
@@ -212,18 +251,41 @@ const efficiencyChart = new Chart(ctxChart, {
     options: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+            // ดันกราฟเข้าตรงกลาง ไม่ให้ข้อความไปชิดขอบจอเกินไป
+            padding: {
+                left: isMobile ? 5 : 20,
+                right: isMobile ? 5 : 20,
+                top: isMobile ? 10 : 20,
+                bottom: isMobile ? 10 : 20
+            }
+        },
         scales: {
             r: {
                 angleLines: { color: 'rgba(181, 166, 138, 0.05)' },
                 grid: { color: 'rgba(255, 255, 255, 0.03)', circular: true },
-                pointLabels: { color: '#828A82', font: { family: 'Inter', size: 11, weight: 300, letterSpacing: 1 } },
+                pointLabels: { 
+                    color: '#828A82', 
+                    font: { 
+                        family: 'Inter', 
+                        size: isMobile ? 9 : 11, // ลดฟอนต์ลงบนมือถือ
+                        weight: 300, 
+                        letterSpacing: isMobile ? 0 : 1 
+                    } 
+                },
                 ticks: { display: false, min: 0, max: 100 }
             }
         },
         plugins: {
             legend: {
                 position: 'bottom',
-                labels: { color: '#828A82', font: { family: 'Inter', size: 11 }, padding: 20, usePointStyle: true }
+                labels: { 
+                    color: '#828A82', 
+                    font: { family: 'Inter', size: isMobile ? 10 : 11 }, 
+                    padding: isMobile ? 10 : 20, 
+                    boxWidth: isMobile ? 8 : 12, // ลดขนาดกล่องสีให้ประหยัดพื้นที่
+                    usePointStyle: true 
+                }
             },
             tooltip: {
                 backgroundColor: 'rgba(11, 13, 11, 0.9)',

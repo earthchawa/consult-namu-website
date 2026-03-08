@@ -206,3 +206,14 @@ body:hover .cursor-outline.hovered {
     transform: rotate(45deg);
     color: #B5A68A;
 }
+
+/* --- ส่วนแก้ปัญหาสำหรับมือถือ (Mobile Fixes) --- */
+/* ปิดการทำงานของ Custom Cursor เมื่อเปิดในอุปกรณ์ที่เป็นระบบสัมผัส */
+@media (hover: none) and (pointer: coarse) {
+    .cursor-dot, .cursor-outline {
+        display: none !important;
+    }
+    body {
+        cursor: auto !important;
+    }
+}

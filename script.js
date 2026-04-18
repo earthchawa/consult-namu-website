@@ -8,7 +8,6 @@ const state = {
 // --- 2. Custom Cursor Logic ---
 const cursorDot = document.getElementById('cursor-dot');
 const cursorOutline = document.getElementById('cursor-outline');
-const magneticTriggers = document.querySelectorAll('.magnetic-trigger');
 
 window.addEventListener('mousemove', (e) => {
     state.mouseX = e.clientX;
@@ -23,21 +22,25 @@ window.addEventListener('mousemove', (e) => {
     }, 50);
 });
 
-magneticTriggers.forEach(trigger => {
-    trigger.addEventListener('mouseenter', () => {
-        cursorOutline.classList.add('hovered');
+// Initialize magnetic triggers
+function initMagneticTriggers() {
+    document.querySelectorAll('.magnetic-trigger').forEach(trigger => {
+        trigger.addEventListener('mouseenter', () => {
+            cursorOutline.classList.add('hovered');
+        });
+        trigger.addEventListener('mouseleave', () => {
+            cursorOutline.classList.remove('hovered');
+            trigger.style.transform = `translate(0px, 0px)`;
+        });
+        trigger.addEventListener('mousemove', (e) => {
+            const rect = trigger.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            trigger.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+        });
     });
-    trigger.addEventListener('mouseleave', () => {
-        cursorOutline.classList.remove('hovered');
-        trigger.style.transform = `translate(0px, 0px)`;
-    });
-    trigger.addEventListener('mousemove', (e) => {
-        const rect = trigger.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        trigger.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-    });
-});
+}
+initMagneticTriggers();
 
 // --- 2.5 Mobile Menu Toggle Logic ---
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -45,23 +48,19 @@ const mobileMenu = document.getElementById('mobile-menu');
 const mobileLinks = document.querySelectorAll('.mobile-link');
 
 if(mobileMenuBtn && mobileMenu) {
-    // เมื่อกดปุ่ม Burger (สามขีด)
     mobileMenuBtn.addEventListener('click', () => {
         const isOpen = mobileMenu.classList.contains('opacity-100');
         if(isOpen) {
-            // ปิดเมนู
             mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
             mobileMenu.classList.add('opacity-0', 'pointer-events-none');
             mobileMenuBtn.textContent = '☰';
         } else {
-            // เปิดเมนู
             mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
             mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
             mobileMenuBtn.textContent = '✕';
         }
     });
 
-    // เมื่อกดลิงก์ในเมนู ให้ปิดเมนูอัตโนมัติ
     mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
@@ -71,21 +70,19 @@ if(mobileMenuBtn && mobileMenu) {
     });
 }
 
-// --- 3. Scroll Logic (Hero Parallax Sinking Effect & Thread Line) ---
+// --- 3. Scroll Logic ---
 const heroText = document.getElementById('hero-text');
 
 window.addEventListener('scroll', () => {
-    const totalScroll = window.scrollY; // ใช้ scrollY ในการอ้างอิงตำแหน่งปัจจุบัน
+    const totalScroll = window.scrollY;
     const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrollPercent = totalScroll / windowHeight;
     
-    // เส้นด้ายดึงลงตามสัดส่วนการ Scroll
+    // Prevent division by zero error on very small documents
+    const scrollPercent = windowHeight > 0 ? (totalScroll / windowHeight) : 0;
+    
     document.getElementById('thread-line').style.height = `${scrollPercent * 100}%`;
 
-    // Parallax ลูกเล่นจมน้ำของ Hero Section (ทำงานเฉพาะตอนเลื่อนอยู่ในหน้าแรก)
     if(heroText && totalScroll < window.innerHeight) {
-        // totalScroll * 0.5 คือให้ข้อความเลื่อนลงต่ำกว่าการเลื่อนจอเล็กน้อย
-        // ส่วน opacity จะคำนวณให้ค่อยๆ จางหายไปจนเหลือ 0 (จมมิด)
         heroText.style.transform = `translateY(${totalScroll * 0.5}px)`;
         heroText.style.opacity = 1 - (totalScroll / (window.innerHeight * 0.6));
     }
@@ -104,33 +101,30 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal-text').forEach(el => observer.observe(el));
 
-// --- 5. Zen Accordion Logic (สำหรับ FAQ แบบใหม่) ---
+// --- 5. Zen Accordion Logic ---
 window.toggleZenAccordion = function(element) {
-    // ปิดอันอื่นที่เปิดอยู่
     document.querySelectorAll('.zen-accordion').forEach(item => {
         if (item !== element) {
             item.classList.remove('active');
             const icon = item.querySelector('.zen-accordion-icon');
             if(icon) {
                 icon.textContent = '+';
-                icon.classList.remove('rotate-45', 'text-gold');
+                icon.classList.remove('rotate-45', 'text-white');
             }
         }
     });
 
-    // เปิด/ปิด อันที่ถูกคลิก
     element.classList.toggle('active');
     const icon = element.querySelector('.zen-accordion-icon');
     
     if (element.classList.contains('active')) {
-        icon.textContent = '+'; // ใช้เครื่องหมายบวก แต่ CSS จะหมุน 45 องศาให้เป็นกากบาทแทน
-        icon.classList.add('text-gold');
+        icon.textContent = '+';
+        icon.classList.add('text-white');
     } else {
         icon.textContent = '+';
-        icon.classList.remove('text-gold');
+        icon.classList.remove('text-white');
     }
 }
-
 
 // --- 7. Canvas "Fluid Flow" ---
 const canvas = document.getElementById('zen-canvas');
@@ -166,8 +160,8 @@ function drawWaves() {
         
         let yOffset = height - (j * 40) - 100;
         let gradient = ctx.createLinearGradient(0, yOffset - 50, 0, height);
-        gradient.addColorStop(0, `rgba(181, 166, 138, ${0.02 + j*0.01})`);
-        gradient.addColorStop(1, 'rgba(11, 13, 11, 0)');
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${0.02 + j*0.01})`);
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
         
         for(let i = 0; i <= width; i+=20) {
             let wave1 = Math.sin((i * 0.003) + time + j) * 30;
@@ -198,7 +192,7 @@ function drawWaves() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(181, 166, 138, ${p.alpha})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.fill();
     });
 
@@ -208,96 +202,94 @@ function drawWaves() {
 drawWaves();
 
 // --- 8. Chart.js Radar Chart ---
-const ctxChart = document.getElementById('efficiency-chart').getContext('2d');
+window.addEventListener('load', () => {
+    const ctxChart = document.getElementById('efficiency-chart').getContext('2d');
+    const isMobile = window.innerWidth < 768;
 
-// เช็คว่าเป็นมือถือหรือไม่ (ความกว้างจอน้อยกว่า 768px)
-const isMobile = window.innerWidth < 768;
-
-const efficiencyChart = new Chart(ctxChart, {
-    type: 'radar',
-    data: {
-        // ทริค: ถ้าเป็นมือถือ ให้จับคำยาวๆ แยกเป็น Array เพื่อบังคับขึ้นบรรทัดใหม่
-        labels: isMobile ? 
-            ['Speed', ['Cost', 'Efficiency'], 'Quality', ['Risk', 'Mitigation'], 'Transparency'] : 
-            ['Speed', 'Cost Efficiency', 'Quality', 'Risk Mitigation', 'Transparency'],
-        datasets: [
-            {
-                label: 'Consult NAMU',
-                data: [90, 85, 95, 90, 100],
-                backgroundColor: 'rgba(181, 166, 138, 0.15)',
-                borderColor: '#B5A68A',
-                pointBackgroundColor: '#B5A68A',
-                pointBorderColor: '#0B0D0B',
-                pointHoverBackgroundColor: '#E8EBE8',
-                pointHoverBorderColor: '#B5A68A',
-                borderWidth: 2,
-                tension: 0.4
-            },
-            {
-                label: 'Traditional Methods',
-                data: [50, 60, 55, 45, 40],
-                backgroundColor: 'rgba(232, 235, 232, 0.02)',
-                borderColor: '#222922',
-                pointBackgroundColor: '#222922',
-                pointBorderColor: '#0B0D0B',
-                pointHoverBackgroundColor: '#E8EBE8',
-                pointHoverBorderColor: '#222922',
-                borderWidth: 1,
-                borderDash: [5, 5],
-                tension: 0.4
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-            // ดันกราฟเข้าตรงกลาง ไม่ให้ข้อความไปชิดขอบจอเกินไป
-            padding: {
-                left: isMobile ? 5 : 20,
-                right: isMobile ? 5 : 20,
-                top: isMobile ? 10 : 20,
-                bottom: isMobile ? 10 : 20
-            }
-        },
-        scales: {
-            r: {
-                angleLines: { color: 'rgba(181, 166, 138, 0.05)' },
-                grid: { color: 'rgba(255, 255, 255, 0.03)', circular: true },
-                pointLabels: { 
-                    color: '#828A82', 
-                    font: { 
-                        family: 'Inter', 
-                        size: isMobile ? 9 : 11, // ลดฟอนต์ลงบนมือถือ
-                        weight: 300, 
-                        letterSpacing: isMobile ? 0 : 1 
-                    } 
+    const efficiencyChart = new Chart(ctxChart, {
+        type: 'radar',
+        data: {
+            labels: isMobile ? 
+                ['Speed', ['Cost', 'Efficiency'], 'Quality', ['Risk', 'Mitigation'], 'Transparency'] : 
+                ['Speed', 'Cost Efficiency', 'Quality', 'Risk Mitigation', 'Transparency'],
+            datasets: [
+                {
+                    label: 'Consult NAMU',
+                    data: [90, 85, 95, 90, 100],
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: '#FFFFFF',
+                    pointBackgroundColor: '#FFFFFF',
+                    pointBorderColor: '#000000',
+                    pointHoverBackgroundColor: '#FFFFFF',
+                    pointHoverBorderColor: '#FFFFFF',
+                    borderWidth: 2,
+                    tension: 0.4
                 },
-                ticks: { display: false, min: 0, max: 100 }
-            }
+                {
+                    label: 'Traditional Methods',
+                    data: [50, 60, 55, 45, 40],
+                    backgroundColor: 'rgba(100, 100, 100, 0.02)',
+                    borderColor: '#444444',
+                    pointBackgroundColor: '#444444',
+                    pointBorderColor: '#000000',
+                    pointHoverBackgroundColor: '#FFFFFF',
+                    pointHoverBorderColor: '#444444',
+                    borderWidth: 1,
+                    borderDash: [5, 5],
+                    tension: 0.4
+                }
+            ]
         },
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: { 
-                    color: '#828A82', 
-                    font: { family: 'Inter', size: isMobile ? 10 : 11 }, 
-                    padding: isMobile ? 10 : 20, 
-                    boxWidth: isMobile ? 8 : 12, // ลดขนาดกล่องสีให้ประหยัดพื้นที่
-                    usePointStyle: true 
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    left: isMobile ? 5 : 20,
+                    right: isMobile ? 5 : 20,
+                    top: isMobile ? 10 : 20,
+                    bottom: isMobile ? 10 : 20
                 }
             },
-            tooltip: {
-                backgroundColor: 'rgba(11, 13, 11, 0.9)',
-                titleColor: '#B5A68A',
-                bodyColor: '#E8EBE8',
-                borderColor: '#222922',
-                borderWidth: 1,
-                padding: 12,
-                displayColors: false,
-                callbacks: { label: function(context) { return context.raw + '% Optimization'; } }
-            }
-        },
-        animation: { duration: 2500, easing: 'easeOutQuart' }
-    }
+            scales: {
+                r: {
+                    angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)', circular: true },
+                    pointLabels: { 
+                        color: '#888888', 
+                        font: { 
+                            family: 'Inter', 
+                            size: isMobile ? 9 : 11, 
+                            weight: 300, 
+                            letterSpacing: isMobile ? 0 : 1 
+                        } 
+                    },
+                    ticks: { display: false, min: 0, max: 100 }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { 
+                        color: '#888888', 
+                        font: { family: 'Inter', size: isMobile ? 10 : 11 }, 
+                        padding: isMobile ? 10 : 20, 
+                        boxWidth: isMobile ? 8 : 12,
+                        usePointStyle: true 
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(10, 10, 10, 0.9)',
+                    titleColor: '#FFFFFF',
+                    bodyColor: '#DDDDDD',
+                    borderColor: '#333333',
+                    borderWidth: 1,
+                    padding: 12,
+                    displayColors: false,
+                    callbacks: { label: function(context) { return context.raw + '% Optimization'; } }
+                }
+            },
+            animation: { duration: 2500, easing: 'easeOutQuart' }
+        }
+    });
 });

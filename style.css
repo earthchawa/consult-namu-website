@@ -1,7 +1,6 @@
 body {
-    background-color: #0B0D0B;
-    background-image: radial-gradient(circle at 50% 0%, #141A14 0%, #0B0D0B 70%);
-    color: #E8EBE8;
+    background-color: #000000;
+    color: #FFFFFF;
     overflow-x: hidden;
     cursor: none;
 }
@@ -20,21 +19,21 @@ body {
 .cursor-dot {
     width: 6px;
     height: 6px;
-    background-color: #B5A68A;
+    background-color: #FFFFFF;
 }
 
 .cursor-outline {
     width: 40px;
     height: 40px;
-    border: 1px solid rgba(181, 166, 138, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
 }
 
 body:hover .cursor-outline.hovered {
     width: 60px;
     height: 60px;
-    background-color: rgba(181, 166, 138, 0.1);
-    border-color: #B5A68A;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #FFFFFF;
     backdrop-filter: blur(2px);
 }
 
@@ -44,7 +43,7 @@ body:hover .cursor-outline.hovered {
     left: 50px;
     top: 0;
     width: 1px;
-    background: linear-gradient(to bottom, transparent, #B5A68A, transparent);
+    background: linear-gradient(to bottom, transparent, #FFFFFF, transparent);
     height: 0%;
     z-index: 40;
     transition: height 0.1s linear;
@@ -66,63 +65,16 @@ body:hover .cursor-outline.hovered {
     transform: translateY(0);
 }
 
-
-/* Chart */
-.chart-container {
-    position: relative;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    height: 400px;
-    max-height: 500px;
-}
-
-/* --- ส่วนที่เพิ่มใหม่สำหรับหน้า About --- */
-
-/* คีย์เฟรมสำหรับอนิเมชันลอยขึ้นลงเบาๆ */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px); /* ลอยขึ้นไป 10px */
-    }
-}
-
-/* คลาสสำหรับเรียกใช้อนิเมชัน */
-.float-slow {
-    animation: float 6s ease-in-out infinite; /* ลอยครบกระบวนการใน 6 วินาที */
-}
-
-.float-slower {
-    animation: float 8s ease-in-out infinite reverse; /* ลอยช้ากว่า (8วิ) และเริ่มในทิศทางตรงกันข้าม */
-}
-
-/* เอฟเฟกต์ไฮไลท์ข้อความเมื่อเอาเมาส์ไปชี้ */
 .hover-highlight:hover {
-    color: #B5A68A; /* เปลี่ยนเป็นสีทอง */
-    text-shadow: 0 0 10px rgba(181, 166, 138, 0.3); /* เพิ่มแสงฟุ้งๆ สีทองเล็กน้อย */
+    color: #FFFFFF;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-/* --- ส่วนที่เพิ่มใหม่สำหรับหน้า About --- */
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.float-slow { animation: float 6s ease-in-out infinite; }
-.float-slower { animation: float 8s ease-in-out infinite reverse; }
-
-.hover-highlight:hover {
-    color: #B5A68A;
-    text-shadow: 0 0 10px rgba(181, 166, 138, 0.3);
-}
-
-/* --- สไตล์ใหม่ของการ์ด Services (Grid Card) --- */
+/* Services Grid Cards */
 .service-grid-card {
     width: 100%;
-    background-color: #0E110E;
-    border: 1px solid #222922;
+    background-color: #050505;
+    border: 1px solid #222222;
     border-radius: 16px;
     padding: 2.5rem;
     position: relative;
@@ -131,18 +83,18 @@ body:hover .cursor-outline.hovered {
 }
 
 @media (min-width: 768px) {
-    .service-grid-card { width: calc(50% - 12px); } /* 2 คอลัมน์ บน Tablet */
+    .service-grid-card { width: calc(50% - 12px); }
 }
 
 @media (min-width: 1024px) {
-    .service-grid-card { width: calc(33.333% - 22px); } /* 3 คอลัมน์ บน Desktop */
+    .service-grid-card { width: calc(33.333% - 22px); }
 }
 
 .service-grid-card:hover {
-    border-color: #B5A68A;
+    border-color: #FFFFFF;
     transform: translateY(-8px);
-    background-color: #141714;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background-color: #0a0a0a;
+    box-shadow: 0 10px 30px rgba(255,255,255,0.05);
 }
 
 .service-grid-card .card-number {
@@ -152,29 +104,29 @@ body:hover .cursor-outline.hovered {
     font-family: 'Syne', sans-serif;
     font-size: 8rem;
     line-height: 1;
-    color: #181C18;
+    color: #111111;
     z-index: 0;
     transition: color 0.5s ease;
 }
 
 .service-grid-card:hover .card-number {
-    color: #1F241F;
+    color: #1a1a1a;
 }
 
-/* --- สไตล์ใหม่ของ FAQ (ยืมดีไซน์หรูหราจาก Services เก่า) --- */
+/* FAQ Accordion */
 .zen-accordion {
-    border-bottom: 1px solid #222922;
+    border-bottom: 1px solid #222222;
     transition: background-color 0.4s ease, border-color 0.4s ease;
     background-color: transparent;
 }
 
 .zen-accordion:hover:not(.active) {
-    background-color: #1B1F1B;
+    background-color: #0a0a0a;
 }
 
 .zen-accordion.active {
-    background-color: #141714;
-    border-color: #B5A68A;
+    background-color: #050505;
+    border-color: #FFFFFF;
 }
 
 .zen-accordion-title {
@@ -183,11 +135,10 @@ body:hover .cursor-outline.hovered {
 
 .zen-accordion:hover .zen-accordion-title,
 .zen-accordion.active .zen-accordion-title {
-    color: #B5A68A;
+    color: #FFFFFF;
     padding-left: 15px;
 }
 
-/* ใช้ max-height เพื่อป้องกันปัญหาข้อความยาวล้น */
 .zen-accordion-content {
     max-height: 0;
     overflow: hidden;
@@ -204,16 +155,11 @@ body:hover .cursor-outline.hovered {
 
 .zen-accordion.active .zen-accordion-icon {
     transform: rotate(45deg);
-    color: #B5A68A;
+    color: #FFFFFF;
 }
 
-/* --- ส่วนแก้ปัญหาสำหรับมือถือ (Mobile Fixes) --- */
-/* ปิดการทำงานของ Custom Cursor เมื่อเปิดในอุปกรณ์ที่เป็นระบบสัมผัส */
+/* Mobile Fixes */
 @media (hover: none) and (pointer: coarse) {
-    .cursor-dot, .cursor-outline {
-        display: none !important;
-    }
-    body {
-        cursor: auto !important;
-    }
+    .cursor-dot, .cursor-outline { display: none !important; }
+    body { cursor: auto !important; }
 }

@@ -1,6 +1,6 @@
 # 🌊 Consult NAMU | Global Sourcing & Trade Experts
 
-[![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fconsult-namu-web.vercel.app%2F&up_message=Live&up_color=success&style=flat-square)](https://consult-namu-web.vercel.app/)
+[![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fconsult-namu-website.vercel.app%2F&up_message=Live&up_color=success&style=flat-square)](https://consult-namu-website.vercel.app/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)]()
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)]()
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)]()
@@ -13,7 +13,9 @@
 
 This website was crafted with a **"Zen Minimalist"** design philosophy to reflect the brand's core identity: transparency, elegant simplicity, and the seamless execution of cross-border trade.
 
-🔗 **[View Live Demo on Vercel](https://consult-namu-web.vercel.app/)** ---
+🔗 **[View Live Demo on Vercel](https://consult-namu-website.vercel.app/)**
+
+---
 
 ## 🛠️ Tech Stack
 
@@ -31,7 +33,7 @@ To initiate the flow for your international trade operations, connect with us:
 
 - 📧 **Email:** samy@consultnamu.com
 - 📍 **Global Presence:** California (USA) / Shanghai (CN) / Hong Kong / Bangkok (TH)
-- 🌐 **Website:** [consult-namu-web.vercel.app](https://consult-namu-web.vercel.app/)
+- 🌐 **Website:** [consult-namu-website.vercel.app](https://consult-namu-website.vercel.app/)
 
 ---
 *Designed & Developed to bridge the world through harmonious trade.*

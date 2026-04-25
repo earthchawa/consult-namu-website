@@ -6,7 +6,6 @@
     <title>Consult NAMU | Global Sourcing & Trade Experts</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
@@ -32,355 +31,462 @@
         }
     </script>
 </head>
-<body class="antialiased selection:bg-white selection:text-black custom-cursor-active bg-darkBg">
+<body class="antialiased selection:bg-white selection:text-black bg-darkBg">
 
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
     <div class="thread-line" id="thread-line"></div>
 
     <nav class="fixed w-full top-0 z-50 px-8 py-6 flex justify-between items-center text-lightText bg-darkBg/80 backdrop-blur-lg border-b border-borderColor">
-        <a href="#hero" class="font-display font-medium text-2xl tracking-tighter text-lightText relative z-50 focus:outline-none">
+        <a href="#home" class="nav-link font-display font-medium text-2xl tracking-tighter text-lightText relative z-50 focus:outline-none">
             CONSULT <span class="text-white italic">NAMU</span>
         </a>
         
         <div class="hidden md:flex space-x-10 text-xs font-medium tracking-[0.15em] text-mutedText">
-            <a href="#about" class="hover:text-white transition-colors magnetic-trigger">ABOUT</a>
-            <a href="#advantage" class="hover:text-white transition-colors magnetic-trigger">ADVANTAGE</a>
-            <a href="#services" class="hover:text-white transition-colors magnetic-trigger">SERVICES</a>
-            <a href="#faq" class="hover:text-white transition-colors magnetic-trigger">FAQ</a>
+            <a href="#about-page" class="nav-link hover:text-white transition-colors">ABOUT</a>
+            <a href="#advantage" class="nav-link hover:text-white transition-colors">ADVANTAGE</a>
+            <a href="#services" class="nav-link hover:text-white transition-colors">SERVICES</a>
+            <a href="#faq" class="nav-link hover:text-white transition-colors">FAQ</a>
+            <a href="#contact" class="nav-link hover:text-white transition-colors">CONTACT</a>
         </div>
         
         <button id="mobile-menu-btn" class="md:hidden text-2xl text-white relative z-50 focus:outline-none">☰</button>
     </nav>
 
     <div id="mobile-menu" class="fixed inset-0 bg-darkBg/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center space-y-8 opacity-0 pointer-events-none transition-opacity duration-300">
-        <a href="#about" class="text-2xl font-display tracking-widest text-lightText hover:text-white mobile-link">ABOUT</a>
+        <a href="#about-page" class="text-2xl font-display tracking-widest text-lightText hover:text-white mobile-link">ABOUT</a>
         <a href="#advantage" class="text-2xl font-display tracking-widest text-lightText hover:text-white mobile-link">ADVANTAGE</a>
         <a href="#services" class="text-2xl font-display tracking-widest text-lightText hover:text-white mobile-link">SERVICES</a>
         <a href="#faq" class="text-2xl font-display tracking-widest text-lightText hover:text-white mobile-link">FAQ</a>
         <a href="#contact" class="text-2xl font-display tracking-widest text-lightText hover:text-white mobile-link">CONTACT</a>
     </div>
 
-    <header id="hero" class="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
-        <canvas id="zen-canvas" class="absolute top-0 left-0 w-full h-full z-0 opacity-40"></canvas>
-        <div id="hero-text" class="relative z-10 text-center px-4 max-w-5xl mt-20 transition-transform duration-75 ease-out">
-            <p class="reveal-text font-sans text-white uppercase tracking-[0.3em] text-xs mb-6 font-medium">The Harmony of Global Trade</p>
-            <h1 class="reveal-text font-display text-5xl md:text-8xl font-medium leading-[1.1] text-lightText mb-8 tracking-tight">FIND YOUR<br><i class="text-white font-light">FLOW.</i></h1>
-            <p class="reveal-text font-sans text-mutedText max-w-xl mx-auto text-lg mb-12 font-light leading-relaxed">Seamlessly connecting businesses with high-quality goods across borders. Experience sourcing without friction.</p>
-        </div>
-        <div class="absolute bottom-12 flex flex-col items-center animate-bounce opacity-50">
-            <span class="block w-[1px] h-10 bg-white mb-4"></span>
-            <span class="text-[10px] font-medium tracking-[0.2em] text-white writing-vertical-rl">SCROLL</span>
-        </div>
-    </header>
-
-    <section id="about" class="w-full pt-32 pb-32 px-6 md:px-20 bg-darkBg relative z-30 overflow-hidden flex items-center min-h-[70vh]">
-        <div class="absolute inset-0 z-0 bg-cover bg-[center_right] pointer-events-none opacity-90" style="background-image: url('assets/about_bg2.png');"></div>
-        <div class="absolute inset-0 z-0 bg-gradient-to-r from-darkBg via-darkBg/90 to-transparent pointer-events-none"></div>
-        <div class="absolute inset-0 z-0 bg-gradient-to-t from-darkBg via-transparent to-darkBg pointer-events-none"></div>
-        
-        <div class="max-w-7xl mx-auto w-full relative z-10">
-            <div class="max-w-3xl reveal-text bg-darkBg/60 lg:bg-transparent p-6 lg:p-0 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none">
-                <span class="text-white text-[12px] font-bold tracking-[0.3em] uppercase mb-4 block">The Foundation</span>
-                <h2 class="font-display text-4xl md:text-5xl font-medium text-lightText mb-8 leading-[1.1]">
-                    Harmony<br>in Global Trade.
-                </h2>
-                <div class="space-y-6">
-                    <p class="font-sans text-lightText/90 leading-relaxed text-lg font-light">
-                        Like stacked stones in a tranquil river, successful international trade requires <span class="hover-highlight text-white font-normal cursor-default transition-colors duration-300">perfect alignment</span>. At <span class="font-medium text-white">Consult NAMU</span>, we provide that foundation.
-                    </p>
-                    <p class="font-sans text-lightText/90 leading-relaxed text-lg font-light">
-                        With strategic presence in Bangkok, Hong Kong, Shanghai, and California, we meticulously balance logistics, quality, and speed to bring your products from source to success without a ripple.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="advantage" class="w-full py-32 px-6 md:px-20 bg-surface relative z-30 border-t border-borderColor">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start relative">
+    <div id="home-view" class="block">
+        <header id="hero" class="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden bg-darkBg">
             
-            <div class="lg:col-span-5 lg:sticky lg:top-32 reveal-text">
-                <span class="text-white text-[12px] font-bold tracking-[0.3em] uppercase mb-4 block">The NAMU Advantage</span>
-                <h2 class="font-display text-5xl md:text-6xl font-medium text-lightText leading-[1.1] mb-8">
-                    Mastering<br><i class="text-white font-light">the Current.</i>
-                </h2>
-                <p class="font-sans text-mutedText text-lg font-light leading-relaxed mb-6 max-w-md">
-                    Traditional sourcing is often fragmented, leading to communication delays and hidden costs. It creates turbulence in your business.
-                </p>
-                <p class="font-sans text-mutedText text-lg font-light leading-relaxed mb-10 max-w-md">
-                    True advantage in global trade isn't found in directories. It's built through years of localized experience and an integrated approach that maximizes every metric.
-                </p>
-            </div>
-
-            <div class="lg:col-span-7 space-y-32">
+            <canvas id="zen-canvas" class="absolute top-0 left-0 w-full h-full z-0 opacity-40 pointer-events-none"></canvas>
+            
+            <div id="hero-text" class="relative z-10 text-center px-4 max-w-5xl mt-20 transition-transform duration-75 ease-out flex flex-col items-center">
+                <p class="reveal-text font-sans text-white uppercase tracking-[0.3em] text-xs mb-6 font-medium">BOOTS ON THE GROUND SOURCING</p>
                 
-                <div class="reveal-text">
-                    <div class="aspect-video md:aspect-[4/3] bg-darkBg border border-white/10 p-3 rounded-2xl shadow-2xl mb-10">
-                        <div class="w-full h-full bg-[#111] rounded-xl relative overflow-hidden group">
-                            <img src="assets/samy.jpeg" alt="Samy on the ground" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
-                        </div>
-                    </div>
-                    
-                    <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase block mb-4 border-b border-white/20 pb-4 inline-block">01 / Experience</span>
-                    <h3 class="font-display text-3xl md:text-4xl font-medium text-lightText mb-6">Led by Experience.</h3>
-                    
-                    <div class="space-y-6">
-                        <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
-                            Consult NAMU is led by <span class="text-white font-medium">Samy</span>, bringing over a decade of lived, on-the-ground experience across Asia. This 10-year immersion allows us to navigate complex cultural nuances and leverage a deeply established network of trusted suppliers.
-                        </p>
-                        <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
-                            We don't just find factories; we partner with vetted manufacturers we know and trust, turning our localized expertise into your competitive advantage.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="reveal-text">
-                    <div class="aspect-[16/9] bg-darkBg border border-white/10 p-3 rounded-2xl shadow-2xl mb-10 overflow-hidden relative group">
-                        <img src="assets/factory1.jpg" alt="Factory Sourcing Operations" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100">
-                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
-                    </div>
-
-                    <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase block mb-4 border-b border-white/20 pb-4 inline-block">02 / Quality Control</span>
-                    <h3 class="font-display text-3xl md:text-4xl font-medium text-lightText mb-6">Uncompromising Oversight.</h3>
-                    
-                    <div class="space-y-6 border-l-2 border-white/20 pl-6 md:pl-10">
-                        <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
-                            We don’t just manage supply chains from a desk; <span class="text-white">we have boots on the ground.</span> 
-                        </p>
-                        <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
-                            Our physical presence inside manufacturing facilities ensures strict quality control and total oversight at every stage of production. By auditing factories and inspecting goods on the floor before they ever ship, we eliminate miscommunications, prevent costly errors, and guarantee that you get exactly what you specified.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="reveal-text">
-                    <div class="aspect-square md:aspect-[4/3] bg-[#080808] border border-white/10 p-6 md:p-10 rounded-2xl shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] mb-10 flex justify-center items-center relative overflow-hidden group">
-                        <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-50"></div>
-                        <div class="w-full h-full relative z-10 flex justify-center items-center">
-                            <canvas id="efficiency-chart"></canvas>
-                        </div>
-                    </div>
-
-                    <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase block mb-4 border-b border-white/20 pb-4 inline-block">03 / Efficiency</span>
-                    <h3 class="font-display text-3xl md:text-4xl font-medium text-lightText mb-6">Data-Driven Flow.</h3>
-                    
-                    <div class="space-y-6">
-                        <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
-                            Our integrated approach maximizes your advantage across every metric. From negotiation to final delivery, we ensure high speed, transparency, and a stress-free flow, completely outperforming traditional fragmented methods.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="w-full py-32 px-6 md:px-20 bg-darkBg border-t border-borderColor relative z-30">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-20 reveal-text text-center">
-                <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase mb-4 block">Our Services</span>
-                <h2 class="font-display text-4xl md:text-5xl font-medium text-lightText">Simplify global sourcing and<br>cross-border trade</h2>
-            </div>
-            
-            <div class="flex flex-wrap justify-center gap-6 lg:gap-8 reveal-text">
-                <div class="service-grid-card group flex flex-col justify-start">
-                    <div class="card-number">01</div>
-                    <div class="relative z-10 flex flex-col h-full">
-                        <svg class="w-12 h-12 text-white mb-6 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.6 9h16.8M3.6 15h16.8M12 3v18" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-2.4 0-4.5 4-4.5 9s2.1 9 4.5 9 4.5-4 4.5-9-2.1-9-4.5-9z" />
-                        </svg>
-                        <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Global Sourcing & Procurement</h3>
-                        <p class="font-sans text-mutedText font-light leading-relaxed">We help clients identify and secure high-quality products from trusted suppliers across Asia, the Middle East, and beyond.</p>
-                    </div>
-                </div>
-
-                <div class="service-grid-card group flex flex-col justify-start">
-                    <div class="card-number">02</div>
-                    <div class="relative z-10 flex flex-col h-full">
-                        <svg class="w-12 h-12 text-white mb-6 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-                        </svg>
-                        <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Import & Export Solutions</h3>
-                        <p class="font-sans text-mutedText font-light leading-relaxed">Whether you're importing goods into Southeast Asia or exporting to Europe or North America, we manage the process smoothly.</p>
-                    </div>
-                </div>
-
-                <div class="service-grid-card group flex flex-col justify-start">
-                    <div class="card-number">03</div>
-                    <div class="relative z-10 flex flex-col h-full">
-                        <svg class="w-12 h-12 text-white mb-6 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-                        </svg>
-                        <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Product Development & Private Label</h3>
-                        <p class="font-sans text-mutedText font-light leading-relaxed">We assist with sourcing and developing custom or white-label products tailored to your brand.</p>
-                    </div>
-                </div>
-
-                <div class="service-grid-card group flex flex-col justify-start">
-                    <div class="card-number">04</div>
-                    <div class="relative z-10 flex flex-col h-full">
-                        <svg class="w-12 h-12 text-white mb-6 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-                        </svg>
-                        <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Market Entry Consulting</h3>
-                        <p class="font-sans text-mutedText font-light leading-relaxed">For companies looking to expand into new regions, we provide insight and operational support.</p>
-                    </div>
-                </div>
-
-                <div class="service-grid-card group flex flex-col justify-start">
-                    <div class="card-number">05</div>
-                    <div class="relative z-10 flex flex-col h-full">
-                        <svg class="w-12 h-12 text-white mb-6 opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                        </svg>
-                        <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Special Projects & Sourcing Missions</h3>
-                        <p class="font-sans text-mutedText font-light leading-relaxed">Need something specific? We handle one-off sourcing missions or complex, niche projects that require discretion and flexibility.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="faq" class="w-full py-32 px-6 md:px-20 bg-darkBg border-t border-borderColor relative z-30">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-16 reveal-text">
-                <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase mb-4 block">Knowledge Base</span>
-                <h2 class="font-display text-4xl font-medium text-lightText">Frequently Asked Questions</h2>
-            </div>
-            
-            <div class="border-t border-borderColor reveal-text" id="faq-list">
+                <h1 class="reveal-text font-display text-5xl md:text-8xl font-medium leading-[1.1] text-lightText mb-6 tracking-tight">
+                    Your eyes on the<br><i class="text-white font-light">ground.</i>
+                </h1>
                 
-                <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
-                    <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
-                    <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
-                        <div class="flex justify-between items-center w-full">
-                            <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">What types of products do you source?</h3>
-                            <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
-                        </div>
-                        <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
-                            <p class="font-sans text-mutedText font-light leading-relaxed">We specialize in sourcing food items, raw materials, select industrial machinery, packaging, and related goods. If you’re looking for something specific, we’re happy to assist with custom sourcing missions.</p>
-                        </div>
-                    </div>
+                <p class="reveal-text font-sans text-mutedText max-w-3xl mx-auto text-lg mb-12 font-light leading-relaxed">
+                    We inspect the factory, verify the goods, and protect your brand <span class="whitespace-nowrap">— before it ships.</span>
+                </p>
+
+                <div class="reveal-text flex flex-col sm:flex-row gap-6 items-center mb-10">
+                    <a href="#contact" class="nav-link inline-block bg-white text-black px-8 py-4 rounded-full font-sans font-medium text-sm tracking-wide hover:bg-gray-200 transition-colors">Book a sourcing call</a>
+                    <a href="#services" class="nav-link inline-block text-white font-sans font-medium text-sm tracking-wide hover:text-gray-300 transition-colors flex items-center gap-2">See how we work <span class="text-lg">→</span></a>
                 </div>
 
-                <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
-                    <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
-                    <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
-                        <div class="flex justify-between items-center w-full">
-                            <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">Which countries do you operate in?</h3>
-                            <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
-                        </div>
-                        <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
-                            <p class="font-sans text-mutedText font-light leading-relaxed">We have a presence in Bangkok, Hong Kong, Shanghai, and California, allowing us to facilitate trade across Asia, the Middle East, Europe, and North America.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
-                    <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
-                    <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
-                        <div class="flex justify-between items-center w-full">
-                            <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">Do you offer private label or OEM services?</h3>
-                            <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
-                        </div>
-                        <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
-                            <p class="font-sans text-mutedText font-light leading-relaxed">Yes. We help clients develop private-label products from design to packaging, working directly with factories to ensure quality and consistency.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
-                    <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
-                    <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
-                        <div class="flex justify-between items-center w-full">
-                            <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">Can you help with shipping and logistics?</h3>
-                            <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
-                        </div>
-                        <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
-                            <p class="font-sans text-mutedText font-light leading-relaxed">Absolutely. We coordinate air, sea, and land transport, and handle customs, documentation, and compliance to ensure your goods arrive smoothly.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
-                    <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
-                    <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
-                        <div class="flex justify-between items-center w-full">
-                            <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">Do you work with small businesses or only large companies?</h3>
-                            <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
-                        </div>
-                        <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
-                            <p class="font-sans text-mutedText font-light leading-relaxed">We work with businesses of all sizes. Whether you’re a startup, a boutique brand, or an established company, we tailor our services to fit your goals and scale.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
-                    <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
-                    <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
-                        <div class="flex justify-between items-center w-full">
-                            <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">What makes Namu different from other sourcing companies?</h3>
-                            <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
-                        </div>
-                        <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
-                            <p class="font-sans text-mutedText font-light leading-relaxed">We offer personalized, end-to-end service with transparency, flexibility, and a deep understanding of both product and market. Our network spans multiple industries and regions, allowing us to adapt quickly to your needs.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
-                    <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
-                    <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
-                        <div class="flex justify-between items-center w-full">
-                            <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">How do you guarantee the quality of the products you source?</h3>
-                            <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
-                        </div>
-                        <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
-                            <p class="font-sans text-mutedText font-light leading-relaxed">Quality control is built into our physical presence. We maintain dedicated, boots-on-the-ground teams who conduct in-person factory audits and rigorous pre-shipment inspections. We verify materials, oversee production runs, and check final packaging on-site to ensure the final product matches your exact specifications before it ever leaves the port.</p>
-                        </div>
-                    </div>
-                </div>
-
+                <p class="reveal-text text-mutedText text-[10px] tracking-widest uppercase font-sans">Serving American retail & wholesale brands</p>
             </div>
-        </div>
-    </section>
-    
-    <section id="contact" class="w-full pt-32 pb-8 px-6 md:px-20 bg-darkBg text-lightText border-t border-borderColor relative z-30">
-        <div class="max-w-4xl mx-auto text-center space-y-12">
-            <p class="font-sans text-white text-xs font-medium tracking-[0.3em] uppercase reveal-text">Initiate the Flow</p>
-            <h2 class="font-display text-5xl md:text-7xl font-light tracking-tight reveal-text italic">Let's Work Together.</h2>
-            <div class="reveal-text pt-8">
-                <a href="mailto:samy@consultnamu.com" class="magnetic-trigger text-2xl md:text-3xl font-display text-lightText border-b border-borderColor hover:border-white transition-all pb-4 inline-block tracking-wide">
-                    samy@consultnamu.com
-                </a>
+        </header>
+
+        <section id="about" class="w-full pt-12 pb-32 bg-darkBg relative z-30 flex flex-col items-center border-t border-white/5">
+            <div class="w-full h-[50vh] md:h-[70vh] relative flex justify-center items-center overflow-hidden mb-16 reveal-text">
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#000000_90%)] z-10 pointer-events-none"></div>
+                <object type="image/svg+xml" data="assets/namu_worldmap.svg" class="w-[150%] md:w-[100%] max-w-[1600px] h-full object-contain opacity-80 relative z-0 pointer-events-none"></object>
             </div>
+
+            <div class="max-w-5xl mx-auto px-6 md:px-12 text-center reveal-text relative z-20">
+                <span class="text-white text-[12px] font-bold tracking-[0.4em] uppercase mb-6 block">The Foundation</span>
+                
+                <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-medium text-lightText leading-[1.1] tracking-tight mb-16 max-w-4xl mx-auto">
+                    Four cities. Two continents.<br class="hidden sm:block"> One standard.
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 text-left max-w-4xl mx-auto border-t border-white/10 pt-12">
+                    <p class="font-sans text-mutedText leading-relaxed text-lg font-light">
+                        With teams in Bangkok, Hong Kong, Shanghai, and California, Namu sits inside the supply chain — not above it.
+                    </p>
+                    <p class="font-sans text-mutedText leading-relaxed text-lg font-light">
+                        From the factory floor in Asia to your warehouse door in the US, every stage has someone we trust watching it. No hand-offs. No broken telephone. No surprises when the container lands.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="advantage" class="w-full py-32 px-6 md:px-20 bg-surface relative z-30 border-t border-borderColor">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start relative">
+                
+                <div class="lg:col-span-5 lg:sticky lg:top-32 reveal-text">
+                    <span class="text-white text-[12px] font-bold tracking-[0.3em] uppercase mb-4 block">THE NAMU ADVANTAGE</span>
+                    <h2 class="font-display text-5xl md:text-6xl font-medium text-lightText leading-[1.1] mb-8">
+                        Most sourcing happens in email threads. Ours happens on the factory floor.
+                    </h2>
+                    <p class="font-sans text-mutedText text-lg font-light leading-relaxed mb-6 max-w-md">
+                        Traditional sourcing is fragmented — agents, brokers, miscommunication, and an anxious wait for the first container to clear customs.
+                    </p>
+                    <p class="font-sans text-mutedText text-lg font-light leading-relaxed mb-10 max-w-md">
+                        Namu collapses that chain. One partner. One point of contact. Feet inside the facilities producing your goods, from the first sample to the final shipment.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-7 space-y-32">
+                    
+                    <div class="reveal-text">
+                        <div class="aspect-video md:aspect-[4/3] bg-darkBg border border-white/10 p-3 rounded-2xl mb-4">
+                            <div class="w-full h-full bg-[#111] rounded-xl relative overflow-hidden group">
+                                <img src="assets/samy.jpeg" alt="Samy on the ground" class="w-full h-full object-cover opacity-80" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
+                            </div>
+                        </div>
+                        <p class="text-mutedText text-xs font-sans tracking-wide mb-10">Samy — Founder. 10+ years on the ground across Asia.</p>
+                        
+                        <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase block mb-4 border-b border-white/20 pb-4 inline-block">01 / EXPERIENCE</span>
+                        <h3 class="font-display text-3xl md:text-4xl font-medium text-lightText mb-6">A decade in Asia. Not in a directory.</h3>
+                        
+                        <div class="space-y-6">
+                            <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
+                                Namu is led by Samy — more than ten years of lived, on-the-ground experience across Bangkok, Hong Kong, and Shanghai. That's a decade of factory visits, supplier negotiations, and learning which corners get cut when no one's looking.
+                            </p>
+                            <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
+                                We don't find factories on Alibaba. We partner with manufacturers we've personally walked through, vetted, and returned to — year after year. Our relationships are our product.
+                            </p>
+                            
+                            <div class="pt-6">
+                                <a href="#about-page" class="nav-link inline-block border border-white/20 text-white px-8 py-3 rounded-full font-sans font-medium text-sm tracking-wide hover:bg-white hover:text-black transition-colors">Read About Samy →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal-text">
+                        <div class="aspect-[16/9] bg-darkBg border border-white/10 p-3 rounded-2xl mb-10 overflow-hidden relative group">
+                            <img src="assets/factory1.jpg" alt="Factory Sourcing Operations" class="w-full h-full object-cover opacity-80" onerror="this.src='https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=1000&auto=format&fit=crop'">
+                        </div>
+
+                        <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase block mb-4 border-b border-white/20 pb-4 inline-block">02 / QUALITY CONTROL</span>
+                        <h3 class="font-display text-3xl md:text-4xl font-medium text-lightText mb-6">Uncompromising oversight.</h3>
+                        
+                        <div class="space-y-6 border-l-2 border-white/20 pl-6 md:pl-10">
+                            <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
+                                <span class="text-white font-medium">We don't manage supply chains from a desk. We walk the floor.</span> 
+                            </p>
+                            <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
+                                Our physical presence inside manufacturing facilities means strict quality control at every stage of production. We audit factories, inspect samples, and verify goods on the floor — before they ever ship. That means no miscommunications, no costly errors, and no unpleasant surprises when your container lands.
+                            </p>
+                            <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
+                                You get exactly what you specified. That's the whole promise.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="reveal-text">
+                        <div class="grid grid-cols-2 gap-4 mb-10">
+                            <div class="bg-[#080808] border border-white/10 p-8 rounded-2xl flex flex-col justify-center items-center text-center">
+                                <h4 class="font-display text-4xl md:text-5xl text-white mb-2">&lt;2%</h4>
+                                <p class="font-sans text-mutedText text-sm tracking-wide">Average defect rate</p>
+                            </div>
+                            <div class="bg-[#080808] border border-white/10 p-8 rounded-2xl flex flex-col justify-center items-center text-center">
+                                <h4 class="font-display text-4xl md:text-5xl text-white mb-2">100%</h4>
+                                <p class="font-sans text-mutedText text-sm tracking-wide">Pre-shipment inspection</p>
+                            </div>
+                            <div class="bg-[#080808] border border-white/10 p-8 rounded-2xl flex flex-col justify-center items-center text-center">
+                                <h4 class="font-display text-3xl md:text-4xl text-white mb-2">4</h4>
+                                <p class="font-sans text-mutedText text-sm tracking-wide">Cities, one invoice</p>
+                            </div>
+                            <div class="bg-[#080808] border border-white/10 p-8 rounded-2xl flex flex-col justify-center items-center text-center">
+                                <h4 class="font-display text-3xl md:text-4xl text-white mb-2">10+</h4>
+                                <p class="font-sans text-mutedText text-sm tracking-wide">Years in Asia</p>
+                            </div>
+                        </div>
+
+                        <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase block mb-4 border-b border-white/20 pb-4 inline-block">03 / RESULTS</span>
+                        <h3 class="font-display text-3xl md:text-4xl font-medium text-lightText mb-6">Built for buyers who can't afford surprises.</h3>
+                        
+                        <div class="space-y-6">
+                            <p class="font-sans text-mutedText md:text-lightText/90 leading-relaxed text-lg font-light">
+                                Every step is on someone's desk — ours. From the first quote to the final delivery, you get one partner accountable for speed, quality, and transparency. That's what replaces the radar chart below with real numbers.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="w-full py-32 px-6 md:px-20 bg-darkBg border-t border-borderColor relative z-30">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-20 reveal-text text-center">
+                    <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase mb-4 block">Our Services</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-medium text-lightText">Every service. Boots on the ground.</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 reveal-text">
+                    
+                    <div class="service-grid-card group flex flex-col justify-start">
+                        <div class="card-number">01</div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <svg class="w-10 h-10 text-white mb-6 opacity-60 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.6 9h16.8M3.6 15h16.8M12 3v18" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c-2.4 0-4.5 4-4.5 9s2.1 9 4.5 9 4.5-4 4.5-9-2.1-9-4.5-9z" />
+                            </svg>
+                            <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Sourcing & Supplier Vetting</h3>
+                            <p class="font-sans text-mutedText font-light leading-relaxed text-sm">We find factories that match your specs, price point, and quality bar — then we walk through them in person before we recommend one.</p>
+                        </div>
+                    </div>
+
+                    <div class="service-grid-card group flex flex-col justify-start">
+                        <div class="card-number">02</div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <svg class="w-10 h-10 text-white mb-6 opacity-60 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">On-Site Quality Assurance</h3>
+                            <p class="font-sans text-mutedText font-light leading-relaxed text-sm">Factory audits, inline production checks, and pre-shipment inspection. We're physically there at every stage, so you don't have to be.</p>
+                        </div>
+                    </div>
+
+                    <div class="service-grid-card group flex flex-col justify-start">
+                        <div class="card-number">03</div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <svg class="w-10 h-10 text-white mb-6 opacity-60 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                            </svg>
+                            <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Product Development & Private Label</h3>
+                            <p class="font-sans text-mutedText font-light leading-relaxed text-sm">From spec sheet to first production run. We develop custom and white-label products that carry your brand the way you'd carry it yourself.</p>
+                        </div>
+                    </div>
+
+                    <div class="service-grid-card group flex flex-col justify-start">
+                        <div class="card-number">04</div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <svg class="w-10 h-10 text-white mb-6 opacity-60 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                            </svg>
+                            <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Import & Logistics</h3>
+                            <p class="font-sans text-mutedText font-light leading-relaxed text-sm">Shipping, customs, documentation. One partner from the factory floor in Asia to your warehouse door in the US.</p>
+                        </div>
+                    </div>
+
+                    <div class="service-grid-card group flex flex-col justify-start">
+                        <div class="card-number">05</div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <svg class="w-10 h-10 text-white mb-6 opacity-60 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                            </svg>
+                            <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Market Entry & Due Diligence</h3>
+                            <p class="font-sans text-mutedText font-light leading-relaxed text-sm">For brands expanding into Asia or evaluating a new region. On-the-ground research you can actually act on.</p>
+                        </div>
+                    </div>
+
+                    <div class="service-grid-card group flex flex-col justify-start">
+                        <div class="card-number">06</div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <svg class="w-10 h-10 text-white mb-6 opacity-60 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                            </svg>
+                            <h3 class="font-display text-2xl font-medium text-lightText mb-4 transition-colors">Sourcing Missions</h3>
+                            <p class="font-sans text-mutedText font-light leading-relaxed text-sm">The one-off, the niche, the urgent. When you need someone to fly in, get it done, and report back quickly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="w-full py-32 px-6 md:px-20 bg-darkBg border-t border-borderColor relative z-30">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16 reveal-text">
+                    <span class="text-white text-[10px] font-medium tracking-[0.3em] uppercase mb-4 block">Knowledge Base</span>
+                    <h2 class="font-display text-4xl font-medium text-lightText">Frequently Asked Questions</h2>
+                </div>
+                
+                <div class="border-t border-borderColor reveal-text" id="faq-list">
+                    <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
+                        <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
+                        <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
+                            <div class="flex justify-between items-center w-full">
+                                <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">What types of products do you source?</h3>
+                                <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
+                            </div>
+                            <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
+                                <p class="font-sans text-mutedText font-light leading-relaxed">We specialize in sourcing food items, raw materials, select industrial machinery, packaging, and related goods. If you’re looking for something specific, we’re happy to assist with custom sourcing missions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
+                        <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
+                        <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
+                            <div class="flex justify-between items-center w-full">
+                                <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">Which countries do you operate in?</h3>
+                                <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
+                            </div>
+                            <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
+                                <p class="font-sans text-mutedText font-light leading-relaxed">We have a presence in Bangkok, Hong Kong, Shanghai, and California, allowing us to facilitate trade across Asia, the Middle East, Europe, and North America.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
+                        <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
+                        <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
+                            <div class="flex justify-between items-center w-full">
+                                <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">Do you offer private label or OEM services?</h3>
+                                <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
+                            </div>
+                            <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
+                                <p class="font-sans text-mutedText font-light leading-relaxed">Yes. We help clients develop private-label products from design to packaging, working directly with factories to ensure quality and consistency.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
+                        <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
+                        <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
+                            <div class="flex justify-between items-center w-full">
+                                <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">Can you help with shipping and logistics?</h3>
+                                <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
+                            </div>
+                            <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
+                                <p class="font-sans text-mutedText font-light leading-relaxed">Absolutely. We coordinate air, sea, and land transport, and handle customs, documentation, and compliance to ensure your goods arrive smoothly.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
+                        <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
+                        <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
+                            <div class="flex justify-between items-center w-full">
+                                <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">Do you work with small businesses or only large companies?</h3>
+                                <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
+                            </div>
+                            <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
+                                <p class="font-sans text-mutedText font-light leading-relaxed">We work with businesses of all sizes. Whether you’re a startup, a boutique brand, or an established company, we tailor our services to fit your goals and scale.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
+                        <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
+                        <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
+                            <div class="flex justify-between items-center w-full">
+                                <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">What makes Namu different from other sourcing companies?</h3>
+                                <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
+                            </div>
+                            <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
+                                <p class="font-sans text-mutedText font-light leading-relaxed">We offer personalized, end-to-end service with transparency, flexibility, and a deep understanding of both product and market. Our network spans multiple industries and regions, allowing us to adapt quickly to your needs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="zen-accordion group cursor-pointer relative" onclick="toggleZenAccordion(this)">
+                        <div class="absolute top-1/2 -translate-y-1/2 right-10 p-6 opacity-0 group-hover:opacity-5 text-white text-8xl font-display font-medium transition-opacity duration-700">Q</div>
+                        <div class="flex flex-col h-full py-8 px-4 md:px-8 justify-between relative z-10">
+                            <div class="flex justify-between items-center w-full">
+                                <h3 class="zen-accordion-title font-display text-xl md:text-2xl font-light text-lightText pr-8">How do you guarantee the quality of the products you source?</h3>
+                                <span class="text-2xl font-light text-mutedText transition-transform duration-500 transform zen-accordion-icon">+</span>
+                            </div>
+                            <div class="zen-accordion-content mt-4 max-w-3xl pl-[15px]">
+                                <p class="font-sans text-mutedText font-light leading-relaxed">Quality control is built into our physical presence. We maintain dedicated, boots-on-the-ground teams who conduct in-person factory audits and rigorous pre-shipment inspections. We verify materials, oversee production runs, and check final packaging on-site to ensure the final product matches your exact specifications before it ever leaves the port.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="w-full pt-32 pb-12 px-6 md:px-20 bg-[#050505] border-t border-borderColor relative z-30 flex flex-col items-center">
+            <div class="max-w-4xl mx-auto w-full text-center reveal-text mb-24">
+                <span class="text-white text-[12px] font-bold tracking-[0.3em] uppercase mb-6 block">INITIATE</span>
+                <h2 class="font-display text-5xl md:text-7xl font-medium text-lightText mb-8 leading-[1.1]">
+                    Ready to source with someone who <i class="font-light text-white">shows up?</i>
+                </h2>
+                <p class="font-sans text-mutedText text-xl font-light mb-12 max-w-2xl mx-auto">
+                    Tell us what you're sourcing. We'll tell you what it takes to get it <span class="whitespace-nowrap">done right.</span>
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <a href="mailto:samy@consultnamu.com" class="inline-block bg-white text-black px-10 py-5 rounded-full font-sans font-medium text-sm tracking-widest uppercase hover:bg-gray-200 transition-colors shadow-lg shadow-white/10">
+                        Book a 20-minute call
+                    </a>
+                    <a href="mailto:samy@consultnamu.com" class="inline-block text-white hover:text-gray-300 transition-colors font-sans text-sm tracking-wider">
+                        Or email <span class="border-b border-white pb-[2px]">samy@consultnamu.com</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="w-full max-w-7xl mx-auto border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] font-sans tracking-[0.2em] uppercase text-mutedText gap-4">
+                <div>CA / SH / HK / BKK</div>
+                <div>© 2026 CONSULT NAMU. ALL RIGHTS RESERVED.</div>
+            </div>
+        </section>
+
+    </div> <div id="about-view" class="hidden w-full pt-32 pb-32 px-6 md:px-20 bg-darkBg relative z-30 min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <a href="#home" class="nav-link text-mutedText hover:text-white transition-colors text-sm font-sans tracking-widest uppercase mb-12 inline-block">← Back to Home</a>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-[11px] font-sans text-mutedText mt-24 pt-16 border-t border-borderColor reveal-text tracking-[0.15em] uppercase">
-                <div class="magnetic-trigger">
-                    <span class="block text-white mb-3 font-medium">THAILAND</span>
-                    <a href="tel:+66621099935" class="hover:text-white transition-colors inline-block">+66 6-2109-9935</a>
+            <div class="flex flex-col md:flex-row gap-12 items-start">
+                <div class="w-full md:w-1/3">
+                    <div class="aspect-square bg-surface border border-white/10 rounded-2xl overflow-hidden sticky top-32">
+                        <img src="assets/samy.jpeg" alt="Samy - Consult NAMU" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=500&auto=format&fit=crop'">
+                    </div>
                 </div>
-                <div class="magnetic-trigger">
-                    <span class="block text-white mb-3 font-medium">USA</span>
-                    <a href="tel:+14159006873" class="hover:text-white transition-colors inline-block">+1 415-900-6873</a>
-                </div>
-                <div>
-                    <span class="block text-white mb-3 font-medium">LOCATIONS</span>
-                    CA / SH / HK / BKK
+                
+                <div class="w-full md:w-2/3 space-y-12">
+                    <div>
+                        <h1 class="font-display text-4xl md:text-5xl font-medium text-lightText leading-[1.2] mb-6">
+                            Samy spent more than a decade working in the supply chains that move consumer goods from Asia to the US.
+                        </h1>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg mb-6">
+                            Bangkok. Hong Kong. Shanghai. Not on calls — in person, inside the factories.
+                        </p>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg mb-6">
+                            What he kept seeing: American retail and wholesale brands — some big, most mid-sized — getting burned by sourcing arrangements that looked good on paper. Agents who worked over email. Factories recommended by brokers who'd never set foot in them. Quality checks that happened (maybe) a few days before a container sailed, by someone the buyer had never met.
+                        </p>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg">
+                            The goods would land. And something would be off. Color, finish, stitching, print registration, packaging. Sometimes small things. Sometimes the kind of thing that cost a full PO.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h2 class="font-display text-2xl font-medium text-white mb-4">What Namu is</h2>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg mb-4">
+                            Namu is Samy's answer to that pattern. A sourcing and QA consultancy built around one non-negotiable: physical presence. In every facility. At every stage of production.
+                        </p>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg">
+                            Namu's target is American retail and wholesale brands sourcing printed and branded goods — apparel, promotional items, custom packaging, branded hardware. The work is the same whether the order is 5,000 units or 50,000: vet the supplier in person, approve the sample, audit the production line, inspect the finished goods, and sign off on the shipment before it moves.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h2 class="font-display text-2xl font-medium text-white mb-4">Why the four cities matter</h2>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg mb-4">
+                            Namu operates across Bangkok, Hong Kong, Shanghai, and California. Each location is deliberate.
+                        </p>
+                        <ul class="font-sans text-lightText/80 leading-relaxed font-light text-lg mb-4 space-y-2 list-disc pl-5">
+                            <li><strong class="font-medium text-white">Bangkok:</strong> apparel, soft goods, leather, and increasingly competitive on branded hardware as Thailand absorbs manufacturing moving out of China.</li>
+                            <li><strong class="font-medium text-white">Hong Kong:</strong> the financial and logistical hub — where deals get structured and shipments get coordinated.</li>
+                            <li><strong class="font-medium text-white">Shanghai:</strong> the industrial backbone for larger-volume runs, complex printing, and packaging.</li>
+                            <li><strong class="font-medium text-white">California:</strong> the US-side presence for client management, time zone coverage, and end-of-line quality verification.</li>
+                        </ul>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg">
+                            The point isn't the list of cities. The point is that at every choke point in your supply chain, there's a Namu person there in real time.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h2 class="font-display text-2xl font-medium text-white mb-4">How Samy works</h2>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg mb-4">
+                            Samy personally handles every client relationship. That's a feature, not a scaling limitation — Namu's value is that you get a real person who knows your product, your tolerances, and your timelines. Not a rotating account manager.
+                        </p>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg mb-4">
+                            Engagements typically start with a 20-minute discovery call. If Namu is the right fit for what you're sourcing, the next step is a sourcing brief — specs, quantity, target cost, timeline.
+                        </p>
+                        <p class="font-sans text-lightText/80 leading-relaxed font-light text-lg">
+                            From there: supplier identification, sample production, pricing negotiation, pre-production review, inline QA, and final inspection. One invoice. One point of contact. End to end.
+                        </p>
+                    </div>
+                    
+                    <div class="pt-8 border-t border-white/10 mt-12">
+                        <a href="#contact" class="nav-link inline-block bg-white text-black px-8 py-4 rounded-full font-sans font-medium text-sm tracking-wide hover:bg-gray-200 transition-colors">Work with Samy</a>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <footer class="mt-16 text-center text-[10px] text-gray-700 font-sans tracking-[0.3em] uppercase">
-            © 2024 CONSULT NAMU. ALL RIGHTS RESERVED.
-        </footer>
-    </section>
-
-    <script src="script.js"></script>
+    </div> <script src="script.js"></script>
 </body>
 </html>

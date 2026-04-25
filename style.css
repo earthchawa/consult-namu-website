@@ -2,39 +2,7 @@ body {
     background-color: #000000;
     color: #FFFFFF;
     overflow-x: hidden;
-    cursor: none;
-}
-
-/* Custom Cursor */
-.cursor-dot, .cursor-outline {
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    z-index: 9999;
-    pointer-events: none;
-}
-
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #FFFFFF;
-}
-
-.cursor-outline {
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
-}
-
-body:hover .cursor-outline.hovered {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: #FFFFFF;
-    backdrop-filter: blur(2px);
+    /* เอา cursor: none; ออกไปแล้ว เพื่อให้ใช้เมาส์ปกติของระบบ */
 }
 
 /* Scroll Thread */
@@ -57,17 +25,12 @@ body:hover .cursor-outline.hovered {
 .reveal-text {
     opacity: 0;
     transform: translateY(20px);
-    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .reveal-text.visible {
     opacity: 1;
     transform: translateY(0);
-}
-
-.hover-highlight:hover {
-    color: #FFFFFF;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Services Grid Cards */
@@ -79,34 +42,25 @@ body:hover .cursor-outline.hovered {
     padding: 2.5rem;
     position: relative;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-@media (min-width: 768px) {
-    .service-grid-card { width: calc(50% - 12px); }
-}
-
-@media (min-width: 1024px) {
-    .service-grid-card { width: calc(33.333% - 22px); }
+    transition: all 0.3s ease;
 }
 
 .service-grid-card:hover {
-    border-color: #FFFFFF;
-    transform: translateY(-8px);
-    background-color: #0a0a0a;
-    box-shadow: 0 10px 30px rgba(255,255,255,0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-4px); 
+    background-color: #080808;
 }
 
 .service-grid-card .card-number {
     position: absolute;
-    top: -1rem;
-    right: -1rem;
+    top: 1rem;
+    right: 1rem;
     font-family: 'Syne', sans-serif;
-    font-size: 8rem;
-    line-height: 1;
+    font-size: 5.5rem;
+    line-height: 0.8;
     color: #111111;
     z-index: 0;
-    transition: color 0.5s ease;
+    transition: color 0.3s ease;
 }
 
 .service-grid-card:hover .card-number {
@@ -156,10 +110,4 @@ body:hover .cursor-outline.hovered {
 .zen-accordion.active .zen-accordion-icon {
     transform: rotate(45deg);
     color: #FFFFFF;
-}
-
-/* Mobile Fixes */
-@media (hover: none) and (pointer: coarse) {
-    .cursor-dot, .cursor-outline { display: none !important; }
-    body { cursor: auto !important; }
 }

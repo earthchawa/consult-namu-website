@@ -36,3 +36,5 @@ Ready to source with someone who shows up? Connect with us:
 
 ---
 *Built for buyers who can't afford surprises.*
+
+*Designed & built by [Earth](https://earthcha.com)*

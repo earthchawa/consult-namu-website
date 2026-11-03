@@ -34,6 +34,13 @@ This website was crafted with a **"Black Minimalist"** design philosophy to refl
 * `dist/consultnamu-preview.zip` for `preview.consultnamu.com` (marked noindex)
 * `dist/consultnamu-live.zip` for `consultnamu.com`
 
+### Deploy (Plesk pulls these branches from GitHub)
+
+```sh
+./publish.sh preview   # preview.consultnamu.com
+./publish.sh live      # consultnamu.com, only after the client approves
+```
+
 
 
 ---

@@ -16,10 +16,11 @@
     sha: { lat: 31.23, lon: 121.47, name: 'Shanghai' },
     hkg: { lat: 22.32, lon: 114.17, name: 'Hong Kong' },
     lax: { lat: 34.05, lon: -118.24, name: 'Los Angeles' },
-    chi: { lat: 41.88, lon: -87.63 },
-    nyc: { lat: 40.71, lon: -74.01, name: 'New York' },
-    mia: { lat: 25.76, lon: -80.19 },
-    bos: { lat: 42.36, lon: -71.06 }
+    chi: { lat: 41.88, lon: -87.63, name: 'Chicago', at: 't' },
+    nyc: { lat: 40.71, lon: -74.01, name: 'New York', at: 'b' },
+    mia: { lat: 25.76, lon: -80.19, name: 'Miami' },
+    bos: { lat: 42.36, lon: -71.06, name: 'Boston' }
+    /* at: where the label sits next to the dot. r = right (default), l = left, t = above, b = below */
   };
   /* Each leg: from, to, start time and end time (seconds into the loop) */
   var LEGS = [
@@ -109,7 +110,7 @@
     var dot = new THREE.Mesh(new THREE.CircleGeometry(0.012, 20), new THREE.MeshBasicMaterial({ color: 0x8a8a8a, transparent: true }));
     var halo = new THREE.Mesh(new THREE.RingGeometry(0.018, 0.022, 32), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 }));
     [dot, halo].forEach(function (m) { m.position.copy(v); m.lookAt(v.clone().multiplyScalar(2)); spin.add(m); });
-    cities[k] = { v: v, dot: dot, halo: halo, lit: 0, name: p.name };
+    cities[k] = { v: v, dot: dot, halo: halo, lit: 0, name: p.name, at: p.at || 'r' };
   });
 
   /* ---------- Routes ---------- */
@@ -149,6 +150,7 @@
     if (!cities[k].name) return;
     var el = document.createElement('span');
     el.textContent = cities[k].name;
+    el.className = 'at-' + cities[k].at;
     labelBox.appendChild(el);
     cities[k].label = el;
   });
@@ -238,7 +240,8 @@
       var facing = tmp.clone().normalize().dot(camDir);
       tmp.project(camera);
       var x = (tmp.x * 0.5 + 0.5) * W, y = (-tmp.y * 0.5 + 0.5) * H;
-      c.label.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+      var shift = { r: '', l: ' translateX(-100%)', t: ' translate(-50%,-140%)', b: ' translate(-50%,120%)' }[c.at];
+      c.label.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)' + shift;
       c.label.style.opacity = facing > 0.25 ? (0.35 + 0.65 * c.lit) : 0;
     });
 

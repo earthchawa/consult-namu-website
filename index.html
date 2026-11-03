@@ -26,15 +26,14 @@
 </head>
 <body>
 
-<!-- ===================== HEADER (hides on scroll down, returns on scroll up) ===================== -->
-<header class="header" id="top">
+<!-- ===================== HEADER ===================== -->
+<header class="header">
   <div class="wrap">
     <a href="index.html" class="wordmark">CONSULT <em>NAMU</em></a>
     <nav class="nav" aria-label="Main">
       <a href="about.html">About</a>
       <a href="#services">Services</a>
       <a href="#agencies">Agencies</a>
-      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -42,53 +41,42 @@
 
 <main>
 
-<!-- ===================== 1. HERO ===================== -->
-<!-- Camera-style frame locks onto the headline, a scan line passes, then "Inspected on site" appears. -->
-<section class="hero-wrap" id="hero">
-  <div class="hero-dots" aria-hidden="true"></div>
-  <div class="hero-dots hero-dots-lit" aria-hidden="true"></div>
-
-  <div class="wrap hero">
-    <div class="label reveal">Sourcing · Production · On-site QA · Asia → US</div>
-    <div class="viewfinder" id="viewfinder">
-      <i class="vf tl"></i><i class="vf tr"></i><i class="vf bl"></i><i class="vf br"></i>
-      <span class="vf-scan" aria-hidden="true"></span>
-      <h1>Your eyes on the <em>ground.</em></h1>
-      <span class="vf-stamp" aria-hidden="true">✓ Inspected on site</span>
+<!-- ===================== 1. HERO + 3D GLOBE ===================== -->
+<!-- The globe is drawn by globe.js. Orders travel Asia → Hong Kong → Los Angeles → US cities. Drag to turn it. -->
+<section class="hero" id="hero">
+  <div class="globe" id="globe" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <h1 class="reveal">Your eyes on the <em>ground.</em></h1>
+      <p class="reveal">We source, produce and inspect your branded goods in Asia, and protect your brand before it ships.</p>
+      <div class="buttons reveal">
+        <a href="#contact" class="btn btn-solid">Book a sourcing call</a>
+        <a href="#how" class="btn btn-outline">How we work →</a>
+      </div>
     </div>
-    <p class="hero-line reveal">We source, produce and inspect your branded goods in Asia, and protect your brand before it ships.</p>
-    <div class="buttons reveal">
-      <a href="#contact" class="btn btn-solid">Book a sourcing call</a>
-      <a href="#compare" class="btn btn-outline">See how we check →</a>
-    </div>
-    <p class="small reveal">For American brands, and the agencies behind them</p>
+    <div class="route" aria-label="Route">Bangkok · Shanghai <span>→</span> Hong Kong <span>→</span> Los Angeles <span>→</span> Your door</div>
   </div>
-
-  <a href="#compare" class="scroll-cue" aria-label="Scroll down"><span></span></a>
 </section>
 
-<!-- ===================== 2. HOW WE CHECK: DRAG TO COMPARE ===================== -->
-<!-- The tote is an illustration only (not a real client order). Drag the handle to compare. -->
-<section id="compare" class="section">
-  <div class="wrap compare-grid">
-    <div class="compare-text">
-      <div class="label reveal">The Namu advantage</div>
+<!-- ===================== 2. HOW WE WORK + DRAG TO COMPARE ===================== -->
+<!-- The tote is an illustration only (not a real client order). -->
+<section id="how" class="section">
+  <div class="wrap how">
+    <div class="how-text">
+      <div class="label reveal">How we work</div>
       <h2 class="h2 reveal">Most sourcing happens in email threads. Ours happens on the <em>factory floor.</em></h2>
-
       <ol class="visit">
         <li class="reveal"><span class="num">01</span><div><h3>Samy goes to the factory</h3><p>In person, at every stage of production.</p></div></li>
         <li class="reveal"><span class="num">02</span><div><h3>Checks it against your sample</h3><p>Color, foil, placement, finish.</p></div></li>
         <li class="reveal"><span class="num">03</span><div><h3>Sends you samples if needed</h3><p>You approve before the full run ships.</p></div></li>
       </ol>
-
       <a href="about.html" class="founder reveal">
-        <img src="assets/samy.jpeg" alt="" width="56" height="56">
-        <span><strong>Samy, Founder</strong>10+ years on the ground across Asia. Read his story →</span>
+        <img src="assets/samy.jpeg" alt="" width="52" height="52">
+        <span><strong>Samy, Founder</strong>10+ years on the ground in Asia →</span>
       </a>
     </div>
 
     <figure class="compare reveal" id="compareBox" style="--pos: 50%">
-      <!-- Right side: the same order with nobody on the floor -->
       <div class="compare-layer compare-bad">
         <svg viewBox="0 0 400 440" aria-hidden="true">
           <path d="M140 120 C140 40 260 40 260 120" fill="none" stroke="#3B3F86" stroke-width="14"/>
@@ -104,9 +92,7 @@
           <text x="236" y="346" class="flag-txt" text-anchor="middle">WRONG FOIL · OFF-CENTER</text>
         </svg>
         <span class="compare-tag right">Nobody on the floor</span>
-        <span class="compare-result bad">Found at your warehouse</span>
       </div>
-      <!-- Left side: Samy checked it at the factory -->
       <div class="compare-layer compare-good">
         <svg viewBox="0 0 400 440" aria-hidden="true">
           <path d="M140 120 C140 40 260 40 260 120" fill="none" stroke="#1F2D5C" stroke-width="14"/>
@@ -117,8 +103,7 @@
             <text y="7" text-anchor="middle" font-family="Syne, sans-serif" font-size="20" font-weight="600" fill="#C9CBCE" letter-spacing="2">LOGO</text>
           </g>
         </svg>
-        <span class="compare-tag left">Samy on the floor</span>
-        <span class="compare-result good">✓ Matches your sample</span>
+        <span class="compare-tag left">✓ Samy on the floor</span>
       </div>
       <div class="compare-handle" aria-hidden="true"><span>⟷</span></div>
       <input type="range" min="0" max="100" value="50" class="compare-range" aria-label="Compare an order checked on the factory floor with one nobody checked">
@@ -127,159 +112,57 @@
   </div>
 </section>
 
-<!-- ===================== 3. MAP: SCROLL JOURNEY ===================== -->
-<!--
-  Scroll-driven map. While the visitor scrolls through this section the map stays on screen
-  and an order travels from Thailand & China, through Hong Kong, across the Pacific to US clients.
-  Needs journey.js (loaded at the bottom of this page) and the "3. Map" part of styles.css.
--->
-<section class="section">
-  <div class="wrap j-intro">
-    <div class="label reveal">Where we work</div>
-    <h2 class="h2 reveal">From the factory floor <em>to your door.</em></h2>
-    <p class="text">Someone we trust at every point between the factory and your warehouse.</p>
-    <div class="j-hint">
-      <svg width="12" height="16" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 1v13M1 9l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
-      Scroll to follow an order
+<!-- ===================== 3. SERVICES ===================== -->
+<section id="services" class="section">
+  <div class="wrap services">
+    <div class="svc svc-head reveal">
+      <div class="label">Services</div>
+      <h2 class="h2">Every service. Boots on the <em>ground.</em></h2>
     </div>
-  </div>
-
-  <div class="j-track" id="journey">
-    <div class="j-stage wrap">
-      <svg class="j-map" viewBox="0 0 1400 520" role="img" aria-label="Map of orders sourced in Thailand and China, coordinated in Hong Kong, shipped across the Pacific to Los Angeles, and delivered to Chicago, New York, Boston and Miami">
-        <defs>
-          <filter id="j-glow" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <filter id="j-soft" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
-          <radialGradient id="j-vignette" cx="50%" cy="50%" r="68%">
-            <stop offset="70%" stop-color="#0A0A0A" stop-opacity="0"/>
-            <stop offset="100%" stop-color="#0A0A0A" stop-opacity="1"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Dotted world map (drawn by journey.js) -->
-        <g id="j-matrix"></g>
-        <rect width="1400" height="520" fill="url(#j-vignette)"/>
-        <text class="j-pacific" x="820" y="470" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" letter-spacing="10" fill="#4A4A4A">PACIFIC OCEAN</text>
-
-        <!-- Route shapes (drawn by journey.js). Chosen so no two routes cross. -->
-        <g id="j-routes" data-d='{
-          "th":"M230 400 Q330 322 440 330",
-          "cn":"M520 190 Q448 214 440 330",
-          "pac":"M440 330 Q760 140 1030 300",
-          "f0":"M1030 300 Q1118 220 1220 200",
-          "f1":"M1030 300 Q1196 196 1360 168",
-          "f2":"M1030 300 Q1182 232 1335 215",
-          "f3":"M1030 300 Q1176 382 1300 385"}'></g>
-
-        <text class="j-region" id="j-rAsia" x="120" y="150" font-family="Inter, sans-serif" font-size="11" letter-spacing="6">ASIA</text>
-        <text class="j-region" id="j-rUS" x="1180" y="470" text-anchor="middle" font-family="Syne, sans-serif" font-size="16" font-weight="500" letter-spacing="6">UNITED STATES</text>
-
-        <!-- Sourcing: Thailand and China -->
-        <g class="j-node on" id="j-nTH" data-x="230" data-y="400">
-          <circle class="j-halo" cx="230" cy="400" r="6"/>
-          <circle class="j-ring" cx="230" cy="400" r="18"/>
-          <circle class="j-dot" cx="230" cy="400" r="6"/>
-          <text class="j-name" x="230" y="446" text-anchor="middle" font-family="Syne, sans-serif" font-size="18" font-weight="500" letter-spacing="3">THAILAND</text>
-          <text class="j-sub" x="230" y="468" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" letter-spacing="3">BANGKOK</text>
-        </g>
-        <g class="j-node on" id="j-nCN" data-x="520" data-y="190">
-          <circle class="j-halo" cx="520" cy="190" r="6"/>
-          <circle class="j-ring" cx="520" cy="190" r="18"/>
-          <circle class="j-dot" cx="520" cy="190" r="6"/>
-          <text class="j-name" x="548" y="176" font-family="Syne, sans-serif" font-size="18" font-weight="500" letter-spacing="3">CHINA</text>
-          <text class="j-sub" x="548" y="198" font-family="Inter, sans-serif" font-size="11" letter-spacing="3">SHANGHAI</text>
-        </g>
-        <!-- Coordination: Hong Kong -->
-        <g class="j-node" id="j-nHK" data-x="440" data-y="330">
-          <circle class="j-halo" cx="440" cy="330" r="6"/>
-          <circle class="j-ring" cx="440" cy="330" r="18"/>
-          <circle class="j-dot" cx="440" cy="330" r="6"/>
-          <text class="j-name" x="440" y="372" text-anchor="middle" font-family="Syne, sans-serif" font-size="18" font-weight="500" letter-spacing="3">HONG KONG</text>
-        </g>
-        <!-- United States -->
-        <g class="j-node" id="j-nLA" data-x="1030" data-y="300">
-          <circle class="j-halo" cx="1030" cy="300" r="6"/>
-          <circle class="j-ring" cx="1030" cy="300" r="16"/>
-          <circle class="j-dot" cx="1030" cy="300" r="6"/>
-          <text class="j-name" x="1030" y="340" text-anchor="middle" font-family="Syne, sans-serif" font-size="14" font-weight="500" letter-spacing="3">LOS ANGELES</text>
-        </g>
-        <g class="j-node j-dest" data-x="1220" data-y="200">
-          <circle class="j-halo" cx="1220" cy="200" r="5"/>
-          <circle class="j-dot" cx="1220" cy="200" r="5"/>
-          <text class="j-name" x="1214" y="182" text-anchor="middle" font-family="Syne, sans-serif" font-size="14" font-weight="500" letter-spacing="3">CHICAGO</text>
-        </g>
-        <g class="j-node j-dest" data-x="1360" data-y="168">
-          <circle class="j-halo" cx="1360" cy="168" r="5"/>
-          <circle class="j-dot" cx="1360" cy="168" r="5"/>
-          <text class="j-name" x="1360" y="146" text-anchor="middle" font-family="Syne, sans-serif" font-size="14" font-weight="500" letter-spacing="3">BOSTON</text>
-        </g>
-        <g class="j-node j-dest" data-x="1335" data-y="215">
-          <circle class="j-halo" cx="1335" cy="215" r="5"/>
-          <circle class="j-dot" cx="1335" cy="215" r="5"/>
-          <text class="j-name" x="1335" y="246" text-anchor="middle" font-family="Syne, sans-serif" font-size="14" font-weight="500" letter-spacing="3">NEW YORK</text>
-        </g>
-        <g class="j-node j-dest" data-x="1300" data-y="385">
-          <circle class="j-halo" cx="1300" cy="385" r="5"/>
-          <circle class="j-dot" cx="1300" cy="385" r="5"/>
-          <text class="j-name" x="1300" y="416" text-anchor="middle" font-family="Syne, sans-serif" font-size="14" font-weight="500" letter-spacing="3">MIAMI</text>
-        </g>
-
-        <g id="j-ships"></g>
-      </svg>
-
-      <!-- Step text. This is the version people see if JavaScript is off. -->
-      <div class="j-status" aria-live="polite">
-        <div class="j-step">
-          <div class="label" id="j-stepNo">Step 1 of 5</div>
-          <div class="j-city" id="j-stepCity">Thailand &amp; China</div>
-          <div class="j-what" id="j-stepWhat">Suppliers vetted in person. Samples approved.</div>
-        </div>
-        <div class="j-step j-side">
-          <div class="j-meter" id="j-meter"><span class="on"></span><span></span><span></span><span></span><span></span></div>
-          <div class="j-done" id="j-done">Inspected. Signed off. Delivered.</div>
-        </div>
-      </div>
+    <div class="svc reveal">
+      <div class="svc-top"><span class="num">01</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="14" cy="14" r="8"/><path d="M20 20l7 7"/></svg></div>
+      <h3>Sourcing &amp; Supplier Vetting</h3>
+      <p>Factories matched to your specs, walked through in person before we recommend one.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-top"><span class="num">02</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z"/><path d="M11 16l4 4 7-8"/></svg></div>
+      <h3>On-Site Quality Assurance</h3>
+      <p>Factory audits, inline checks and pre-shipment inspection.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-top"><span class="num">03</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4l12 6-12 6-12-6z"/><path d="M4 16l12 6 12-6"/><path d="M4 22l12 6 12-6"/></svg></div>
+      <h3>Product Development &amp; Private Label</h3>
+      <p>From spec sheet to first production run, carrying your brand.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-top"><span class="num">04</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="10" width="24" height="14"/><path d="M10 10v14M16 10v14M22 10v14"/></svg></div>
+      <h3>Import &amp; Logistics</h3>
+      <p>Shipping, customs and documents, with licensed partners.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-top"><span class="num">05</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 18l26-10-8 18-5-7z"/><path d="M16 19l13-11"/></svg></div>
+      <h3>Sourcing Missions</h3>
+      <p>The one-off, the niche, the urgent. We fly in and get it done.</p>
     </div>
   </div>
 </section>
 
-
-
-<!-- ===================== 4. STATS (two only) ===================== -->
-<section class="stats-section">
-  <div class="wrap stats">
-    <div class="reveal"><div class="stat-big">Every order</div><div class="stat-small">Inspected before it ships</div></div>
-    <div class="reveal"><div class="stat-big"><span class="count" data-to="10">10</span>+ years</div><div class="stat-small">On the ground in Asia</div></div>
-  </div>
-</section>
-
-<!-- ===================== 5. SERVICES (click a row to open it) ===================== -->
-<section id="services" class="wrap services">
-  <div class="services-head">
-    <div class="label reveal">Our services</div>
-    <h2 class="h2 reveal">Every service. Boots on the <em>ground.</em></h2>
-  </div>
-  <div class="rows acc">
-    <div class="row reveal open"><button class="row-btn" aria-expanded="true"><span class="num">01</span><h3>Sourcing &amp; Supplier Vetting</h3><i class="plus"></i></button><div class="row-body"><p>We find factories that match your specs, price, and quality bar — then walk through them in person before we recommend one.</p></div></div>
-    <div class="row reveal"><button class="row-btn" aria-expanded="false"><span class="num">02</span><h3>On-Site Quality Assurance</h3><i class="plus"></i></button><div class="row-body"><p>Factory audits, inline checks, and pre-shipment inspection. We're there at every stage, so you don't have to be.</p></div></div>
-    <div class="row reveal"><button class="row-btn" aria-expanded="false"><span class="num">03</span><h3>Product Development &amp; Private Label</h3><i class="plus"></i></button><div class="row-body"><p>From spec sheet to first production run. Custom and white-label products that carry your brand the way you'd carry it yourself.</p></div></div>
-    <div class="row reveal"><button class="row-btn" aria-expanded="false"><span class="num">04</span><h3>Import &amp; Logistics</h3><i class="plus"></i></button><div class="row-body"><p>Shipping, customs, and documentation — coordinated with licensed partners. One contact from the factory floor to your warehouse door.</p></div></div>
-    <div class="row reveal"><button class="row-btn" aria-expanded="false"><span class="num">05</span><h3>Sourcing Missions</h3><i class="plus"></i></button><div class="row-body"><p>The one-off, the niche, the urgent. When you need someone to fly in, get it done, and report back.</p></div></div>
-  </div>
-</section>
-
-<!-- ===================== 6. FOR BRAND AGENCIES ===================== -->
+<!-- ===================== 4. FOR BRAND AGENCIES ===================== -->
 <section id="agencies" class="section agency-section">
-  <div class="wrap agency-simple">
+  <div class="wrap agency">
     <div class="agency-text">
       <div class="label reveal">For brand agencies</div>
       <h2 class="h2 reveal">Your designs, produced right. <em>Your client stays yours.</em></h2>
       <p class="text reveal">You design it. We match every spec in your file on the factory floor, and never contact your client without your OK.</p>
-      <a href="mailto:samy@consultnamu.com?subject=Agency%20partnership" class="btn btn-solid agency-btn reveal">Partner with us</a>
+      <a href="mailto:samy@consultnamu.com?subject=Agency%20partnership" class="btn btn-solid reveal">Partner with us</a>
     </div>
-
     <!-- Example only (not a real client order). Rows tick off one by one when it scrolls into view. -->
-    <figure class="spec spec-clean reveal" id="spec">
+    <figure class="spec reveal" id="spec">
       <div class="spec-row"><span class="spec-v"><i class="chip" style="background:#1F2D5C"></i>Pantone 2758 C</span><span class="spec-ok" data-ok="✓ Matched">Checking</span></div>
       <div class="spec-row"><span class="spec-v"><i class="chip" style="background:#A7A9AC"></i>Silver foil</span><span class="spec-ok" data-ok="✓ Matched">Checking</span></div>
       <div class="spec-row"><span class="spec-v">Logo placement</span><span class="spec-ok" data-ok="✓ Approved">Checking</span></div>
@@ -289,38 +172,30 @@
   </div>
 </section>
 
-<!-- ===================== 7. FAQ (click a question to open it) ===================== -->
+<!-- ===================== 5. FAQ (only what isn't said above) ===================== -->
 <section id="faq" class="section">
   <div class="wrap faq">
-    <div class="faq-head">
-      <div class="label reveal">FAQ</div>
-      <h2 class="h2 reveal">Good <em>questions.</em></h2>
-    </div>
-    <div class="faq-list acc">
+    <div class="label reveal">Questions</div>
+    <div class="faq-list">
       <div class="faq-item reveal">
-        <button class="row-btn" aria-expanded="false"><h3>What do you source?</h3><i class="plus"></i></button>
-        <div class="row-body"><p>Branded and printed goods — apparel, promotional items, custom packaging, and branded hardware. Need something specific? Ask about a sourcing mission.</p></div>
+        <h3>What do you source?</h3>
+        <p>Branded and printed goods: apparel, promotional items, custom packaging and branded hardware. Need something specific? Ask about a sourcing mission.</p>
       </div>
       <div class="faq-item reveal">
-        <button class="row-btn" aria-expanded="false"><h3>How do you handle quality?</h3><i class="plus"></i></button>
-        <div class="row-body"><p>By being physically present. We audit factories, approve samples, and inspect goods on the floor before they ship. One honest note: samples are often digitally printed, so color won't perfectly match production — that's why we run and approve test pieces with you before the full batch.</p></div>
+        <h3>Do you work with small businesses?</h3>
+        <p>Yes. Startup, boutique brand or established company, we tailor the work to your scale.</p>
       </div>
       <div class="faq-item reveal">
-        <button class="row-btn" aria-expanded="false"><h3>Do you work with small businesses?</h3><i class="plus"></i></button>
-        <div class="row-body"><p>Yes. Startup, boutique brand, or established company — we tailor the work to your scale.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="row-btn" aria-expanded="false"><h3>Do you work with brand agencies?</h3><i class="plus"></i></button>
-        <div class="row-body"><p>Yes, it's a big part of what we do. We act as your production partner: you own the design and the client relationship, we make sure what you designed is exactly what arrives.</p></div>
+        <h3>Will production match my sample's color?</h3>
+        <p>Samples are often digitally printed, so color won't match perfectly. That's why we run and approve test pieces with you before the full batch.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== 8. CONTACT ===================== -->
+<!-- ===================== 6. CONTACT ===================== -->
 <section id="contact" class="section">
   <div class="wrap contact">
-    <div class="label reveal">Get in touch</div>
     <h2 class="reveal">Ready to source with someone who <em>shows up?</em></h2>
     <p class="reveal">Tell us what you're sourcing. We'll tell you what it takes to get it done right.</p>
     <div class="buttons reveal">
@@ -342,12 +217,14 @@
   </div>
 </footer>
 
-<!-- Phones only: a "Book a call" bar that appears after the hero and hides at the contact section -->
+<!-- Phones only: a "Book a call" bar that appears after the hero -->
 <a href="mailto:samy@consultnamu.com?subject=Call%20request%20(homepage)" class="mobile-cta" id="mobileCta">Book a 20-minute call</a>
 
-<!-- Scroll journey map (section 3) -->
-<script src="journey.js" defer></script>
-<!-- Small effects: header, hero tabs, compare slider, open/close rows, spec ticks, fade-ins -->
+<!-- 3D globe: Three.js library, land dots, then the globe itself -->
+<script src="vendor/three.min.js" defer></script>
+<script src="globe-land.js" defer></script>
+<script src="globe.js" defer></script>
+<!-- Small effects: header, compare slider, spec ticks, fade-ins -->
 <script src="interactions.js" defer></script>
 
 </body>

@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Naim;Samy;;;
+FN:Samy Naim
+ORG:Consult Namu
+TITLE:Managing Director
+TEL;TYPE=CELL,VOICE,PREF:+14159006873
+TEL;TYPE=CELL:+66622109935
+TEL;TYPE=CELL:+8619705050378
+EMAIL;TYPE=WORK,INTERNET:samy@consultnamu.com
+URL:https://consultnamu.com
+X-SOCIALPROFILE;TYPE=instagram:https://instagram.com/consultnamu
+NOTE:US number is on WhatsApp.
+END:VCARD

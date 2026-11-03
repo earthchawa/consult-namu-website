@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Samy Naim | Consult NAMU</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta name="description" content="Contact Samy Naim, Managing Director at Consult Namu.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;600&display=swap">
+<style>
+:root {
+  --bg: #0A0A0A; --fg: #F5F5F5; --body: #C8C8C8; --muted: #8A8A8A; --line: #2A2A2A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased; }
+.page {
+  max-width: 440px; margin: 0 auto; min-height: 100vh;
+  padding-block: 40px 36px;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 36px;
+}
+.wordmark { font-family: 'Syne', sans-serif; font-weight: 500; font-size: 18px; letter-spacing: -0.05em; color: var(--fg); text-decoration: none; }
+.who { display: flex; flex-direction: column; gap: 10px; }
+.who h1 { margin: 0; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 44px; letter-spacing: -0.04em; line-height: 1; }
+.role { font-size: 15px; color: var(--body); }
+.line { font-size: 13px; color: var(--muted); }
+.links { display: flex; flex-direction: column; gap: 10px; }
+.btn, .links summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 56px; padding: 0 20px;
+  border: 1px solid #3A3A3A; color: var(--fg); text-decoration: none;
+  font-size: 15px; font-weight: 400; cursor: pointer; list-style: none;
+  transition: border-color .2s, background .2s;
+}
+.links summary::-webkit-details-marker { display: none; }
+.btn:hover, .links summary:hover { border-color: var(--fg); }
+.btn:focus-visible, .links summary:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.btn .hint, .links summary .hint { font-size: 12px; color: var(--muted); }
+.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); font-weight: 500; }
+.btn.primary .hint { color: #555555; }
+.btn.primary:hover { background: #FFFFFF; }
+details[open] summary { border-color: var(--fg); }
+.wechat-panel { border: 1px solid var(--fg); border-top: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.wechat-panel img, .wechat-placeholder { width: 200px; height: 200px; max-width: 100%; background: #FFFFFF; }
+.wechat-placeholder { display: flex; align-items: center; justify-content: center; padding: 16px; color: #555555; font-size: 12px; line-height: 1.5; }
+.wechat-panel p { margin: 0; font-size: 13px; color: var(--body); }
+.numbers { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.numbers a { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--fg); text-decoration: none; font-size: 15px; font-variant-numeric: tabular-nums; }
+.numbers a span:first-child { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; color: var(--muted); padding-top: 3px; }
+.label { font-size: 11px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+.foot { margin-top: auto; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); }
+.foot .tag { font-size: 9px; font-weight: 500; letter-spacing: 0.4em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<main class="page">
+  <a class="wordmark" href="https://consultnamu.com">CONSULT <em>NAMU</em></a>
+
+  <section class="who">
+    <h1>Samy Naim</h1>
+    <div class="role">Managing Director, Consult Namu</div>
+    <div class="line">Sourcing, production and on-site QA. Asia to the US.</div>
+  </section>
+
+  <nav class="links" aria-label="Contact Samy">
+    <!-- Downloads samy.vcf: all three numbers, email and website in one tap -->
+    <a class="btn primary" href="samy.vcf" download="Samy Naim - Consult Namu.vcf">Save my contact <span class="hint">All numbers + email</span></a>
+    <a class="btn" href="https://wa.me/14159006873">WhatsApp <span class="hint" aria-hidden="true">→</span></a>
+    <details>
+      <summary>WeChat <span class="hint">Show QR</span></summary>
+      <div class="wechat-panel">
+        <img src="assets/wechat-qr.png" alt="Samy's WeChat QR code" width="200" height="200">
+        <p>Open WeChat → Scan to add Samy</p>
+      </div>
+    </details>
+    <a class="btn" href="https://instagram.com/consultnamu">Instagram <span class="hint">@consultnamu</span></a>
+    <a class="btn" href="mailto:samy@consultnamu.com?subject=Hello%20from%20your%20card">Email <span class="hint">samy@consultnamu.com</span></a>
+    <a class="btn" href="https://consultnamu.com">Website <span class="hint">consultnamu.com</span></a>
+  </nav>
+
+  <section aria-label="Phone numbers">
+    <div class="label" style="margin-bottom: 12px">Call or text</div>
+    <div class="numbers">
+      <a href="tel:+14159006873"><span>US</span><span>+1 415 900 6873</span></a>
+      <a href="tel:+66622109935"><span>TH</span><span>+66 62 210 9935</span></a>
+      <a href="tel:+8619705050378"><span>CN</span><span>+86 197 0505 0378</span></a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span class="tag">Boots on the ground sourcing</span>
+    <span>Bangkok · Hong Kong · Shanghai · California</span>
+  </footer>
+</main>
+
+</body>
+</html>

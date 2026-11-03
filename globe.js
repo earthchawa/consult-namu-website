@@ -80,7 +80,8 @@
   }
   var ocGeo = new THREE.BufferGeometry();
   ocGeo.setAttribute('position', new THREE.BufferAttribute(oc, 3));
-  spin.add(new THREE.Points(ocGeo, new THREE.PointsMaterial({
+  var ocMat;
+  spin.add(new THREE.Points(ocGeo, ocMat = new THREE.PointsMaterial({
     size: 0.016, map: dotTex, color: 0x232323, transparent: true, alphaTest: 0.3, sizeAttenuation: true
   })));
 
@@ -92,7 +93,8 @@
   }
   var landGeo = new THREE.BufferGeometry();
   landGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  spin.add(new THREE.Points(landGeo, new THREE.PointsMaterial({
+  var landMat;
+  spin.add(new THREE.Points(landGeo, landMat = new THREE.PointsMaterial({
     size: 0.034, map: dotTex, color: 0x8c8c8c, transparent: true, alphaTest: 0.3, sizeAttenuation: true
   })));
 
@@ -158,6 +160,9 @@
     renderer.setSize(W, H, false);
     camera.aspect = W / H;
     camera.updateProjectionMatrix();
+    /* Small screens: slightly bigger dots so the continents still read */
+    var k = Math.min(1.7, Math.max(1, 640 / H));
+    landMat.size = 0.034 * k; ocMat.size = 0.016 * k;
   }
   window.addEventListener('resize', resize);
   resize();

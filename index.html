@@ -43,49 +43,43 @@
 <main>
 
 <!-- ===================== 1. HERO ===================== -->
-<!-- Dot grid lights up around the cursor. The two tabs change the line and button for brands or agencies. -->
+<!-- Camera-style frame locks onto the headline, a scan line passes, then "Inspected on site" appears. -->
 <section class="hero-wrap" id="hero">
   <div class="hero-dots" aria-hidden="true"></div>
   <div class="hero-dots hero-dots-lit" aria-hidden="true"></div>
 
   <div class="wrap hero">
     <div class="label reveal">Sourcing · Production · On-site QA · Asia → US</div>
-    <h1 class="reveal">Your eyes on the <em>ground.</em></h1>
-
-    <div class="audience reveal" role="tablist" aria-label="Who are you?">
-      <button role="tab" aria-selected="true" data-aud="brand">I'm a brand</button>
-      <button role="tab" aria-selected="false" data-aud="agency">I'm an agency</button>
+    <div class="viewfinder" id="viewfinder">
+      <i class="vf tl"></i><i class="vf tr"></i><i class="vf bl"></i><i class="vf br"></i>
+      <span class="vf-scan" aria-hidden="true"></span>
+      <h1>Your eyes on the <em>ground.</em></h1>
+      <span class="vf-stamp" aria-hidden="true">✓ Inspected on site</span>
     </div>
-
-    <p class="hero-line reveal" id="heroLine"
-       data-brand="We source, produce and inspect your branded goods in Asia, and protect your brand before it ships."
-       data-agency="You design the merch and packaging. We get it made to spec, and your client stays yours.">We source, produce and inspect your branded goods in Asia, and protect your brand before it ships.</p>
-
+    <p class="hero-line reveal">We source, produce and inspect your branded goods in Asia, and protect your brand before it ships.</p>
     <div class="buttons reveal">
-      <a href="mailto:samy@consultnamu.com?subject=Call%20request%20(homepage)" class="btn btn-solid" id="heroCta"
-         data-brand-text="Book a sourcing call" data-brand-href="mailto:samy@consultnamu.com?subject=Call%20request%20(homepage)"
-         data-agency-text="Partner with us" data-agency-href="mailto:samy@consultnamu.com?subject=Agency%20partnership">Book a sourcing call</a>
-      <a href="#compare" class="btn btn-outline">See what we catch →</a>
+      <a href="#contact" class="btn btn-solid">Book a sourcing call</a>
+      <a href="#compare" class="btn btn-outline">See how we check →</a>
     </div>
+    <p class="small reveal">For American brands, and the agencies behind them</p>
   </div>
 
   <a href="#compare" class="scroll-cue" aria-label="Scroll down"><span></span></a>
 </section>
 
-<!-- ===================== 2. THE PROBLEM: DRAG TO COMPARE ===================== -->
-<!-- Illustration only (not a real client order). Drag the handle to compare. -->
+<!-- ===================== 2. HOW WE CHECK: DRAG TO COMPARE ===================== -->
+<!-- The tote is an illustration only (not a real client order). Drag the handle to compare. -->
 <section id="compare" class="section">
   <div class="wrap compare-grid">
     <div class="compare-text">
       <div class="label reveal">The Namu advantage</div>
       <h2 class="h2 reveal">Most sourcing happens in email threads. Ours happens on the <em>factory floor.</em></h2>
-      <p class="text reveal">The sample looked right on your screen. Then the container lands.</p>
 
-      <ul class="catch-list reveal">
-        <li><span>Color</span>Off-shade navy</li>
-        <li><span>Foil</span>Gold instead of silver</li>
-        <li><span>Placement</span>Drifted off-center</li>
-      </ul>
+      <ol class="visit">
+        <li class="reveal"><span class="num">01</span><div><h3>Samy goes to the factory</h3><p>In person, at every stage of production.</p></div></li>
+        <li class="reveal"><span class="num">02</span><div><h3>Checks it against your sample</h3><p>Color, foil, placement, finish.</p></div></li>
+        <li class="reveal"><span class="num">03</span><div><h3>Sends you samples if needed</h3><p>You approve before the full run ships.</p></div></li>
+      </ol>
 
       <a href="about.html" class="founder reveal">
         <img src="assets/samy.jpeg" alt="" width="56" height="56">
@@ -94,22 +88,25 @@
     </div>
 
     <figure class="compare reveal" id="compareBox" style="--pos: 50%">
-      <!-- Right side: what landed without anyone on the floor -->
+      <!-- Right side: the same order with nobody on the floor -->
       <div class="compare-layer compare-bad">
         <svg viewBox="0 0 400 440" aria-hidden="true">
           <path d="M140 120 C140 40 260 40 260 120" fill="none" stroke="#3B3F86" stroke-width="14"/>
           <path d="M90 120 L310 120 L326 410 L74 410 Z" fill="#3B3F86"/>
           <path d="M98 132 L302 132 L316 398 L84 398 Z" fill="none" stroke="#56599E" stroke-width="1.4" stroke-dasharray="7 9"/>
-          <g transform="translate(232 262) rotate(6)">
+          <g transform="translate(236 266) rotate(7)">
             <circle r="34" fill="none" stroke="#C9A65A" stroke-width="3"/>
             <text y="7" text-anchor="middle" font-family="Syne, sans-serif" font-size="20" font-weight="600" fill="#C9A65A" letter-spacing="2">LOGO</text>
           </g>
-          <circle cx="232" cy="262" r="58" class="flag"/>
-          <circle cx="110" cy="180" r="26" class="flag"/>
+          <circle cx="236" cy="266" r="56" class="flag"/>
+          <circle cx="128" cy="190" r="24" class="flag"/>
+          <text x="128" y="152" class="flag-txt" text-anchor="middle">COLOR OFF</text>
+          <text x="236" y="346" class="flag-txt" text-anchor="middle">WRONG FOIL · OFF-CENTER</text>
         </svg>
-        <span class="compare-tag right">What landed</span>
+        <span class="compare-tag right">Nobody on the floor</span>
+        <span class="compare-result bad">Found at your warehouse</span>
       </div>
-      <!-- Left side: the approved sample -->
+      <!-- Left side: Samy checked it at the factory -->
       <div class="compare-layer compare-good">
         <svg viewBox="0 0 400 440" aria-hidden="true">
           <path d="M140 120 C140 40 260 40 260 120" fill="none" stroke="#1F2D5C" stroke-width="14"/>
@@ -120,11 +117,12 @@
             <text y="7" text-anchor="middle" font-family="Syne, sans-serif" font-size="20" font-weight="600" fill="#C9CBCE" letter-spacing="2">LOGO</text>
           </g>
         </svg>
-        <span class="compare-tag left">Approved sample</span>
+        <span class="compare-tag left">Samy on the floor</span>
+        <span class="compare-result good">✓ Matches your sample</span>
       </div>
       <div class="compare-handle" aria-hidden="true"><span>⟷</span></div>
-      <input type="range" min="0" max="100" value="50" class="compare-range" aria-label="Compare approved sample with what landed">
-      <figcaption>Drag to compare. We catch this on the floor, not at your warehouse.</figcaption>
+      <input type="range" min="0" max="100" value="50" class="compare-range" aria-label="Compare an order checked on the factory floor with one nobody checked">
+      <figcaption>Drag to compare. Same order, with and without someone on the floor.</figcaption>
     </figure>
   </div>
 </section>
@@ -247,17 +245,11 @@
 
 
 
-<!-- ===================== 4. STATS + WHAT WE SOURCE (moving strip) ===================== -->
+<!-- ===================== 4. STATS (two only) ===================== -->
 <section class="stats-section">
   <div class="wrap stats">
     <div class="reveal"><div class="stat-big">Every order</div><div class="stat-small">Inspected before it ships</div></div>
     <div class="reveal"><div class="stat-big"><span class="count" data-to="10">10</span>+ years</div><div class="stat-small">On the ground in Asia</div></div>
-  </div>
-  <div class="marquee" aria-label="What we source: apparel, promotional items, custom packaging, branded hardware, private label">
-    <div class="marquee-track" aria-hidden="true">
-      <span>Apparel</span><span>Promotional items</span><span>Custom packaging</span><span>Branded hardware</span><span>Private label</span>
-      <span>Apparel</span><span>Promotional items</span><span>Custom packaging</span><span>Branded hardware</span><span>Private label</span>
-    </div>
   </div>
 </section>
 
@@ -278,35 +270,22 @@
 
 <!-- ===================== 6. FOR BRAND AGENCIES ===================== -->
 <section id="agencies" class="section agency-section">
-  <div class="wrap agency">
-    <div class="agency-top">
-      <div class="agency-text">
-        <div class="label reveal">For brand agencies</div>
-        <h2 class="h2 reveal">Your designs, produced right. <em>Your client stays yours.</em></h2>
-        <p class="text reveal">You design it. We vet the factory, match every spec in your file, and check it on the floor before it ships.</p>
-        <a href="mailto:samy@consultnamu.com?subject=Agency%20partnership" class="btn btn-solid agency-btn reveal">Partner with us</a>
-      </div>
-
-      <!-- Example spec sheet (illustrative values, not a real client order). Rows tick off one by one when it scrolls into view. -->
-      <figure class="spec reveal" id="spec">
-        <div class="spec-head">
-          <div class="spec-title">Spec check</div>
-          <div class="spec-tag">Example · Branded tote</div>
-        </div>
-        <div class="spec-row"><div><span class="spec-k">Body</span><span class="spec-v">12 oz cotton canvas</span></div><span class="spec-ok" data-ok="✓ Verified">Checking…</span></div>
-        <div class="spec-row"><div><span class="spec-k">Color</span><span class="spec-v"><i class="chip" style="background:#1F2D5C"></i>Pantone 2758 C navy</span></div><span class="spec-ok" data-ok="✓ Matched">Checking…</span></div>
-        <div class="spec-row"><div><span class="spec-k">Logo</span><span class="spec-v"><i class="chip" style="background:#A7A9AC"></i>Silver foil · Pantone 877 C</span></div><span class="spec-ok" data-ok="✓ Matched">Checking…</span></div>
-        <div class="spec-row"><div><span class="spec-k">Placement</span><span class="spec-v">Centered, front</span></div><span class="spec-ok" data-ok="✓ Approved">Checking…</span></div>
-        <div class="spec-row"><div><span class="spec-k">Quantity</span><span class="spec-v">3,000 units</span></div><span class="spec-ok" data-ok="✓ Inspected">Checking…</span></div>
-        <figcaption><span class="spec-stamp">Signed off</span> on the factory floor before shipping.</figcaption>
-      </figure>
+  <div class="wrap agency-simple">
+    <div class="agency-text">
+      <div class="label reveal">For brand agencies</div>
+      <h2 class="h2 reveal">Your designs, produced right. <em>Your client stays yours.</em></h2>
+      <p class="text reveal">You design it. We match every spec in your file on the factory floor, and never contact your client without your OK.</p>
+      <a href="mailto:samy@consultnamu.com?subject=Agency%20partnership" class="btn btn-solid agency-btn reveal">Partner with us</a>
     </div>
 
-    <div class="agency-points">
-      <div class="reveal"><h3>Spec-accurate</h3><p>Pantone, foil, stock and finish matched to your file.</p></div>
-      <div class="reveal"><h3>Your client stays yours</h3><p>We never contact your clients without your OK.</p></div>
-      <div class="reveal"><h3>One contact</h3><p>Samy handles your account personally. No hand-offs.</p></div>
-    </div>
+    <!-- Example only (not a real client order). Rows tick off one by one when it scrolls into view. -->
+    <figure class="spec spec-clean reveal" id="spec">
+      <div class="spec-row"><span class="spec-v"><i class="chip" style="background:#1F2D5C"></i>Pantone 2758 C</span><span class="spec-ok" data-ok="✓ Matched">Checking</span></div>
+      <div class="spec-row"><span class="spec-v"><i class="chip" style="background:#A7A9AC"></i>Silver foil</span><span class="spec-ok" data-ok="✓ Matched">Checking</span></div>
+      <div class="spec-row"><span class="spec-v">Logo placement</span><span class="spec-ok" data-ok="✓ Approved">Checking</span></div>
+      <div class="spec-row"><span class="spec-v">3,000 units</span><span class="spec-ok" data-ok="✓ Inspected">Checking</span></div>
+      <figcaption><span class="spec-stamp">Signed off</span> Example: branded tote</figcaption>
+    </figure>
   </div>
 </section>
 

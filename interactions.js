@@ -54,21 +54,31 @@
     hero.addEventListener('pointerleave', function () { lit.style.opacity = ''; });
   }
 
-  /* ---------- Hero: "I'm a brand" / "I'm an agency" ---------- */
-  var line = $('#heroLine'), heroCta = $('#heroCta');
-  $$('.audience button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var aud = b.dataset.aud;
-      $$('.audience button').forEach(function (x) { x.setAttribute('aria-selected', x === b); });
-      line.classList.add('swap');
-      setTimeout(function () {
-        line.textContent = line.dataset[aud];
-        heroCta.textContent = heroCta.dataset[aud + 'Text'];
-        heroCta.href = heroCta.dataset[aud + 'Href'];
-        line.classList.remove('swap');
-      }, reduce ? 0 : 180);
+  /* ---------- Hero: camera frame drifts slightly with the cursor ---------- */
+  var vf = $('#viewfinder');
+  if (hero && vf && !reduce) {
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect();
+      var dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+      vf.style.transform = 'translate(' + (dx * 14).toFixed(1) + 'px,' + (dy * 10).toFixed(1) + 'px)';
     });
-  });
+    hero.addEventListener('pointerleave', function () { vf.style.transform = ''; });
+  }
+
+  /* ---------- About page: line fills as you scroll through the steps ---------- */
+  var tl = $('.timeline');
+  if (tl) {
+    var tItems = $$('li', tl);
+    function fill() {
+      var r = tl.getBoundingClientRect(), vh = window.innerHeight;
+      var p = Math.min(1, Math.max(0, (vh * 0.75 - r.top) / (r.height || 1)));
+      tl.style.setProperty('--fill', reduce ? 1 : p);
+      tItems.forEach(function (li, i) { li.classList.toggle('lit', reduce || p >= (i + 0.3) / tItems.length); });
+    }
+    window.addEventListener('scroll', fill, { passive: true });
+    window.addEventListener('resize', fill);
+    fill();
+  }
 
   /* ---------- Drag to compare ---------- */
   var box = $('#compareBox');

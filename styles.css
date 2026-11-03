@@ -1,0 +1,296 @@
+/* =========================================================
+   CONSULT NAMU — shared styles for index.html and about.html
+   Colors and fonts are the brand. Please don't change them.
+   ========================================================= */
+
+/* ---------- Brand colors ---------- */
+:root {
+  --black: #0A0A0A;      /* page background */
+  --white: #F5F5F5;      /* headings, buttons */
+  --body: #C8C8C8;       /* paragraph text */
+  --muted: #8A8A8A;      /* small labels */
+  --faint: #6B6B6B;      /* numbers, placeholders */
+  --line: #2A2A2A;       /* thin divider lines */
+  --max: 1200px;         /* content width */
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--white); }
+img { max-width: 100%; display: block; }
+h1, h2, h3 { margin: 0; font-family: 'Syne', sans-serif; font-weight: 500; }
+p { margin: 0; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+.section { border-top: 1px solid var(--line); }
+
+/* Small uppercase label above headings */
+.label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* Section headings */
+.h2 { font-size: clamp(32px, 4vw, 52px); line-height: 1.1; letter-spacing: -0.03em; }
+.h2-sm { font-size: clamp(28px, 3vw, 40px); line-height: 1.1; letter-spacing: -0.03em; }
+.text { font-size: 17px; line-height: 1.7; color: var(--body); }
+
+/* ---------- Wordmark: CONSULT NAMU (NAMU in italics) ---------- */
+.wordmark {
+  font-family: 'Syne', sans-serif; font-weight: 500; font-size: 22px;
+  letter-spacing: -0.05em; text-decoration: none; color: var(--white);
+}
+
+/* ---------- Header / navigation ---------- */
+.header { border-bottom: 1px solid var(--line); }
+.header .wrap {
+  padding-top: 28px; padding-bottom: 28px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+}
+.nav { display: flex; flex-wrap: wrap; gap: 32px; }
+.nav a {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
+  text-decoration: none; color: #A3A3A3;
+}
+.nav a:hover { color: var(--white); }
+
+/* ---------- Buttons ---------- */
+.buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.btn {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 32px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  text-decoration: none; transition: opacity .2s;
+}
+.btn:hover { opacity: .8; }
+.btn-solid { background: var(--white); color: var(--black); }
+.btn-outline { border: 1px solid var(--white); color: var(--white); }
+.btn-email { letter-spacing: 0.1em; text-transform: none; }
+.link-arrow {
+  align-self: flex-start; padding-bottom: 4px; border-bottom: 1px solid var(--white);
+  font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+}
+
+/* ---------- 1. Hero ---------- */
+.hero {
+  padding-top: 160px; padding-bottom: 180px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px;
+}
+.hero h1 { font-size: clamp(48px, 8vw, 104px); line-height: 1; letter-spacing: -0.04em; }
+.hero p { max-width: 560px; font-size: 18px; line-height: 1.6; color: var(--body); }
+.hero .small { font-size: 12px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--body); margin-top: 16px; }
+
+/* ---------- Two-column blocks (text + photo) ---------- */
+.split {
+  padding-top: 140px; padding-bottom: 140px;
+  display: flex; flex-wrap: wrap; gap: 80px; align-items: center;
+}
+.split-text { flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
+.split-photo { flex: 1 1 340px; min-width: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+.split-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--line); }
+.split-photo figcaption { font-size: 13px; color: var(--muted); }
+
+/* ---------- 3. Map: scroll journey ("Where we work") ---------- */
+/* Works with journey.js. The section's height decides how much scrolling the journey takes. */
+.j-intro {
+  padding-top: 140px; padding-bottom: 56px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px;
+}
+.j-intro .text { max-width: 520px; }
+.j-hint {
+  display: flex; align-items: center; gap: 10px; margin-top: 8px;
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted);
+}
+.j-hint svg { animation: j-nudge 1.8s ease-in-out infinite; }
+@keyframes j-nudge { 50% { transform: translateY(5px); } }
+
+.j-track { height: 300vh; position: relative; }
+.j-stage {
+  position: sticky; top: 0; height: 100vh; min-height: 540px; max-width: 1440px;
+  display: flex; flex-direction: column; justify-content: center; gap: 28px;
+}
+.j-map { width: 100%; height: auto; max-height: 70vh; display: block; overflow: visible; }
+
+.j-status {
+  display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px 32px;
+  max-width: 1152px; width: 100%; margin: 0 auto; padding-top: 24px; border-top: 1px solid var(--line);
+}
+.j-step { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.j-side { align-items: flex-end; }
+.j-city { font-family: 'Syne', sans-serif; font-weight: 500; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; }
+.j-what { font-size: 15px; line-height: 1.5; color: var(--body); }
+.j-meter { display: flex; gap: 6px; }
+.j-meter span { width: 28px; height: 2px; background: var(--line); transition: background .3s; }
+.j-meter span.on { background: var(--white); }
+.j-done {
+  font-family: 'Syne', sans-serif; font-size: 22px; letter-spacing: -0.01em;
+  opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s;
+}
+.j-done.on { opacity: 1; transform: none; }
+
+/* Dotted world map */
+.j-land { fill: #383838; transition: fill .8s; }
+.j-sea { fill: #181818; }
+.j-land.lit { fill: #6E6E6E; }
+
+/* Routes */
+.j-leg { transition: opacity .6s; }
+.j-leg.past { opacity: .45; }
+.j-comet { opacity: 0; }
+
+/* Places */
+.j-dot { fill: #3A3A3A; transition: fill .5s; }
+.j-ring { fill: none; stroke: var(--white); stroke-width: 1; opacity: 0; transition: opacity .5s; }
+.j-halo { fill: none; stroke: #FFFFFF; stroke-width: 1; opacity: 0; }
+.j-name { fill: #555555; transition: fill .5s; }
+.j-sub { fill: #444444; transition: fill .5s; }
+.j-node.on .j-dot { fill: #FFFFFF; }
+.j-node.on .j-ring { opacity: .45; }
+.j-node.on .j-name { fill: var(--white); }
+.j-node.on .j-sub { fill: var(--muted); }
+.j-node.on .j-halo { animation: j-halo 1.4s ease-out 1; }
+@keyframes j-halo { 0% { opacity: .6; r: 6; } 100% { opacity: 0; r: 40; } }
+.j-node.check .j-ring { opacity: .9; stroke-dasharray: 3 4; animation: j-spin 6s linear infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes j-spin { to { transform: rotate(360deg); } }
+.j-region { fill: #3A3A3A; transition: fill .6s; }
+.j-region.on { fill: var(--muted); }
+
+/* Phones: taller map; journey.js zooms in and follows the shipment */
+@media (max-width: 640px) {
+  .j-intro { padding-top: 90px; padding-bottom: 40px; }
+  .j-stage { gap: 20px; }
+  .j-map { height: 56vh; max-height: none; }
+  .j-status { flex-direction: column; }
+  .j-side { align-items: flex-start; }
+  .j-region { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .j-hint svg, .j-node.check .j-ring, .j-node.on .j-halo { animation: none; }
+  .j-land, .j-leg, .j-dot, .j-ring, .j-name, .j-sub, .j-region, .j-done, .j-meter span { transition: none; }
+}
+
+/* ---------- 4. Stats ---------- */
+.stats-section { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stats {
+  padding-top: 72px; padding-bottom: 72px; text-align: center;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 48px;
+}
+.stat-big { font-family: 'Syne', sans-serif; font-weight: 500; font-size: 48px; letter-spacing: -0.04em; margin-bottom: 12px; }
+.stat-small { font-size: 11px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- 5. Services list ---------- */
+.services { padding-top: 140px; padding-bottom: 140px; display: flex; flex-direction: column; gap: 56px; }
+.services-head { display: flex; flex-direction: column; gap: 20px; }
+.rows { border-top: 1px solid var(--line); }
+.row {
+  display: flex; flex-wrap: wrap; gap: 16px 48px; padding: 32px 0; border-bottom: 1px solid var(--line);
+}
+.row .num { flex: 0 0 48px; font-family: 'Syne', sans-serif; font-size: 14px; color: var(--faint); }
+.row h3 { flex: 1 1 280px; font-size: 24px; letter-spacing: -0.02em; }
+.row p { flex: 2 1 400px; font-size: 16px; line-height: 1.65; color: var(--body); }
+
+/* ---------- 6. For brand agencies ---------- */
+.agency-section { background: #0E0E0E; }
+.agency { padding-top: 140px; padding-bottom: 140px; display: flex; flex-direction: column; gap: 72px; }
+.agency-top { display: flex; flex-wrap: wrap; gap: 64px; align-items: center; }
+.agency-text { flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
+.agency-btn { align-self: flex-start; }
+
+.spec { flex: 0 1 430px; min-width: 0; margin: 0; border: 1px solid var(--line); background: var(--black); }
+.spec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+.spec-title { white-space: nowrap; font-family: 'Syne', sans-serif; font-weight: 500; font-size: 18px; letter-spacing: -0.01em; }
+.spec-tag { white-space: nowrap; font-size: 10px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+.spec-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 24px; border-bottom: 1px solid #1E1E1E; }
+.spec-row:last-of-type { border-bottom: 0; }
+.spec-row > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.spec-k { font-size: 10px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); }
+.spec-v { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+.chip { width: 14px; height: 14px; flex: 0 0 auto; border: 1px solid #4A4A4A; }
+.spec-ok { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
+.spec figcaption { padding: 16px 24px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+
+.agency-points {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px;
+  border-top: 1px solid var(--line); padding-top: 40px;
+}
+.agency-points h3 { font-size: 20px; letter-spacing: -0.02em; margin-bottom: 10px; }
+.agency-points p { font-size: 15px; line-height: 1.6; color: var(--body); }
+
+/* ---------- 7. FAQ ---------- */
+.faq { padding-top: 140px; padding-bottom: 140px; display: flex; flex-wrap: wrap; gap: 64px; }
+.faq-head { flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.faq-list { flex: 2 1 520px; min-width: 0; border-top: 1px solid var(--line); }
+.faq-item { padding: 32px 0; border-bottom: 1px solid var(--line); }
+.faq-item h3 { font-size: 20px; letter-spacing: -0.02em; margin-bottom: 12px; }
+.faq-item p { font-size: 16px; line-height: 1.65; color: var(--body); }
+
+/* ---------- 7. Contact ---------- */
+.contact {
+  padding-top: 160px; padding-bottom: 160px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px;
+}
+.contact h2 { font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.03em; }
+.contact p { max-width: 520px; font-size: 17px; line-height: 1.65; color: var(--body); }
+
+/* ---------- Footer ---------- */
+.footer { border-top: 1px solid var(--line); }
+.footer .wrap {
+  padding-top: 56px; padding-bottom: 56px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+}
+.footer .wordmark { font-size: 20px; }
+.tagline { font-size: 9px; font-weight: 500; letter-spacing: 0.4em; text-transform: uppercase; color: var(--muted); }
+.footer .info { font-size: 12px; color: var(--muted); line-height: 1.8; }
+.footer .copy { font-size: 11px; color: var(--faint); }
+
+/* =========================================================
+   ABOUT PAGE ONLY
+   ========================================================= */
+.about-hero h1 { font-size: clamp(34px, 4.4vw, 58px); line-height: 1.08; letter-spacing: -0.03em; }
+.about-hero p { font-size: 18px; line-height: 1.6; color: var(--body); }
+
+.two-col { padding-top: 130px; padding-bottom: 130px; display: flex; flex-wrap: wrap; gap: 64px; }
+.two-col .left { flex: 1 1 280px; min-width: 0; }
+.two-col .right { flex: 2 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+
+/* Big statement: "Samy personally handles every client relationship..." */
+.statement-section { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.statement {
+  max-width: 1000px; padding-top: 150px; padding-bottom: 150px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px;
+}
+.statement .big { font-family: 'Syne', sans-serif; font-weight: 500; font-size: clamp(30px, 4vw, 52px); line-height: 1.12; letter-spacing: -0.03em; }
+.statement .text { max-width: 620px; }
+
+/* Five steps */
+.steps-section { padding-top: 130px; padding-bottom: 130px; display: flex; flex-direction: column; gap: 56px; }
+.steps {
+  margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--white);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.steps li { padding: 28px 24px 0 0; display: flex; flex-direction: column; gap: 12px; }
+.steps .num { font-family: 'Syne', sans-serif; font-size: 14px; color: var(--faint); }
+.steps h3 { font-size: 20px; letter-spacing: -0.02em; }
+.steps p { font-size: 15px; line-height: 1.6; color: var(--body); }
+
+/* ---------- Phones ---------- */
+@media (max-width: 640px) {
+  .nav { gap: 10px 16px; }
+  .nav a { font-size: 10px; letter-spacing: 0.18em; }
+  .hero .btn { min-width: 250px; justify-content: center; }
+  .spec { flex-basis: 100%; }
+  .spec-head { flex-wrap: wrap; }
+  .hero { padding-top: 100px; padding-bottom: 110px; }
+  .split, .services, .faq, .contact, .two-col, .steps-section, .statement, .agency { padding-top: 90px; padding-bottom: 90px; }
+  .agency { gap: 48px; }
+  .spec-head, .spec-row, .spec figcaption { padding-left: 16px; padding-right: 16px; }
+  .steps li { padding-bottom: 20px; }
+}

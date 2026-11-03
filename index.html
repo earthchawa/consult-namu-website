@@ -34,6 +34,7 @@
       <a href="about.html">About</a>
       <a href="#services">Services</a>
       <a href="#agencies">Agencies</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -113,81 +114,110 @@
 </section>
 
 <!-- ===================== 3. SERVICES ===================== -->
+<!-- Scroll through the list: the panel on the left shows the service in view. -->
 <section id="services" class="section">
   <div class="wrap services">
-    <div class="svc svc-head reveal">
-      <div class="label">Services</div>
-      <h2 class="h2">Every service. Boots on the <em>ground.</em></h2>
+    <div class="svc-side">
+      <div class="label reveal">Services</div>
+      <h2 class="h2 reveal">Every service. Boots on the <em>ground.</em></h2>
+      <div class="svc-panel" aria-hidden="true">
+        <div class="svc-icon" id="svcIcon"></div>
+        <div class="svc-count"><span id="svcNum">01</span> / 05</div>
+        <div class="svc-ticks"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+      </div>
     </div>
-    <div class="svc reveal">
-      <div class="svc-top"><span class="num">01</span>
-        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="14" cy="14" r="8"/><path d="M20 20l7 7"/></svg></div>
-      <h3>Sourcing &amp; Supplier Vetting</h3>
-      <p>Factories matched to your specs, walked through in person before we recommend one.</p>
-    </div>
-    <div class="svc reveal">
-      <div class="svc-top"><span class="num">02</span>
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z"/><path d="M11 16l4 4 7-8"/></svg></div>
-      <h3>On-Site Quality Assurance</h3>
-      <p>Factory audits, inline checks and pre-shipment inspection.</p>
-    </div>
-    <div class="svc reveal">
-      <div class="svc-top"><span class="num">03</span>
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4l12 6-12 6-12-6z"/><path d="M4 16l12 6 12-6"/><path d="M4 22l12 6 12-6"/></svg></div>
-      <h3>Product Development &amp; Private Label</h3>
-      <p>From spec sheet to first production run, carrying your brand.</p>
-    </div>
-    <div class="svc reveal">
-      <div class="svc-top"><span class="num">04</span>
-        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="10" width="24" height="14"/><path d="M10 10v14M16 10v14M22 10v14"/></svg></div>
-      <h3>Import &amp; Logistics</h3>
-      <p>Shipping, customs and documents, with licensed partners.</p>
-    </div>
-    <div class="svc reveal">
-      <div class="svc-top"><span class="num">05</span>
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 18l26-10-8 18-5-7z"/><path d="M16 19l13-11"/></svg></div>
-      <h3>Sourcing Missions</h3>
-      <p>The one-off, the niche, the urgent. We fly in and get it done.</p>
-    </div>
+    <ol class="svc-list">
+      <li class="svc-item">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="14" cy="14" r="8"/><path d="M20 20l7 7"/></svg>
+        <span class="num">01</span>
+        <h3>Sourcing &amp; Supplier Vetting</h3>
+        <p>We find factories that match your specs, price, and quality bar — then walk through them in person before we recommend one.</p>
+      </li>
+      <li class="svc-item">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z"/><path d="M11 16l4 4 7-8"/></svg>
+        <span class="num">02</span>
+        <h3>On-Site Quality Assurance</h3>
+        <p>Factory audits, inline checks, and pre-shipment inspection. We're there at every stage, so you don't have to be.</p>
+      </li>
+      <li class="svc-item">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4l12 6-12 6-12-6z"/><path d="M4 16l12 6 12-6"/><path d="M4 22l12 6 12-6"/></svg>
+        <span class="num">03</span>
+        <h3>Product Development &amp; Private Label</h3>
+        <p>From spec sheet to first production run. Custom and white-label products that carry your brand the way you'd carry it yourself.</p>
+      </li>
+      <li class="svc-item">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="10" width="24" height="14"/><path d="M10 10v14M16 10v14M22 10v14"/></svg>
+        <span class="num">04</span>
+        <h3>Import &amp; Logistics</h3>
+        <p>Shipping, customs, and documentation — coordinated with licensed partners. One contact from the factory floor to your warehouse door.</p>
+      </li>
+      <li class="svc-item">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 18l26-10-8 18-5-7z"/><path d="M16 19l13-11"/></svg>
+        <span class="num">05</span>
+        <h3>Sourcing Missions</h3>
+        <p>The one-off, the niche, the urgent. When you need someone to fly in, get it done, and report back.</p>
+      </li>
+    </ol>
   </div>
 </section>
 
 <!-- ===================== 4. FOR BRAND AGENCIES ===================== -->
 <section id="agencies" class="section agency-section">
   <div class="wrap agency">
-    <div class="agency-text">
-      <div class="label reveal">For brand agencies</div>
-      <h2 class="h2 reveal">Your designs, produced right. <em>Your client stays yours.</em></h2>
-      <p class="text reveal">You design it. We match every spec in your file on the factory floor, and never contact your client without your OK.</p>
-      <a href="mailto:samy@consultnamu.com?subject=Agency%20partnership" class="btn btn-solid reveal">Partner with us</a>
+    <div class="agency-top">
+      <div class="agency-text">
+        <div class="label reveal">For brand agencies</div>
+        <h2 class="h2 reveal">Your designs, produced right. <em>Your client stays yours.</em></h2>
+        <p class="text reveal">You design the merch and the packaging. We get it made: we vet the factory, match every spec in your file, and check it on the floor before it ships. We work behind the scenes or alongside you, whichever suits the account.</p>
+        <a href="mailto:samy@consultnamu.com?subject=Agency%20partnership" class="btn btn-solid reveal">Partner with us</a>
+      </div>
+
+      <!-- Example spec sheet (illustrative values, not a real client order). Rows tick off one by one when it scrolls into view. -->
+      <figure class="spec reveal" id="spec">
+        <div class="spec-head">
+          <div class="spec-title">Spec check</div>
+          <div class="spec-tag">Example · Branded tote</div>
+        </div>
+        <div class="spec-row"><div><span class="spec-k">Body</span><span class="spec-v">12 oz cotton canvas</span></div><span class="spec-ok" data-ok="✓ Verified">Checking</span></div>
+        <div class="spec-row"><div><span class="spec-k">Color</span><span class="spec-v"><i class="chip" style="background:#1F2D5C"></i>Pantone 2758 C navy</span></div><span class="spec-ok" data-ok="✓ Matched">Checking</span></div>
+        <div class="spec-row"><div><span class="spec-k">Logo</span><span class="spec-v"><i class="chip" style="background:#A7A9AC"></i>Silver foil · Pantone 877 C</span></div><span class="spec-ok" data-ok="✓ Matched">Checking</span></div>
+        <div class="spec-row"><div><span class="spec-k">Placement</span><span class="spec-v">Centered, front</span></div><span class="spec-ok" data-ok="✓ Approved">Checking</span></div>
+        <div class="spec-row"><div><span class="spec-k">Quantity</span><span class="spec-v">3,000 units</span></div><span class="spec-ok" data-ok="✓ Inspected">Checking</span></div>
+        <figcaption><span class="spec-stamp">Signed off</span> on the factory floor before shipping.</figcaption>
+      </figure>
     </div>
-    <!-- Example only (not a real client order). Rows tick off one by one when it scrolls into view. -->
-    <figure class="spec reveal" id="spec">
-      <div class="spec-row"><span class="spec-v"><i class="chip" style="background:#1F2D5C"></i>Pantone 2758 C</span><span class="spec-ok" data-ok="✓ Matched">Checking</span></div>
-      <div class="spec-row"><span class="spec-v"><i class="chip" style="background:#A7A9AC"></i>Silver foil</span><span class="spec-ok" data-ok="✓ Matched">Checking</span></div>
-      <div class="spec-row"><span class="spec-v">Logo placement</span><span class="spec-ok" data-ok="✓ Approved">Checking</span></div>
-      <div class="spec-row"><span class="spec-v">3,000 units</span><span class="spec-ok" data-ok="✓ Inspected">Checking</span></div>
-      <figcaption><span class="spec-stamp">Signed off</span> Example: branded tote</figcaption>
-    </figure>
+
+    <div class="agency-points">
+      <div class="reveal"><h3>Spec-accurate</h3><p>Pantone, foil, stock and finish matched to your file. Test pieces approved with you before the full run.</p></div>
+      <div class="reveal"><h3>Your client stays yours</h3><p>We never contact your clients without your OK. You lead the account. We deliver behind you.</p></div>
+      <div class="reveal"><h3>One contact, start to finish</h3><p>Samy handles your account personally, from the first sample to the final box. No hand-offs.</p></div>
+    </div>
   </div>
 </section>
 
-<!-- ===================== 5. FAQ (only what isn't said above) ===================== -->
+<!-- ===================== 5. FAQ (click a question to open it) ===================== -->
 <section id="faq" class="section">
   <div class="wrap faq">
-    <div class="label reveal">Questions</div>
-    <div class="faq-list">
+    <div class="faq-head">
+      <div class="label reveal">FAQ</div>
+      <h2 class="h2 reveal">Good <em>questions.</em></h2>
+    </div>
+    <div class="faq-list acc">
       <div class="faq-item reveal">
-        <h3>What do you source?</h3>
-        <p>Branded and printed goods: apparel, promotional items, custom packaging and branded hardware. Need something specific? Ask about a sourcing mission.</p>
+        <button class="row-btn" aria-expanded="false"><h3>What do you source?</h3><i class="plus"></i></button>
+        <div class="row-body"><p>Branded and printed goods — apparel, promotional items, custom packaging, and branded hardware. Need something specific? Ask about a sourcing mission.</p></div>
       </div>
       <div class="faq-item reveal">
-        <h3>Do you work with small businesses?</h3>
-        <p>Yes. Startup, boutique brand or established company, we tailor the work to your scale.</p>
+        <button class="row-btn" aria-expanded="false"><h3>How do you handle quality?</h3><i class="plus"></i></button>
+        <div class="row-body"><p>By being physically present. We audit factories, approve samples, and inspect goods on the floor before they ship. One honest note: samples are often digitally printed, so color won't perfectly match production — that's why we run and approve test pieces with you before the full batch.</p></div>
       </div>
       <div class="faq-item reveal">
-        <h3>Will production match my sample's color?</h3>
-        <p>Samples are often digitally printed, so color won't match perfectly. That's why we run and approve test pieces with you before the full batch.</p>
+        <button class="row-btn" aria-expanded="false"><h3>Do you work with small businesses?</h3><i class="plus"></i></button>
+        <div class="row-body"><p>Yes. Startup, boutique brand, or established company — we tailor the work to your scale.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="row-btn" aria-expanded="false"><h3>Do you work with brand agencies?</h3><i class="plus"></i></button>
+        <div class="row-body"><p>Yes, it's a big part of what we do. We act as your production partner: you own the design and the client relationship, we make sure what you designed is exactly what arrives.</p></div>
       </div>
     </div>
   </div>

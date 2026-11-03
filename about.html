@@ -38,7 +38,7 @@
 
 <main>
 
-<!-- ===================== 1. WHO ===================== -->
+<!-- ===================== WHO ===================== -->
 <section class="wrap ab-hero">
   <div class="ab-hero-text">
     <div class="label reveal">About</div>
@@ -53,64 +53,65 @@
   </figure>
 </section>
 
-<!-- ===================== 2. WHAT HE KEPT SEEING (lines get crossed out) ===================== -->
-<section class="section">
-  <div class="wrap ab-block">
+<!-- ===================== THE STORY =====================
+     One line runs down the page like a shipping route.
+     Each chapter is a stop on it; the line fills as you scroll. -->
+<div class="wrap story" id="story">
+  <div class="story-line" aria-hidden="true"></div>
+
+  <!-- 01 -->
+  <article class="chapter">
+    <span class="stop" aria-hidden="true">01</span>
     <div class="label reveal">What he kept seeing</div>
-    <p class="ab-intro reveal">American brands getting burned by sourcing that looked good on paper.</p>
+    <p class="ch-lead reveal">American brands getting burned by sourcing that looked good on paper.</p>
     <ul class="strike-list">
       <li class="reveal"><span>Agents who worked over email.</span></li>
       <li class="reveal"><span>Factories picked by brokers who'd never set foot in them.</span></li>
       <li class="reveal"><span>Quality checks by someone the buyer had never met.</span></li>
     </ul>
-    <p class="ab-after reveal">The goods would land, and something would be off. Sometimes the kind of thing that costs a full PO.</p>
-  </div>
-</section>
+    <p class="ch-text reveal">The goods would land, and something would be off. Sometimes the kind of thing that costs a full PO.</p>
+  </article>
 
-<!-- ===================== 3. WHAT NAMU IS ===================== -->
-<section class="section">
-  <div class="wrap ab-block">
+  <!-- 02 -->
+  <article class="chapter">
+    <span class="stop" aria-hidden="true">02</span>
     <div class="label reveal">So he built Namu</div>
-    <h2 class="ab-big reveal">One non-negotiable: <em>physical presence.</em></h2>
-    <p class="ab-intro reveal">In every facility. At every stage of production.</p>
-  </div>
-</section>
+    <p class="ch-lead reveal">One non-negotiable: <em>physical presence.</em></p>
+    <p class="ch-text reveal">In every facility. At every stage of production.</p>
+  </article>
 
-<!-- ===================== 4. HOW SAMY WORKS (big statement) ===================== -->
-<!-- Keep this wording exactly as written. -->
-<section class="statement-section">
-  <div class="wrap statement">
+  <!-- 03: keep this wording exactly as written -->
+  <article class="chapter">
+    <span class="stop" aria-hidden="true">03</span>
     <div class="label reveal">How Samy works</div>
-    <p class="big reveal">Samy personally handles every client relationship. That's a feature, <em>not a scaling limitation</em></p>
-    <p class="text reveal">— Namu's value is that you get a real person who knows your product, your tolerances, and your timelines. Not a rotating account manager.</p>
-  </div>
-</section>
+    <p class="ch-lead reveal">Samy personally handles every client relationship. That's a feature, <em>not a scaling limitation</em></p>
+    <p class="ch-text reveal">— Namu's value is that you get a real person who knows your product, your tolerances, and your timelines. Not a rotating account manager.</p>
+  </article>
 
-<!-- ===================== 5. HOW AN ENGAGEMENT RUNS (line fills as you scroll) ===================== -->
-<section class="section">
-  <div class="wrap ab-block">
+  <!-- 04 -->
+  <article class="chapter">
+    <span class="stop" aria-hidden="true">04</span>
     <div class="label reveal">How an engagement runs</div>
-    <h2 class="h2-sm reveal">One invoice. One point of contact. <em>End to end.</em></h2>
-    <ol class="timeline">
-      <li><div class="num">01</div><h3>Discovery call</h3><p>Twenty minutes to see if Namu fits what you're sourcing.</p></li>
-      <li><div class="num">02</div><h3>Sourcing brief</h3><p>Specs, quantity, target cost, timeline.</p></li>
-      <li><div class="num">03</div><h3>Suppliers &amp; samples</h3><p>Supplier identification, sample production, pricing negotiation.</p></li>
-      <li><div class="num">04</div><h3>Production QA</h3><p>Pre-production review and inline checks on the floor.</p></li>
-      <li><div class="num">05</div><h3>Final inspection</h3><p>Signed off before the shipment moves.</p></li>
+    <p class="ch-lead reveal">One invoice. One point of contact. <em>End to end.</em></p>
+    <ol class="mini-stops">
+      <li class="reveal"><h3>Discovery call</h3><p>Twenty minutes to see if Namu fits what you're sourcing.</p></li>
+      <li class="reveal"><h3>Sourcing brief</h3><p>Specs, quantity, target cost, timeline.</p></li>
+      <li class="reveal"><h3>Suppliers &amp; samples</h3><p>Supplier identification, sample production, pricing negotiation.</p></li>
+      <li class="reveal"><h3>Production QA</h3><p>Pre-production review and inline checks on the floor.</p></li>
+      <li class="reveal"><h3>Final inspection</h3><p>Signed off before the shipment moves.</p></li>
     </ol>
-  </div>
-</section>
+  </article>
 
-<!-- ===================== 6. CALL TO ACTION ===================== -->
-<section id="contact" class="section">
-  <div class="wrap contact">
-    <h2 class="reveal">Work with <em>Samy.</em></h2>
+  <!-- Last stop -->
+  <article class="chapter chapter-end" id="contact">
+    <span class="stop stop-end" aria-hidden="true">✓</span>
+    <p class="ch-lead reveal">Work with <em>Samy.</em></p>
     <div class="buttons reveal">
       <a href="mailto:samy@consultnamu.com?subject=Call%20request%20(About%20page)" class="btn btn-solid">Book a 20-minute call</a>
       <a href="mailto:samy@consultnamu.com?subject=Website%20inquiry" class="btn btn-outline btn-email">samy@consultnamu.com</a>
     </div>
-  </div>
-</section>
+  </article>
+</div>
 
 </main>
 

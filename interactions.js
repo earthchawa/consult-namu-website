@@ -89,18 +89,50 @@
     }
   }
 
-  /* ---------- About page: line fills as you scroll through the steps ---------- */
-  var tl = $('.timeline');
-  if (tl) {
-    var items = $$('li', tl);
-    function fill() {
-      var r = tl.getBoundingClientRect(), vh = window.innerHeight;
-      var p = reduce ? 1 : Math.min(1, Math.max(0, (vh * 0.7 - r.top) / (r.height || 1)));
-      tl.style.setProperty('--fill', p);
-      items.forEach(function (li, i) { li.classList.toggle('lit', p >= (i + 0.2) / items.length); });
+  /* ---------- Services: panel shows the service in the middle of the screen ---------- */
+  var svcItems = $$('.svc-item'), svcIcon = $('#svcIcon'), svcNum = $('#svcNum'), ticks = $$('.svc-ticks i');
+  function setSvc(i) {
+    svcItems.forEach(function (it, k) { it.classList.toggle('active', k === i); });
+    ticks.forEach(function (t, k) { t.classList.toggle('on', k <= i); });
+    if (svcNum) svcNum.textContent = ('0' + (i + 1)).slice(-2);
+    if (svcIcon) svcIcon.innerHTML = $('svg', svcItems[i]).outerHTML;
+  }
+  if (svcItems.length) {
+    setSvc(0);
+    if (hasIO) {
+      var sio = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) setSvc(svcItems.indexOf(e.target)); });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      svcItems.forEach(function (it) { sio.observe(it); });
     }
-    window.addEventListener('scroll', fill, { passive: true });
-    window.addEventListener('resize', fill);
-    fill();
+  }
+
+  /* ---------- FAQ: open / close ---------- */
+  $$('.acc').forEach(function (list) {
+    $$('.row-btn', list).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.parentNode, open = !item.classList.contains('open');
+        $$('.open', list).forEach(function (o) { o.classList.remove('open'); $('.row-btn', o).setAttribute('aria-expanded', 'false'); });
+        item.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open);
+      });
+    });
+  });
+
+  /* ---------- About page: the route line fills, stops light up ---------- */
+  var story = $('#story');
+  if (story) {
+    var line = $('.story-line', story), chapters = $$('.chapter', story), minis = $$('.mini-stops li', story);
+    function track() {
+      var vh = window.innerHeight, mark = vh * 0.6;
+      var r = line.getBoundingClientRect();
+      var p = reduce ? 1 : Math.min(1, Math.max(0, (mark - r.top) / (r.height || 1)));
+      line.style.setProperty('--prog', p);
+      chapters.forEach(function (c) { c.classList.toggle('lit', reduce || $('.stop', c).getBoundingClientRect().top < mark); });
+      minis.forEach(function (m) { m.classList.toggle('lit', reduce || m.getBoundingClientRect().top < mark); });
+    }
+    window.addEventListener('scroll', track, { passive: true });
+    window.addEventListener('resize', track);
+    track();
   }
 })();

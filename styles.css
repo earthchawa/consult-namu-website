@@ -297,3 +297,142 @@ p { margin: 0; }
   .spec-head, .spec-row, .spec figcaption { padding-left: 16px; padding-right: 16px; }
   .steps li { padding-bottom: 20px; }
 }
+
+/* =========================================================
+   INTERACTIONS (homepage concept)
+   Works with interactions.js. Same brand colors and fonts.
+   ========================================================= */
+
+/* ---------- Fade-in on scroll (only when JavaScript runs) ---------- */
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* ---------- Header stays on top, hides while scrolling down ---------- */
+.header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); transition: transform .35s ease; }
+.header.hide { transform: translateY(-100%); }
+section[id] { scroll-margin-top: 90px; }
+
+/* ---------- 1. Hero with dot grid ---------- */
+.hero-wrap { position: relative; overflow: hidden; min-height: calc(100svh - 86px); display: flex; align-items: center; }
+.hero-wrap .hero { position: relative; z-index: 1; width: 100%; padding-top: 110px; padding-bottom: 150px; gap: 28px; }
+.hero-dots {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, #2E2E2E 1.1px, transparent 1.6px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 100%);
+          mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 100%);
+}
+.hero-dots-lit {
+  --mx: 50%; --my: 40%;
+  background-image: radial-gradient(circle, rgba(245,245,245,.75) 1.2px, transparent 1.7px);
+  -webkit-mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000, transparent 75%);
+          mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000, transparent 75%);
+  opacity: 0; transition: opacity .4s;
+}
+.hero .label { color: var(--muted); }
+@media (max-width: 640px) { .hero .label { letter-spacing: .18em; font-size: 10px; } }
+
+/* "I'm a brand / I'm an agency" switch */
+.audience { display: inline-flex; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: #0E0E0E; }
+.audience button {
+  font: inherit; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 12px 22px; cursor: pointer;
+  transition: background .25s, color .25s;
+}
+.audience button[aria-selected="true"] { background: var(--white); color: var(--black); }
+.audience button:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
+.hero-line { min-height: 3.2em; transition: opacity .18s, transform .18s; }
+.hero-line.swap { opacity: 0; transform: translateY(6px); }
+
+.scroll-cue { position: absolute; left: 50%; bottom: 28px; width: 1px; height: 56px; background: var(--line); overflow: hidden; z-index: 1; }
+.scroll-cue span { position: absolute; left: 0; top: -20px; width: 1px; height: 20px; background: var(--white); animation: cue 2s ease-in-out infinite; }
+@keyframes cue { to { top: 56px; } }
+
+/* ---------- 2. Drag to compare ---------- */
+.compare-grid { padding-top: 140px; padding-bottom: 160px; display: flex; flex-wrap: wrap; gap: 72px; align-items: center; }
+.compare-text { flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
+.catch-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.catch-list li { display: flex; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 16px; color: var(--white); }
+.catch-list span { flex: 0 0 110px; font-size: 11px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--faint); padding-top: 4px; }
+.founder { display: flex; align-items: center; gap: 16px; text-decoration: none; padding: 12px 20px 12px 12px; border: 1px solid var(--line); border-radius: 999px; align-self: flex-start; transition: border-color .2s; }
+.founder:hover { border-color: var(--white); }
+.founder img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
+.founder span { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: var(--muted); }
+.founder strong { font-weight: 500; font-size: 15px; color: var(--white); }
+
+.compare { --pos: 50%; position: relative; flex: 1 1 400px; max-width: 480px; margin: 0 auto 48px; aspect-ratio: 400 / 440; border: 1px solid var(--line); background: #111; user-select: none; touch-action: pan-y; }
+.compare-layer { position: absolute; inset: 0; }
+.compare-layer svg { width: 100%; height: 100%; display: block; }
+.compare-good { background: #141414; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+.compare-bad { background: #101010; }
+.compare .flag { fill: none; stroke: var(--white); stroke-width: 1.2; stroke-dasharray: 4 5; opacity: .8; }
+.compare-tag { position: absolute; top: 16px; font-size: 10px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--white); background: rgba(10,10,10,.7); padding: 8px 10px; }
+.compare-tag.left { left: 16px; } .compare-tag.right { right: 16px; color: var(--muted); }
+.compare-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 1px; background: var(--white); pointer-events: none; }
+.compare-handle span { position: absolute; top: 50%; left: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: var(--white); color: var(--black); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 0 0 8px rgba(245,245,245,.12); }
+.compare-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.compare-range:focus-visible + figcaption { color: var(--white); }
+.compare figcaption { position: absolute; top: 100%; left: 0; right: 0; margin-top: 14px; font-size: 13px; color: var(--muted); text-align: center; }
+
+/* ---------- 4. Moving strip of what we source ---------- */
+.marquee { overflow: hidden; border-top: 1px solid var(--line); padding: 26px 0; }
+.marquee-track { display: flex; width: max-content; animation: marquee 32s linear infinite; }
+.marquee-track span { font-family: 'Syne', sans-serif; font-weight: 500; font-size: clamp(22px, 3vw, 34px); letter-spacing: -0.02em; color: #4A4A4A; white-space: nowrap; padding-right: 48px; }
+.marquee-track span::after { content: '✦'; font-size: .5em; vertical-align: middle; padding-left: 48px; color: #333; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Open / close rows (services + FAQ) ---------- */
+.acc .row { display: block; padding: 0; }
+.faq-item { padding: 0; }
+.row-btn { width: 100%; display: flex; align-items: center; gap: 16px 48px; padding: 30px 0; background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.row-btn:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
+.row-btn .num { flex: 0 0 48px; font-family: 'Syne', sans-serif; font-size: 14px; color: var(--faint); }
+.row-btn h3 { flex: 1 1 auto; font-size: 24px; letter-spacing: -0.02em; margin: 0; transition: transform .3s; }
+.faq-item .row-btn h3 { font-size: 20px; }
+.row-btn:hover h3 { transform: translateX(8px); }
+.plus { position: relative; flex: 0 0 16px; height: 16px; }
+.plus::before, .plus::after { content: ''; position: absolute; left: 0; top: 7.5px; width: 16px; height: 1px; background: var(--white); transition: transform .3s; }
+.plus::after { transform: rotate(90deg); }
+.open > .row-btn .plus::after { transform: rotate(0); }
+.row-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease; }
+.row-body > p { overflow: hidden; min-height: 0; max-width: 680px; font-size: 16px; line-height: 1.65; color: var(--body); }
+.row-body > p::after { content: ''; display: block; height: 30px; }
+.services .row-body > p { padding-left: 96px; }
+.open > .row-body { grid-template-rows: 1fr; }
+.acc .row:hover, .faq-item:hover { border-bottom-color: #4A4A4A; }
+
+/* ---------- Spec sheet ticks ---------- */
+.spec-ok { color: var(--faint); transition: color .3s; }
+.spec-ok.done { color: var(--white); animation: tick .4s ease; }
+@keyframes tick { 0% { transform: scale(.8); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.spec-stamp { display: inline-block; margin-right: 6px; padding: 3px 8px; border: 1px solid var(--faint); font-size: 10px; font-weight: 600; letter-spacing: .25em; text-transform: uppercase; color: var(--faint); transition: all .4s; }
+.spec.signed .spec-stamp { border-color: var(--white); color: var(--black); background: var(--white); }
+
+/* ---------- Phones: "Book a call" bar ---------- */
+.mobile-cta { display: none; }
+@media (max-width: 640px) {
+  .hero-wrap { min-height: calc(100svh - 96px); }
+  .hero-wrap .hero { padding-top: 64px; padding-bottom: 110px; }
+  .audience button { padding: 11px 16px; letter-spacing: .1em; }
+  .compare-grid { padding-top: 90px; padding-bottom: 110px; gap: 48px; }
+  .catch-list span { flex-basis: 96px; }
+  .row-btn { gap: 16px; padding: 24px 0; }
+  .row-btn .num { flex-basis: 28px; }
+  .row-btn h3 { font-size: 19px; }
+  .services .row-body > p { padding-left: 44px; }
+  .mobile-cta {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; left: 16px; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 60;
+    min-height: 52px; background: var(--white); color: var(--black); text-decoration: none;
+    font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(0,0,0,.6);
+    transform: translateY(160%); transition: transform .35s ease;
+  }
+  .mobile-cta.show { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .marquee-track, .scroll-cue span { animation: none; }
+  .header, .row-body, .hero-line, .mobile-cta { transition: none; }
+}

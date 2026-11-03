@@ -291,6 +291,9 @@ p { margin: 0; }
   .hero { padding-top: 100px; padding-bottom: 110px; }
   .split, .services, .faq, .contact, .two-col, .steps-section, .statement, .agency { padding-top: 90px; padding-bottom: 90px; }
   .agency { gap: 48px; }
+  /* Tighter gaps so headings stay close to their text on small screens */
+  .split { gap: 48px; }
+  .two-col, .faq, .agency-top { gap: 28px; }
   .spec-head, .spec-row, .spec figcaption { padding-left: 16px; padding-right: 16px; }
   .steps li { padding-bottom: 20px; }
 }

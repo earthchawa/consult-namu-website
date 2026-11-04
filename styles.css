@@ -79,11 +79,13 @@ section[id] { scroll-margin-top: 90px; }
 .globe-labels span.at-t, .globe-labels span.at-b { padding: 0; }
 .globe-labels span { position: absolute; left: 0; top: 0; padding: 0 0 0 12px; margin-top: -6px; font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--white); white-space: nowrap; transition: opacity .4s; }
 
-/* ---------- 2. How we work + drag to compare ---------- */
-.how { padding-top: 140px; padding-bottom: 160px; display: flex; flex-wrap: wrap; gap: 72px; align-items: center; }
-.how-text { flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 32px; }
+/* ---------- 2. How we work + inspection panels ---------- */
+.how { padding-top: 140px; padding-bottom: 150px; display: flex; flex-direction: column; gap: 72px; }
+.how-text { display: flex; flex-wrap: wrap; gap: 40px 72px; align-items: flex-end; }
+.how-head { flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+.how-steps { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
 .visit { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.visit li { display: flex; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.visit li { display: flex; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .visit .num { flex: 0 0 28px; font-family: 'Syne', sans-serif; font-size: 14px; color: var(--faint); padding-top: 4px; }
 .visit h3 { font-size: 20px; letter-spacing: -0.02em; margin-bottom: 4px; }
 .visit p { font-size: 15px; color: var(--body); }
@@ -93,36 +95,27 @@ section[id] { scroll-margin-top: 90px; }
 .founder span { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: var(--muted); }
 .founder strong { font-weight: 500; font-size: 15px; color: var(--white); }
 
-.compare { --pos: 50%; position: relative; flex: 1 1 400px; max-width: 480px; margin: 0 auto 48px; aspect-ratio: 400 / 440; border: 1px solid var(--line); background: #111; user-select: none; touch-action: pan-y; }
-.compare-layer { position: absolute; inset: 0; }
-.compare-layer svg { width: 100%; height: 100%; display: block; }
-.compare-good { background: #141414; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
-.compare-bad { background: #101010; }
-.compare .flag { fill: none; stroke: var(--white); stroke-width: 1.2; stroke-dasharray: 4 5; opacity: .85; }
-.compare .flag-txt { font-family: Inter, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2.5px; fill: var(--white); }
+/* Two full bags side by side: unchecked (REJECTED) and approved (PASSED) */
+.inspect { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.inspect-card { position: relative; margin: 0; border: 1px solid var(--line); background: #0E0E0E; }
+.inspect-card svg { display: block; width: 100%; height: auto; }
+.inspect-cap { grid-column: 1 / -1; text-align: center; font-size: 13px; color: var(--muted); }
 .compare-tag { position: absolute; top: 16px; padding: 8px 10px; font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; white-space: nowrap; }
 .compare-tag.left { left: 16px; background: var(--white); color: var(--black); }
-.compare-tag.right { right: 16px; border: 1px dashed var(--muted); color: var(--muted); background: rgba(10,10,10,.75); }
-.compare-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 1px; background: var(--white); pointer-events: none; }
-.compare-handle span { position: absolute; top: 50%; left: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: var(--white); color: var(--black); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 0 0 8px rgba(245,245,245,.12); }
-.compare-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
-.compare figcaption { position: absolute; top: 100%; left: 0; right: 0; margin-top: 14px; font-size: 13px; color: var(--muted); text-align: center; }
+.compare-tag.right { left: 16px; border: 1px dashed #FF6A55; color: #FF6A55; background: rgba(10,10,10,.75); }
+.replay { background: none; border: 0; padding: 0 0 0 8px; color: #bbb; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.replay:hover { color: #fff; }
 
-
-/* ---------- Drag to compare: inspection animation ---------- */
-.compare-spec { max-width: 560px; background: #0E0E0E; }
-.compare-spec .fx{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.7);transition:opacity .35s ease,transform .5s cubic-bezier(.2,1.5,.4,1);transition-delay:var(--d)}
-.compare-spec.play .fx{opacity:1;transform:none}
-.compare-spec .stamp{opacity:0;transform-box:fill-box;transform-origin:center}
-.compare-spec.play .stamp{animation:stampIn .45s cubic-bezier(.3,1.6,.5,1) var(--d) both}
-@keyframes stampIn{0%{opacity:0;transform:scale(2.2)}60%{opacity:1}100%{opacity:1;transform:scale(1)}}
-.compare-spec .scan{opacity:0}
-.compare-spec.play .compare-bad .scan{animation:scan 2s cubic-bezier(.45,0,.55,1) .3s both}
-@keyframes scan{0%{opacity:1;transform:translateY(0)}92%{opacity:1;transform:translateY(212px)}100%{opacity:0;transform:translateY(212px)}}
-.compare-spec.gliding .compare-handle span{box-shadow:0 0 0 8px rgba(245,245,245,.12),0 0 0 18px rgba(245,245,245,.06)}
-.compare figcaption .replay{background:none;border:0;padding:0 0 0 8px;color:#bbb;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-.compare figcaption .replay:hover{color:#fff}
-@media (prefers-reduced-motion: reduce){.compare-spec .fx,.compare-spec .stamp{transition:none;animation:none!important;opacity:1;transform:none}.compare-spec .scan{display:none}}
+/* Inspection animation (from the client's version) */
+.compare-spec .fx { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.7); transition: opacity .35s ease, transform .5s cubic-bezier(.2,1.5,.4,1); transition-delay: var(--d); }
+.compare-spec.play .fx { opacity: 1; transform: none; }
+.compare-spec .stamp { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.compare-spec.play .stamp { animation: stampIn .45s cubic-bezier(.3,1.6,.5,1) var(--d) both; }
+@keyframes stampIn { 0% { opacity: 0; transform: scale(2.2); } 60% { opacity: 1; } 100% { opacity: 1; transform: scale(1); } }
+.compare-spec .scan { opacity: 0; }
+.compare-spec.play .compare-bad .scan { animation: scan 2s cubic-bezier(.45,0,.55,1) .3s both; }
+@keyframes scan { 0% { opacity: 1; transform: translateY(0); } 92% { opacity: 1; transform: translateY(212px); } 100% { opacity: 0; transform: translateY(212px); } }
+@media (prefers-reduced-motion: reduce) { .compare-spec .fx, .compare-spec .stamp { transition: none; animation: none !important; opacity: 1; transform: none; } .compare-spec .scan { display: none; } }
 
 /* ---------- 3. Services: sticky panel + list ---------- */
 .services { padding-top: 140px; padding-bottom: 140px; display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start; }
@@ -261,6 +254,7 @@ html:not(.js) .row-body { grid-template-rows: 1fr; }
    ========================================================= */
 .mobile-cta { display: none; }
 @media (max-width: 900px) {
+  .how-text { gap: 32px; }
   /* Hero stacks: text, then the globe in its own space, then the route */
   .hero { min-height: 0; flex-direction: column; }
   .hero-inner { display: contents; }
@@ -282,8 +276,8 @@ html:not(.js) .row-body { grid-template-rows: 1fr; }
   .hero .buttons .btn { flex: 1 1 100%; }
 
   .how, .agency { padding-top: 90px; padding-bottom: 110px; gap: 48px; }
-  .compare-tag { top: 10px; padding: 6px 8px; font-size: 9px; letter-spacing: .12em; }
-  .compare-tag.left { left: 10px; } .compare-tag.right { right: 10px; }
+  .inspect { grid-template-columns: 1fr; gap: 16px; }
+  .compare-tag { top: 10px; left: 10px !important; padding: 6px 8px; font-size: 9px; letter-spacing: .12em; }
 
   .services { padding-top: 90px; padding-bottom: 90px; gap: 40px; }
   .svc-item { padding: 36px 0; }

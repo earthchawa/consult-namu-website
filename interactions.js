@@ -43,14 +43,13 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ---------- Drag to compare ---------- */
-  /* First time it appears: show the unchecked bag and its faults, then glide the
-     handle to the middle to reveal the approved spec. "Replay" runs it again. */
-  var box = $('#compareBox');
+  /* ---------- How we work: inspect both bags ----------
+     When the panels scroll into view: scan the unchecked bag, mark its faults,
+     stamp REJECTED, then mark the approved bag and stamp PASSED. "Replay" runs it again. */
+  var box = $('#inspect');
   if (box) {
-    var range = $('.compare-range', box), timers = [], raf, userTook = false;
-    function setPos(v) { box.style.setProperty('--pos', v + '%'); range.value = v; }
-    function clear() { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf); box.classList.remove('gliding'); }
+    var timers = [];
+    function clear() { timers.forEach(clearTimeout); timers = []; }
     function counters() {
       $$('[data-count]', box).forEach(function (el) {
         var to = parseFloat(el.dataset.count), fmt = el.dataset.fmt, d = parseFloat(el.dataset.d) * 1000;
@@ -65,31 +64,17 @@
         }, d));
       });
     }
-    function glide(from, to, ms) {
-      var t0 = performance.now(); box.classList.add('gliding');
-      (function step(n) {
-        if (userTook) { box.classList.remove('gliding'); return; }
-        var k = Math.min(1, (n - t0) / ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-        setPos(from + (to - from) * e);
-        if (k < 1) raf = requestAnimationFrame(step); else box.classList.remove('gliding');
-      })(t0);
-    }
     function play() {
-      clear(); userTook = false;
-      if (reduce) { box.classList.add('play'); setPos(50); return; }
-      box.classList.remove('play'); setPos(0); void box.offsetWidth; box.classList.add('play'); counters();
-      timers.push(setTimeout(function () { glide(0, 50, 1200); }, 3500));
+      clear();
+      if (reduce) { box.classList.add('play'); return; }
+      box.classList.remove('play'); void box.offsetWidth; box.classList.add('play'); counters();
     }
-    range.addEventListener('input', function () { box.style.setProperty('--pos', range.value + '%'); });
-    ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) {
-      range.addEventListener(ev, function () { userTook = true; clear(); box.classList.add('play'); }, { passive: true });
-    });
     var replay = $('#replayInspect');
     if (replay) replay.addEventListener('click', play);
     if (hasIO) {
       var cio = new IntersectionObserver(function (es) {
         if (es[0].isIntersecting) { play(); cio.disconnect(); }
-      }, { threshold: 0.55 });
+      }, { threshold: 0.35 });
       cio.observe(box);
     } else { play(); }
   }

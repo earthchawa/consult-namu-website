@@ -108,6 +108,22 @@ section[id] { scroll-margin-top: 90px; }
 .compare-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
 .compare figcaption { position: absolute; top: 100%; left: 0; right: 0; margin-top: 14px; font-size: 13px; color: var(--muted); text-align: center; }
 
+
+/* ---------- Drag to compare: inspection animation ---------- */
+.compare-spec { max-width: 560px; background: #0E0E0E; }
+.compare-spec .fx{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.7);transition:opacity .35s ease,transform .5s cubic-bezier(.2,1.5,.4,1);transition-delay:var(--d)}
+.compare-spec.play .fx{opacity:1;transform:none}
+.compare-spec .stamp{opacity:0;transform-box:fill-box;transform-origin:center}
+.compare-spec.play .stamp{animation:stampIn .45s cubic-bezier(.3,1.6,.5,1) var(--d) both}
+@keyframes stampIn{0%{opacity:0;transform:scale(2.2)}60%{opacity:1}100%{opacity:1;transform:scale(1)}}
+.compare-spec .scan{opacity:0}
+.compare-spec.play .compare-bad .scan{animation:scan 2s cubic-bezier(.45,0,.55,1) .3s both}
+@keyframes scan{0%{opacity:1;transform:translateY(0)}92%{opacity:1;transform:translateY(212px)}100%{opacity:0;transform:translateY(212px)}}
+.compare-spec.gliding .compare-handle span{box-shadow:0 0 0 8px rgba(245,245,245,.12),0 0 0 18px rgba(245,245,245,.06)}
+.compare figcaption .replay{background:none;border:0;padding:0 0 0 8px;color:#bbb;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.compare figcaption .replay:hover{color:#fff}
+@media (prefers-reduced-motion: reduce){.compare-spec .fx,.compare-spec .stamp{transition:none;animation:none!important;opacity:1;transform:none}.compare-spec .scan{display:none}}
+
 /* ---------- 3. Services: sticky panel + list ---------- */
 .services { padding-top: 140px; padding-bottom: 140px; display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start; }
 .svc-side { flex: 1 1 380px; min-width: 0; position: sticky; top: 110px; display: flex; flex-direction: column; gap: 20px; }
@@ -123,6 +139,7 @@ section[id] { scroll-margin-top: 90px; }
 .svc-list { flex: 1 1 520px; min-width: 0; list-style: none; margin: 0; padding: 0; }
 .svc-item { padding: 56px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 56px 1fr; gap: 10px 0; transition: opacity .4s; }
 .svc-item:first-child { padding-top: 0; }
+@media (min-width: 901px) { .svc-item { min-height: 44vh; align-content: center; } .svc-list { padding-bottom: 20vh; } }
 .svc-item svg { display: none; }
 .svc-item .num { grid-row: span 2; font-family: 'Syne', sans-serif; font-size: 14px; color: var(--faint); padding-top: 8px; }
 .svc-item h3 { font-size: clamp(24px, 2.6vw, 34px); line-height: 1.15; letter-spacing: -0.02em; }

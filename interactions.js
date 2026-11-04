@@ -44,29 +44,54 @@
   onScroll();
 
   /* ---------- Drag to compare ---------- */
+  /* First time it appears: show the unchecked bag and its faults, then glide the
+     handle to the middle to reveal the approved spec. "Replay" runs it again. */
   var box = $('#compareBox');
   if (box) {
-    var range = $('.compare-range', box);
-    range.addEventListener('input', function () { box.style.setProperty('--pos', range.value + '%'); box.classList.add('touched'); });
-    /* One small hint movement the first time it appears */
-    if (!reduce && hasIO) {
-      var hint = new IntersectionObserver(function (es) {
-        if (!es[0].isIntersecting || box.classList.contains('touched')) return;
-        hint.disconnect();
-        var t0 = null;
-        function step(t) {
-          if (box.classList.contains('touched')) return;
-          t0 = t0 || t;
-          var k = (t - t0) / 1600;
-          if (k > 1) { box.style.setProperty('--pos', '50%'); range.value = 50; return; }
-          var v = 50 + Math.sin(k * Math.PI * 2) * 22;
-          box.style.setProperty('--pos', v + '%'); range.value = v;
-          requestAnimationFrame(step);
-        }
-        setTimeout(function () { requestAnimationFrame(step); }, 500);
-      }, { threshold: 0.6 });
-      hint.observe(box);
+    var range = $('.compare-range', box), timers = [], raf, userTook = false;
+    function setPos(v) { box.style.setProperty('--pos', v + '%'); range.value = v; }
+    function clear() { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf); box.classList.remove('gliding'); }
+    function counters() {
+      $$('[data-count]', box).forEach(function (el) {
+        var to = parseFloat(el.dataset.count), fmt = el.dataset.fmt, d = parseFloat(el.dataset.d) * 1000;
+        el.textContent = fmt.replace('{v}', '0.0');
+        timers.push(setTimeout(function () {
+          var t0 = performance.now();
+          (function step(n) {
+            var k = Math.min(1, (n - t0) / 700);
+            el.textContent = fmt.replace('{v}', (to * (1 - Math.pow(1 - k, 3))).toFixed(1));
+            if (k < 1) requestAnimationFrame(step);
+          })(t0);
+        }, d));
+      });
     }
+    function glide(from, to, ms) {
+      var t0 = performance.now(); box.classList.add('gliding');
+      (function step(n) {
+        if (userTook) { box.classList.remove('gliding'); return; }
+        var k = Math.min(1, (n - t0) / ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        setPos(from + (to - from) * e);
+        if (k < 1) raf = requestAnimationFrame(step); else box.classList.remove('gliding');
+      })(t0);
+    }
+    function play() {
+      clear(); userTook = false;
+      if (reduce) { box.classList.add('play'); setPos(50); return; }
+      box.classList.remove('play'); setPos(0); void box.offsetWidth; box.classList.add('play'); counters();
+      timers.push(setTimeout(function () { glide(0, 50, 1200); }, 3500));
+    }
+    range.addEventListener('input', function () { box.style.setProperty('--pos', range.value + '%'); });
+    ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) {
+      range.addEventListener(ev, function () { userTook = true; clear(); box.classList.add('play'); }, { passive: true });
+    });
+    var replay = $('#replayInspect');
+    if (replay) replay.addEventListener('click', play);
+    if (hasIO) {
+      var cio = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { play(); cio.disconnect(); }
+      }, { threshold: 0.55 });
+      cio.observe(box);
+    } else { play(); }
   }
 
   /* ---------- Spec sheet ticks off row by row ---------- */
@@ -89,7 +114,9 @@
     }
   }
 
-  /* ---------- Services: panel shows the service in the middle of the screen ---------- */
+  /* ---------- Services: panel shows the service you are reading ----------
+     A service becomes active once its top passes 40% of the screen height,
+     so each one stays on the panel for a full stretch of scrolling. */
   var svcItems = $$('.svc-item'), svcIcon = $('#svcIcon'), svcNum = $('#svcNum'), ticks = $$('.svc-ticks i');
   function setSvc(i) {
     svcItems.forEach(function (it, k) { it.classList.toggle('active', k === i); });
@@ -98,13 +125,15 @@
     if (svcIcon) svcIcon.innerHTML = $('svg', svcItems[i]).outerHTML;
   }
   if (svcItems.length) {
-    setSvc(0);
-    if (hasIO) {
-      var sio = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) setSvc(svcItems.indexOf(e.target)); });
-      }, { rootMargin: '-45% 0px -45% 0px' });
-      svcItems.forEach(function (it) { sio.observe(it); });
+    var svcNow = -1;
+    function svcTrack() {
+      var line = window.innerHeight * 0.4, idx = 0;
+      svcItems.forEach(function (it, k) { if (it.getBoundingClientRect().top < line) idx = k; });
+      if (idx !== svcNow) { svcNow = idx; setSvc(idx); }
     }
+    window.addEventListener('scroll', svcTrack, { passive: true });
+    window.addEventListener('resize', svcTrack);
+    svcTrack();
   }
 
   /* ---------- FAQ: open / close ---------- */

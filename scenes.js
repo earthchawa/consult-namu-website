@@ -1,9 +1,7 @@
 /* =========================================================
-   CONSULT NAMU — 3D scenes for the homepage (needs vendor/three.min.js)
-   1. Services: a stack of five shipping containers, one per service.
-      The container for the service being read slides out.
-   2. What we make: a product viewer. Pick a project to see it, drag to turn it.
-   Each scene only animates while it is on screen.
+   CONSULT NAMU — 3D product viewer for "What we make" (needs vendor/three.min.js)
+   Pick a project to see it, drag to turn it.
+   It only animates while it is on screen.
    If WebGL is not available, the sections still show all their text.
    ========================================================= */
 (function () {
@@ -55,108 +53,7 @@
   }
 
   /* =========================================================
-     1. SERVICES: shipping container stack
-     ========================================================= */
-  (function () {
-    var host = document.getElementById('containers');
-    if (!host) return;
-    var renderer = makeRenderer(host);
-    if (!renderer) return;
-
-    var scene = new THREE.Scene();
-    var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
-    camera.position.set(7, 5.2, 8);
-    camera.lookAt(0, 0.1, 0);
-
-    var yard = new THREE.Group(); scene.add(yard);
-    var N = 5, L = 3.2, H = 0.86, D = 1.15, GAP = 0.06;
-
-    /* Faces drawn on canvases: corrugated sides with the service number, door ends */
-    function sideTex(n, on) {
-      return canvasTex(512, 140, function (g, w, h) {
-        g.fillStyle = on ? '#2B2B2B' : '#121212'; g.fillRect(0, 0, w, h);
-        g.strokeStyle = on ? '#4A4A4A' : '#222'; g.lineWidth = 3;
-        for (var x = 14; x < w; x += 18) { g.beginPath(); g.moveTo(x, 8); g.lineTo(x, h - 8); g.stroke(); }
-        g.fillStyle = on ? '#2B2B2B' : '#121212'; g.fillRect(24, h / 2 - 34, 132, 68);
-        g.fillStyle = on ? '#F5F5F5' : '#5A5A5A';
-        g.font = '600 52px Syne, Inter, sans-serif'; g.textBaseline = 'middle';
-        g.fillText(n, 34, h / 2 + 3);
-        g.font = '600 16px Inter, sans-serif';
-        g.fillStyle = on ? '#BDBDBD' : '#3A3A3A';
-        g.fillText('NAMU · ' + n + ' / 05', w - 150, h - 22);
-      });
-    }
-    function endTex(on) {
-      return canvasTex(160, 140, function (g, w, h) {
-        g.fillStyle = on ? '#262626' : '#101010'; g.fillRect(0, 0, w, h);
-        g.strokeStyle = on ? '#6A6A6A' : '#2A2A2A'; g.lineWidth = 3;
-        g.strokeRect(8, 8, w - 16, h - 16);
-        [w * .3, w * .45, w * .55, w * .7].forEach(function (x) { g.beginPath(); g.moveTo(x, 14); g.lineTo(x, h - 14); g.stroke(); });
-        g.beginPath(); g.moveTo(w / 2, 10); g.lineTo(w / 2, h - 10); g.stroke();
-      });
-    }
-    var topMat = new THREE.MeshBasicMaterial({ color: 0x191919 });
-    var topOn = new THREE.MeshBasicMaterial({ color: 0x3A3A3A });
-
-    var boxes = [];
-    for (var i = 0; i < N; i++) {
-      var n = ('0' + (i + 1)).slice(-2);
-      var mats = {
-        off: [new THREE.MeshBasicMaterial({ map: endTex(false) }), new THREE.MeshBasicMaterial({ color: 0x0c0c0c }),
-              topMat, topMat,
-              new THREE.MeshBasicMaterial({ map: sideTex(n, false) }), new THREE.MeshBasicMaterial({ color: 0x0c0c0c })],
-        on:  [new THREE.MeshBasicMaterial({ map: endTex(true) }), new THREE.MeshBasicMaterial({ color: 0x1a1a1a }),
-              topOn, topOn,
-              new THREE.MeshBasicMaterial({ map: sideTex(n, true) }), new THREE.MeshBasicMaterial({ color: 0x1a1a1a })]
-      };
-      var geo = new THREE.BoxGeometry(L, H, D);
-      var mesh = new THREE.Mesh(geo, mats.off);
-      var edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ color: 0x3a3a3a }));
-      var c = new THREE.Group(); c.add(mesh); c.add(edges);
-      /* 01 on top, 05 at the bottom, each slightly offset like a real stack */
-      c.position.set((i % 2 ? 0.12 : -0.12), (N - 1 - i) * (H + GAP) - (N - 1) * (H + GAP) / 2, 0);
-      c.userData = { mesh: mesh, edges: edges, mats: mats, x0: c.position.x, out: 0 };
-      yard.add(c); boxes.push(c);
-    }
-    /* Faint ground grid */
-    var grid = new THREE.GridHelper(9, 18, 0x1a1a1a, 0x151515);
-    grid.material.transparent = true; grid.material.opacity = 0.55;
-    grid.position.y = -(N - 1) * (H + GAP) / 2 - H / 2 - 0.02; yard.add(grid);
-
-    var active = 0;
-    window.NAMU_setService = function (i) { active = i; if (reduce) frame(0); };
-
-    var drag = dragTurn(host);
-    function resize() {
-      var w = host.clientWidth || 1, h = host.clientHeight || 1;
-      renderer.setSize(w, h, false);
-      var s = 4.3, a = w / h;
-      camera.left = -s * a; camera.right = s * a; camera.top = s; camera.bottom = -s;
-      camera.updateProjectionMatrix();
-    }
-    window.addEventListener('resize', resize); resize();
-
-    function frame(t) {
-      var sec = t / 1000;
-      drag.tick();
-      yard.rotation.y = (reduce ? 0 : Math.sin(sec * 0.35) * 0.08) + drag.y;
-      boxes.forEach(function (c, k) {
-        var on = k === active, u = c.userData;
-        u.out = reduce ? (on ? 1 : 0) : damp(u.out, on ? 1 : 0, 0.08);
-        c.position.x = u.x0 + u.out * 1.35;
-        c.position.z = u.out * 0.25;
-        var want = on ? u.mats.on : u.mats.off;
-        if (u.mesh.material !== want) u.mesh.material = want;
-        u.edges.material.color.setScalar(0.23 + 0.73 * u.out);
-      });
-      renderer.render(scene, camera);
-    }
-    runWhenVisible(host, frame);
-    host.classList.add('ready');
-  })();
-
-  /* =========================================================
-     2. WHAT WE MAKE: product viewer
+     WHAT WE MAKE: product viewer
      ========================================================= */
   (function () {
     var host = document.getElementById('products');

@@ -257,6 +257,7 @@
     new IntersectionObserver(function (es) { es[0].isIntersecting ? start() : stop(); }).observe(host);
   } else { start(); }
   document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+  window.addEventListener('pageshow', function () { if (!document.hidden) { stop(); start(); } });
   frame(performance.now());
   if (reduce) window.addEventListener('resize', function () { frame(performance.now()); });
   host.classList.add('ready');

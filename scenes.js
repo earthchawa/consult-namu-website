@@ -26,10 +26,13 @@
     function start() { if (!on) { on = true; raf = requestAnimationFrame(loop); } }
     function stop() { on = false; cancelAnimationFrame(raf); }
     if (reduce) { frame(0); return { kick: function () { frame(0); } }; }
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) { es[0].isIntersecting ? start() : stop(); }).observe(host);
+    var inView = !('IntersectionObserver' in window);
+    if (!inView) {
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; inView && !document.hidden ? start() : stop(); }).observe(host);
     } else start();
-    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); });
+    /* pause in a background tab, resume when the visitor comes back (also after Back/Forward) */
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (inView) { on = false; start(); } });
+    window.addEventListener('pageshow', function () { if (inView && !document.hidden) { on = false; cancelAnimationFrame(raf); start(); } });
     return { kick: function () {} };
   }
   function canvasTex(w, h, draw) {
@@ -66,8 +69,19 @@
     camera.position.set(0, 1.3, 7.2);
     camera.lookAt(0, 0.05, 0);
 
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x111111, 0.45));
-    var key = new THREE.DirectionalLight(0xffffff, 0.85); key.position.set(3, 4, 4); scene.add(key);
+    /* Studio reflections: a few soft light panels baked into an environment map */
+    (function () {
+      var pm = new THREE.PMREMGenerator(renderer), env = new THREE.Scene();
+      env.background = new THREE.Color(0x0c0c0c);
+      function panel(w, h, c, k, p) {
+        var m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(k), side: THREE.DoubleSide }));
+        m.position.set(p[0], p[1], p[2]); m.lookAt(0, 0, 0); env.add(m);
+      }
+      panel(8, 4, 0xffffff, 2.2, [0, 7, 5]); panel(4, 7, 0xfff1dc, 1.6, [-7, 2, 3]); panel(4, 6, 0xffffff, 1.0, [7, 2, -2]); panel(12, 3, 0x2a2a2a, 1, [0, -6, 0]);
+      scene.environment = pm.fromScene(env, 0.04).texture; pm.dispose();
+    })();
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x111111, 0.3));
+    var key = new THREE.DirectionalLight(0xffffff, 0.7); key.position.set(3, 4, 4); scene.add(key);
     var fill = new THREE.DirectionalLight(0xffffff, 0.25); fill.position.set(-4, 1, 3); scene.add(fill);
     var rim = new THREE.DirectionalLight(0xffffff, 0.75); rim.position.set(-3, 3, -5); scene.add(rim);
 
@@ -93,91 +107,126 @@
     }
 
     /* ---------- Toile pattern, drawn on a canvas (no logos, no text) ----------
-       Trees, buildings, arches and birds in thin brown line work, like the client's bags and coasters. */
-    function toile(c, w, h, ink, seed) {
+       Engraving-style trees: branching lines with small leaf marks and hatched ground,
+       in a soft rose-brown, like the print on the client's bags and coasters. */
+    function toile(c, w, h, ink, seed, opts) {
+      opts = opts || {};
       var s = seed || 7;
       function rnd() { s = (s * 16807) % 2147483647; return s / 2147483647; }
+      var k = (opts.scale || 1) * w / 1024;
+      c.save();
       c.strokeStyle = ink; c.fillStyle = ink; c.lineCap = 'round'; c.lineJoin = 'round';
-      function tree(x, y, k) {
-        c.lineWidth = 1.4 * k;
-        c.beginPath(); c.moveTo(x, y); c.lineTo(x + 2 * k, y - 34 * k); c.stroke();
+      c.globalAlpha = opts.alpha || 0.9;
+      function leaves(x, y, size) {
+        var n = 7 + Math.floor(rnd() * 7);
+        for (var i = 0; i < n; i++) {
+          var a = rnd() * Math.PI * 2, d = rnd() * size, lx = x + Math.cos(a) * d, ly = y + Math.sin(a) * d * 0.75;
+          c.lineWidth = 0.9 * k;
+          c.beginPath(); c.ellipse(lx, ly, 2.6 * k, 1.3 * k, a, 0, Math.PI * 2); c.stroke();
+        }
+      }
+      function branch(x, y, len, ang, depth, width) {
+        var bend = (rnd() - 0.5) * 0.5;
+        var mx = x + Math.cos(ang + bend) * len * 0.5, my = y + Math.sin(ang + bend) * len * 0.5;
+        var ex = x + Math.cos(ang) * len, ey = y + Math.sin(ang) * len;
+        c.lineWidth = Math.max(0.7 * k, width);
+        c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(mx, my, ex, ey); c.stroke();
+        /* bark hatching on thicker limbs */
+        if (width > 2.2 * k) for (var hh = 0.2; hh < 0.9; hh += 0.18) {
+          var hx = x + (ex - x) * hh, hy = y + (ey - y) * hh;
+          c.lineWidth = 0.6 * k; c.beginPath(); c.moveTo(hx - 2 * k, hy); c.lineTo(hx + 2 * k, hy + 1.5 * k); c.stroke();
+        }
+        if (depth <= 0) { leaves(ex, ey, 9 * k); return; }
+        var kids = 2 + (rnd() < 0.45 ? 1 : 0);
+        for (var i = 0; i < kids; i++) {
+          var spread = (i - (kids - 1) / 2) * (0.45 + rnd() * 0.25);
+          branch(ex, ey, len * (0.66 + rnd() * 0.12), ang + spread, depth - 1, width * 0.62);
+        }
+        if (depth <= 2) leaves(ex, ey, 7 * k);
+      }
+      function ground(x, y, wd) {
+        c.lineWidth = 0.7 * k;
         for (var i = 0; i < 9; i++) {
-          var a = rnd() * Math.PI * 2, d = rnd() * 16 * k;
-          c.beginPath(); c.arc(x + Math.cos(a) * d, y - 42 * k + Math.sin(a) * d * 0.8, (6 + rnd() * 7) * k, 0, Math.PI * 2); c.stroke();
+          var gx = x + rnd() * wd, gy = y + rnd() * 8 * k;
+          c.beginPath(); c.moveTo(gx, gy); c.lineTo(gx + (6 + rnd() * 10) * k, gy); c.stroke();
         }
-        for (var j = 0; j < 7; j++) { var hx = x - 14 * k + rnd() * 28 * k, hy = y - 52 * k + rnd() * 22 * k; c.beginPath(); c.moveTo(hx, hy); c.lineTo(hx + 5 * k, hy + 3 * k); c.stroke(); }
-      }
-      function building(x, y, k) {
-        var bw = (30 + rnd() * 26) * k, bh = (40 + rnd() * 34) * k;
-        c.lineWidth = 1.2 * k; c.strokeRect(x, y - bh, bw, bh);
-        for (var wy = y - bh + 6 * k; wy < y - 8 * k; wy += 9 * k)
-          for (var wx = x + 4 * k; wx < x + bw - 5 * k; wx += 8 * k) c.strokeRect(wx, wy, 3.5 * k, 5 * k);
-        c.beginPath(); c.moveTo(x - 3 * k, y - bh); c.lineTo(x + bw / 2, y - bh - 14 * k); c.lineTo(x + bw + 3 * k, y - bh); c.stroke();
-      }
-      function arch(x, y, k) {
-        c.lineWidth = 1.3 * k;
-        c.beginPath(); c.moveTo(x, y); c.lineTo(x, y - 26 * k); c.arc(x + 14 * k, y - 26 * k, 14 * k, Math.PI, 0); c.lineTo(x + 28 * k, y); c.stroke();
-        c.strokeRect(x - 6 * k, y - 44 * k, 40 * k, 44 * k);
-      }
-      function birds(x, y, k) {
-        c.lineWidth = 1 * k;
-        for (var i = 0; i < 3; i++) { var bx = x + i * 12 * k, by = y + rnd() * 8 * k; c.beginPath(); c.moveTo(bx - 4 * k, by); c.quadraticCurveTo(bx, by - 4 * k, bx, by); c.quadraticCurveTo(bx, by - 4 * k, bx + 4 * k, by); c.stroke(); }
-      }
-      function grass(x, y, k) { c.lineWidth = 1 * k; for (var i = 0; i < 6; i++) { c.beginPath(); c.moveTo(x + i * 4 * k, y); c.lineTo(x + i * 4 * k + (rnd() - 0.5) * 6 * k, y - (6 + rnd() * 8) * k); c.stroke(); } }
-      var k = w / 512 * 0.78, cell = 74 * k;
-      var rows = Math.ceil(h / cell) + 1, cols = Math.ceil(w / cell) + 1;
-      c.lineWidth = 1.6 * k;
-      for (var row = 0; row < rows; row++) {
-        var by = (row + 1) * cell - 4 * k;
-        for (var col = 0; col < cols; col++) {
-          var bx = col * cell - cell * 0.5 + (row % 2 ? cell / 2 : 0) + rnd() * 14 * k, pick = rnd();
-          if (pick < 0.45) tree(bx + 20 * k, by, k * (0.9 + rnd() * 0.5));
-          else if (pick < 0.7) building(bx, by, k);
-          else arch(bx + 6 * k, by, k);
-          grass(bx + 40 * k, by + 2 * k, k);
-          if (rnd() < 0.35) birds(bx + 30 * k, by - 80 * k, k);
+        for (var j = 0; j < 6; j++) {
+          var tx = x + rnd() * wd; c.beginPath(); c.moveTo(tx, y); c.lineTo(tx + (rnd() - 0.5) * 4 * k, y - (5 + rnd() * 7) * k); c.stroke();
         }
       }
+      var density = opts.density || 1;
+      var n = Math.round((w * h) / (190 * 190 * k * k) * density);
+      for (var t = 0; t < n; t++) {
+        var x = rnd() * w, y = rnd() * h + 40 * k, size = (34 + rnd() * 30) * k;
+        if (opts.edge) { /* keep trees toward the outside of a round piece */
+          var dx = x - w / 2, dy = y - h / 2; if (Math.sqrt(dx * dx + dy * dy) < w * opts.edge) continue;
+        }
+        branch(x, y, size, -Math.PI / 2 + (rnd() - 0.5) * 0.35, 3, 3.2 * k);
+        ground(x - 24 * k, y + 2 * k, 50 * k);
+      }
+      c.restore();
     }
-    function toileTex(w, h, bg, ink, seed) {
-      return canvasTex(w, h, function (c) { c.fillStyle = bg; c.fillRect(0, 0, w, h); toile(c, w, h, ink, seed); });
+    function toileTex(w, h, bg, ink, seed, opts) {
+      return canvasTex(w, h, function (c) { c.fillStyle = bg; c.fillRect(0, 0, w, h); toile(c, w, h, ink, seed, opts); });
     }
-    var FOIL = { color: 0xD6B46A, metalness: 0.35, roughness: 0.35, emissive: 0x2A1E08 };
-    var GREEN = 0x0A2A17;
+    /* Flat ribbon strip that follows a curve (width lies in the plane of the curve) */
+    function ribbonStrip(points, width, mat) {
+      var curve = new THREE.CatmullRomCurve3(points);
+      var n = 64, pos = [], idx = [];
+      for (var i = 0; i <= n; i++) {
+        var t = i / n, p = curve.getPoint(t), d = curve.getTangent(t);
+        var nx = -d.y, ny = d.x, l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l;
+        pos.push(p.x + nx * width / 2, p.y + ny * width / 2, p.z, p.x - nx * width / 2, p.y - ny * width / 2, p.z);
+        if (i < n) { var a = i * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+      }
+      var geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.setIndex(idx); geo.computeVertexNormals();
+      return new THREE.Mesh(geo, mat);
+    }
+    var FOIL = { color: 0xE2C27C, metalness: 0.9, roughness: 0.28 };
+    var GREEN = 0x0B3320;
 
     /* ---------- The products ---------- */
     var builders = {
-      /* Printed paper bag: toile print, green grosgrain ribbon handles, a plain gold foil mark */
+      /* Printed paper bag: uncoated stock with an engraved toile print, green grosgrain
+         ribbon handles, side gussets and a small gold foil mark (no brand) */
       bag: function () {
         var g = new THREE.Group();
-        var W = 1.8, H = 1.42, D = 0.56;
-        var printFront = toileTex(1024, 820, '#ECE5D8', '#6F4B44', 11);
-        var printSide = toileTex(320, 820, '#ECE5D8', '#6F4B44', 23);
-        var front = new THREE.MeshStandardMaterial({ map: printFront, roughness: 0.85 });
-        var back = new THREE.MeshStandardMaterial({ map: toileTex(1024, 820, '#ECE5D8', '#6F4B44', 37), roughness: 0.85 });
-        var side = new THREE.MeshStandardMaterial({ map: printSide, roughness: 0.85 });
-        var inside = std(0xC9BFAE, { roughness: 0.9 }), bottom = std(0xD8D0C2);
-        var body = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), [side, side, inside, bottom, front, back]);
-        g.add(body);
-        /* turned-down top cuff */
-        var cuff = new THREE.Mesh(new THREE.BoxGeometry(W + 0.004, 0.16, D + 0.004), std(0xE6DECF, { roughness: 0.85 }));
-        cuff.position.y = H / 2 - 0.08; g.add(cuff);
-        /* gold foil mark in place of the logo: a thin rule with a small diamond */
-        var foil = std(FOIL.color, FOIL);
-        var rule = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.012, 0.004), foil); rule.position.set(0, -0.02, D / 2 + 0.003); g.add(rule);
-        var dia = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.06, 0.004), foil); dia.rotation.z = Math.PI / 4; dia.position.set(0, -0.02, D / 2 + 0.004); g.add(dia);
-        var rule2 = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.008, 0.004), foil); rule2.position.set(0, -0.1, D / 2 + 0.003); g.add(rule2);
-        /* ribbon handles, flat and slightly glossy */
-        var rib = std(GREEN, { roughness: 0.38 });
-        [D / 2 - 0.06, -D / 2 + 0.06].forEach(function (z) {
-          var curve = new THREE.CubicBezierCurve3(new THREE.Vector3(-0.42, H / 2 - 0.12, 0), new THREE.Vector3(-0.44, H / 2 + 0.75, 0), new THREE.Vector3(0.44, H / 2 + 0.75, 0), new THREE.Vector3(0.42, H / 2 - 0.12, 0));
-          var hm = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, 0.05, 10, false), rib);
-          hm.scale.z = 0.14; hm.position.z = z; g.add(hm);
-          [-0.42, 0.42].forEach(function (x) {
-            var knot = new THREE.Mesh(new THREE.CircleGeometry(0.03, 16), std(0x2A2A2A)); knot.position.set(x, H / 2 - 0.12, z + (z > 0 ? 0.03 : -0.03)); if (z < 0) knot.rotation.y = Math.PI; g.add(knot);
+        var W = 1.9, H = 1.5, D = 0.62;
+        var BG = '#EFE9DE', INK = '#9B7369';
+        function face(w, h, seed, gusset) {
+          return canvasTex(w, h, function (c) {
+            c.fillStyle = BG; c.fillRect(0, 0, w, h);
+            toile(c, w, h, INK, seed, { alpha: 0.9, scale: w > 600 ? 1.15 : 0.75, density: 2.6 });
+            /* top turn-over fold */
+            c.strokeStyle = 'rgba(0,0,0,.12)'; c.lineWidth = 2; c.beginPath(); c.moveTo(0, h * 0.07); c.lineTo(w, h * 0.07); c.stroke();
+            if (gusset) { /* side pleat: centre fold and the V at the bottom */
+              c.strokeStyle = 'rgba(0,0,0,.16)'; c.lineWidth = 2.5;
+              c.beginPath(); c.moveTo(w / 2, h * 0.07); c.lineTo(w / 2, h * 0.86); c.lineTo(0, h); c.moveTo(w / 2, h * 0.86); c.lineTo(w, h); c.stroke();
+            }
           });
+        }
+        var paper = function (t) { return new THREE.MeshStandardMaterial({ map: t, roughness: 0.92, envMapIntensity: 0.35 }); };
+        var inside = std(0xCFC6B6, { roughness: 0.95 }), bottom = std(0xDAD2C4, { roughness: 0.95 });
+        var body = new THREE.Mesh(new THREE.BoxGeometry(W, H, D),
+          [paper(face(320, 760, 23, true)), paper(face(320, 760, 29, true)), inside, bottom, paper(face(1024, 820, 11)), paper(face(1024, 820, 37))]);
+        g.add(body);
+        /* gold foil mark in place of the logo: two fine rules and a small diamond */
+        var foil = std(FOIL.color, FOIL);
+        [[0.5, 0.008, 0.02], [0.26, 0.006, -0.06]].forEach(function (r) {
+          var m = new THREE.Mesh(new THREE.BoxGeometry(r[0], r[1], 0.003), foil); m.position.set(0, r[2], D / 2 + 0.002); g.add(m);
         });
-        g.position.y = -0.25;
+        var dia = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.045, 0.003), foil); dia.rotation.z = Math.PI / 4; dia.position.set(0, 0.02, D / 2 + 0.003); g.add(dia);
+        /* grosgrain ribbon handles: flat strips that dip into the bag */
+        var rib = std(GREEN, { roughness: 0.42, side: THREE.DoubleSide, envMapIntensity: 0.6 });
+        [D / 2 - 0.05, -D / 2 + 0.05].forEach(function (z) {
+          var top = H / 2;
+          g.add(ribbonStrip([
+            new THREE.Vector3(-0.42, top - 0.14, z), new THREE.Vector3(-0.43, top + 0.18, z), new THREE.Vector3(-0.3, top + 0.52, z),
+            new THREE.Vector3(0, top + 0.62, z), new THREE.Vector3(0.3, top + 0.52, z), new THREE.Vector3(0.43, top + 0.18, z), new THREE.Vector3(0.42, top - 0.14, z)
+          ], 0.075, rib));
+        });
+        g.userData.y = -0.3; g.userData.sway = true;
         return g;
       },
       /* Suede cylinder gift box with a lift-off lid */
@@ -219,7 +268,7 @@
           var loop = new THREE.Mesh(new THREE.TorusGeometry(0.075, 0.016, 8, 24), std(FOIL.color, FOIL)); loop.position.y = 0.8; b.add(loop);
           b.position.x = x; g.add(b); return b;
         }
-        var green = ball(std(0x0E2F1E, { roughness: 0.6, metalness: 0 }), -0.66);
+        var green = ball(std(0x061A10, { roughness: 0.6, metalness: 0, envMapIntensity: 0.3 }), -0.66);
         var pearl = ball(new THREE.MeshStandardMaterial({ map: art, roughness: 0.32, metalness: 0.18 }), 0.66);
         pearl.rotation.y = -Math.PI / 2;
         g.position.y = -0.15;
@@ -265,78 +314,70 @@
         };
         return g;
       },
-      /* Coasters: scalloped die-cut paper, toile border, plain center (no logo) */
+      /* Coasters: 12-scallop die-cut board, engraved toile around the edge, dark-green
+         scalloped line set in from the edge, blank center (no wordmark) */
       coaster: function () {
         var g = new THREE.Group();
-        /* 12 deep scallops, like the client's coaster */
-        var R = 0.74, N = 12;
-        function scallop(t) { return 0.86 + 0.14 * Math.abs(Math.cos(N * t / 2)); }
+        var R = 0.8, N = 12;
+        function scallop(t) { return 0.87 + 0.13 * Math.abs(Math.cos(N * t / 2)); }
         var shape = new THREE.Shape();
-        for (var i = 0; i <= 360; i++) {
-          var t = i / 360 * Math.PI * 2, rr = R * scallop(t);
-          var x = Math.cos(t) * rr, y = Math.sin(t) * rr;
-          if (i === 0) shape.moveTo(x, y); else shape.lineTo(x, y);
+        for (var i = 0; i <= 480; i++) {
+          var t = i / 480 * Math.PI * 2, rr = R * scallop(t);
+          if (i === 0) shape.moveTo(Math.cos(t) * rr, Math.sin(t) * rr); else shape.lineTo(Math.cos(t) * rr, Math.sin(t) * rr);
         }
-        var geo = new THREE.ExtrudeGeometry(shape, { depth: 0.035, bevelEnabled: false, curveSegments: 4 });
+        var geo = new THREE.ExtrudeGeometry(shape, { depth: 0.045, bevelEnabled: true, bevelThickness: 0.006, bevelSize: 0.006, bevelSegments: 2, curveSegments: 4 });
         var top = canvasTex(1024, 1024, function (c, w) {
-          /* white stock, dense rose-brown toile around the edge that fades to a clean center */
-          c.fillStyle = '#F7F5F0'; c.fillRect(0, 0, w, w);
-          toile(c, w, w, '#A06F63', 5);
-          toile(c, w, w, '#A9786C', 19);
-          toile(c, w, w, '#B58A7F', 41);
-          var fade = c.createRadialGradient(w / 2, w / 2, w * 0.06, w / 2, w / 2, w * 0.27);
-          fade.addColorStop(0, 'rgba(247,245,240,1)'); fade.addColorStop(0.5, 'rgba(247,245,240,.85)'); fade.addColorStop(1, 'rgba(247,245,240,0)');
+          c.fillStyle = '#F8F6F1'; c.fillRect(0, 0, w, w);
+          toile(c, w, w, '#A87A6E', 5, { alpha: 0.92, scale: 1, density: 3.2, edge: 0.16 });
+          var fade = c.createRadialGradient(w / 2, w / 2, w * 0.1, w / 2, w / 2, w * 0.3);
+          fade.addColorStop(0, 'rgba(248,246,241,1)'); fade.addColorStop(0.55, 'rgba(248,246,241,.9)'); fade.addColorStop(1, 'rgba(248,246,241,0)');
           c.fillStyle = fade; c.fillRect(0, 0, w, w);
-          /* thin dark-green scalloped line set in from the edge */
-          c.strokeStyle = '#1F3D2C'; c.lineWidth = 6;
-          c.beginPath();
-          for (var j = 0; j <= 360; j++) {
-            var a = j / 360 * Math.PI * 2, r = R * scallop(a) * 0.8;
+          c.strokeStyle = '#1E3A2A'; c.lineWidth = 4.5; c.beginPath();
+          for (var j = 0; j <= 480; j++) {
+            var a = j / 480 * Math.PI * 2, r = R * scallop(a) * 0.82;
             var px = (Math.cos(a) * r / (2 * R) + 0.5) * w, py = (0.5 - Math.sin(a) * r / (2 * R)) * w;
             if (j === 0) c.moveTo(px, py); else c.lineTo(px, py);
           }
           c.stroke();
-          /* the center is left blank where the real coaster carries the wordmark (no brand) */
         });
         top.repeat.set(1 / (2 * R), 1 / (2 * R)); top.offset.set(0.5, 0.5);
-        var face = new THREE.MeshStandardMaterial({ map: top, roughness: 0.9 });
-        var edgeM = std(0xEDEAE3, { roughness: 0.95 });
-        function coaster(x, y, z, rx, rz) {
-          var m = new THREE.Mesh(geo, [face, edgeM]);
-          m.position.set(x, y, z); m.rotation.set(rx, 0, rz); g.add(m); return m;
+        var face = new THREE.MeshStandardMaterial({ map: top, roughness: 0.9, envMapIntensity: 0.35 });
+        var edgeM = std(0xEFECE6, { roughness: 0.95, envMapIntensity: 0.3 });
+        function piece(x, y, z, rx, rz) {
+          var m = new THREE.Mesh(geo, [face, edgeM]); m.position.set(x, y, z); m.rotation.set(rx, 0, rz); g.add(m); return m;
         }
-        /* a short stack, and one standing up so the print is visible */
-        for (var k = 0; k < 4; k++) coaster(0.5 + k * 0.012, -0.95 + k * 0.04, 0.1 - k * 0.01, -Math.PI / 2, k * 0.25);
-        var up = coaster(-0.35, -0.2, 0.05, -0.18, 0.05);
-        g.userData.tick = function (s) { if (!reduce) up.rotation.x = -0.18 + Math.sin(s * 1.1) * 0.05; };
+        /* a neat stack behind, and the hero coaster leaning toward the viewer */
+        for (var k = 0; k < 5; k++) piece(0.35, -0.98 + k * 0.052, -0.35, -Math.PI / 2, k * 0.21);
+        piece(-0.12, -0.25, 0.25, -0.62, 0.08);
+        g.userData.sway = true;
         return g;
       },
-      /* Stainless steel ornament: a cut-out letterform (two crossing curved strokes, like the
-         client's "X"), 2 mm thick, gold finish, hanging from a ribbon. No brand. */
+      /* Stainless steel ornament: a 2 mm cut-out letterform (one arc crossing one long
+         stroke, like the client's "X"), polished gold finish, hung on a satin ribbon. No brand. */
       xorn: function () {
         var g = new THREE.Group();
-        /* one tapered curved stroke as a flat shape */
         function stroke(p0, p1, p2, wMax) {
           var curve = new THREE.QuadraticBezierCurve(new THREE.Vector2(p0[0], p0[1]), new THREE.Vector2(p1[0], p1[1]), new THREE.Vector2(p2[0], p2[1]));
-          var n = 48, left = [], right = [];
+          var n = 72, left = [], right = [];
           for (var i = 0; i <= n; i++) {
             var t = i / n, p = curve.getPoint(t), d = curve.getTangent(t);
-            var w = wMax * (0.18 + 0.82 * Math.sin(Math.PI * t));
+            var w = wMax * (0.12 + 0.88 * Math.pow(Math.sin(Math.PI * t), 0.7));
             left.push(new THREE.Vector2(p.x - d.y * w, p.y + d.x * w));
             right.push(new THREE.Vector2(p.x + d.y * w, p.y - d.x * w));
           }
-          var sh = new THREE.Shape(left.concat(right.reverse()));
-          return new THREE.ExtrudeGeometry(sh, { depth: 0.035, bevelEnabled: true, bevelThickness: 0.008, bevelSize: 0.008, bevelSegments: 2, curveSegments: 8 });
+          return new THREE.ExtrudeGeometry(new THREE.Shape(left.concat(right.reverse())),
+            { depth: 0.03, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.008, bevelSegments: 3, curveSegments: 12 });
         }
-        var metal = std(0xC8A65E, { metalness: 0.45, roughness: 0.25, emissive: 0x2A1E08 });
-        var a = new THREE.Mesh(stroke([-0.78, 0.42], [0.05, 0.42], [0.62, -0.42], 0.07), metal);
-        var b = new THREE.Mesh(stroke([0.6, 0.86], [0.02, 0.12], [-0.6, -0.92], 0.065), metal);
-        b.position.z = 0.002;
-        var x = new THREE.Group(); x.add(a); x.add(b); x.position.z = -0.02; g.add(x);
-        /* hanging ribbon */
-        var rib = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.1, 0.008), std(0xC9A65A, { roughness: 0.45 }));
-        rib.position.set(0.02, 0.62, -0.03); g.add(rib);
-        g.userData.tick = function (s) { if (!reduce) g.rotation.z = Math.sin(s * 1.3) * 0.05; };
+        var metal = std(0xF0D18C, { metalness: 0.7, roughness: 0.22, envMapIntensity: 2.2, emissive: 0x241A06 });
+        var x = new THREE.Group();
+        x.add(new THREE.Mesh(stroke([-0.86, 0.46], [0.02, 0.48], [0.7, -0.5], 0.06), metal));
+        var b = new THREE.Mesh(stroke([0.66, 0.96], [0.02, 0.14], [-0.66, -1.0], 0.055), metal); b.position.z = 0.001; x.add(b);
+        x.position.set(0, -0.15, -0.015); g.add(x);
+        /* satin ribbon: two thin strips meeting at a small hole near the crossing */
+        var sat = std(0xCDAE6A, { roughness: 0.35, metalness: 0.2, side: THREE.DoubleSide, envMapIntensity: 0.8 });
+        g.add(ribbonStrip([new THREE.Vector3(0.02, 0.05, 0.02), new THREE.Vector3(0.0, 0.5, 0.01), new THREE.Vector3(-0.02, 1.1, 0)], 0.045, sat));
+        g.add(ribbonStrip([new THREE.Vector3(0.02, 0.05, -0.02), new THREE.Vector3(0.04, 0.5, -0.01), new THREE.Vector3(0.0, 1.1, 0)], 0.045, sat));
+        g.userData.sway = true;
         return g;
       },
       ceramic: function () {
@@ -378,8 +419,8 @@
       o.visible = true;
       var k = Math.max(0, grow), s = 1 + 2.2 * Math.pow(k - 1, 3) + 1.2 * Math.pow(k - 1, 2); /* ease out with a little overshoot */
       o.scale.setScalar(Math.max(0.0001, k >= 1 ? 1 : s));
-      o.rotation.y = (reduce ? 0.6 : sec * 0.45) + drag.y;
-      o.position.y = reduce ? 0 : Math.sin(sec * 1.2) * 0.05;
+      o.rotation.y = (reduce ? (o.userData.sway ? 0.25 : 0.6) : (o.userData.sway ? Math.sin(sec * 0.55) * 0.5 : sec * 0.45)) + drag.y;
+      o.position.y = (o.userData.y || 0) + (reduce ? 0 : Math.sin(sec * 1.2) * 0.05);
       if (o.userData.tick) o.userData.tick(sec);
       renderer.render(scene, camera);
     }

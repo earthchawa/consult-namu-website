@@ -94,55 +94,47 @@
     } else { play(); }
   }
 
-  /* ---------- Spec sheet ticks off row by row ---------- */
-  var spec = $('#spec');
-  if (spec) {
+  /* ---------- Spec sheets tick off row by row (agencies card, inspection report) ---------- */
+  $$('.spec[data-tick]').forEach(function (spec) {
     var oks = $$('.spec-ok', spec);
     function finish(i) {
       oks[i].textContent = oks[i].dataset.ok;
       oks[i].classList.add('done');
       if (i === oks.length - 1) spec.classList.add('signed');
     }
-    if (reduce || !hasIO) { oks.forEach(function (o, i) { finish(i); }); }
-    else {
-      var so = new IntersectionObserver(function (es) {
-        if (!es[0].isIntersecting) return;
-        so.disconnect();
-        oks.forEach(function (o, i) { setTimeout(function () { finish(i); }, 500 + i * 450); });
-      }, { threshold: 0.5 });
-      so.observe(spec);
+    if (reduce || !hasIO) { oks.forEach(function (o, i) { finish(i); }); return; }
+    var so = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      so.disconnect();
+      oks.forEach(function (o, i) { setTimeout(function () { finish(i); }, 500 + i * 450); });
+    }, { threshold: 0.5 });
+    so.observe(spec);
+  });
+
+  /* ---------- How we work page: progress bar across the five stages ----------
+     The bar fills as you scroll through the stages; click a stage to jump to it. */
+  var track = $('#hwTrack');
+  if (track) {
+    var stages = $$('.hw-step'), dots = $$('li', track);
+    function stageTrack() {
+      var line = window.innerHeight * 0.5, idx = -1, p = 0;
+      stages.forEach(function (st, k) {
+        var r = st.getBoundingClientRect();
+        if (r.top < line) { idx = k; p = k + Math.min(1, (line - r.top) / (r.height || 1)); }
+      });
+      track.style.setProperty('--p', Math.max(0, Math.min(1, p / stages.length)));
+      dots.forEach(function (d, k) { d.classList.toggle('on', k <= idx); d.classList.toggle('now', k === idx); });
+      stages.forEach(function (st, k) { st.classList.toggle('now', k === idx); });
     }
+    window.addEventListener('scroll', stageTrack, { passive: true });
+    window.addEventListener('resize', stageTrack);
+    stageTrack();
   }
 
-  /* ---------- Services: the container for the service you are reading slides out ----------
-     A service becomes active once its top passes 45% of the screen height.
-     Pointing at a service also selects it. scenes.js draws the containers. */
-  var svcItems = $$('.svc3-item'), svcNum = $('#svcNum'), svcName = $('#svcName');
-  var svcNow = -1, svcHover = -1;
-  function setSvc(i) {
-    if (i === svcNow) return;
-    svcNow = i;
-    svcItems.forEach(function (it, k) { it.classList.toggle('active', k === i); });
-    if (svcNum) svcNum.textContent = ('0' + (i + 1)).slice(-2);
-    if (svcName) svcName.textContent = $('h3', svcItems[i]).textContent;
-    if (window.NAMU_setService) window.NAMU_setService(i);
-  }
-  if (svcItems.length) {
-    function svcTrack() {
-      if (svcHover >= 0) return;
-      var line = window.innerHeight * 0.45, idx = 0;
-      svcItems.forEach(function (it, k) { if (it.getBoundingClientRect().top < line) idx = k; });
-      setSvc(idx);
-    }
-    svcItems.forEach(function (it, k) {
-      it.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { svcHover = k; setSvc(k); } });
-      it.addEventListener('pointerleave', function () { svcHover = -1; });
-    });
-    window.addEventListener('scroll', svcTrack, { passive: true });
-    window.addEventListener('resize', svcTrack);
-    window.addEventListener('load', function () { var i = svcNow; svcNow = -1; setSvc(Math.max(0, i)); });
-    svcTrack();
-  }
+  /* ---------- How we work page: finish swatches shimmer when tapped (phones) ---------- */
+  $$('.chip-fx').forEach(function (c) {
+    c.addEventListener('click', function () { c.classList.remove('tap'); void c.offsetWidth; c.classList.add('tap'); });
+  });
 
   /* ---------- What we make: pick a project to see it in 3D ----------
      Cycles through the projects on its own until someone picks one. */

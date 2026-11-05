@@ -63,6 +63,7 @@
     if (!host) return;
     var renderer = makeRenderer(host);
     if (!renderer) return;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5)); /* sharp enough for this size, much lighter on phones */
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
@@ -117,24 +118,26 @@
       c.save();
       c.strokeStyle = ink; c.fillStyle = ink; c.lineCap = 'round'; c.lineJoin = 'round';
       c.globalAlpha = opts.alpha || 0.9;
+      /* everything is collected into three paths (thin / medium / thick) and stroked once each: fast */
+      var thin = new Path2D(), mid = new Path2D(), thick = new Path2D();
+      function pathFor(wd) { return wd > 2.2 * k ? thick : wd > 1.2 * k ? mid : thin; }
       function leaves(x, y, size) {
         var n = 7 + Math.floor(rnd() * 7);
         for (var i = 0; i < n; i++) {
           var a = rnd() * Math.PI * 2, d = rnd() * size, lx = x + Math.cos(a) * d, ly = y + Math.sin(a) * d * 0.75;
-          c.lineWidth = 0.9 * k;
-          c.beginPath(); c.ellipse(lx, ly, 2.6 * k, 1.3 * k, a, 0, Math.PI * 2); c.stroke();
+          thin.moveTo(lx + Math.cos(a) * 2.6 * k, ly + Math.sin(a) * 2.6 * k);
+          thin.ellipse(lx, ly, 2.6 * k, 1.3 * k, a, 0, Math.PI * 2);
         }
       }
       function branch(x, y, len, ang, depth, width) {
         var bend = (rnd() - 0.5) * 0.5;
         var mx = x + Math.cos(ang + bend) * len * 0.5, my = y + Math.sin(ang + bend) * len * 0.5;
         var ex = x + Math.cos(ang) * len, ey = y + Math.sin(ang) * len;
-        c.lineWidth = Math.max(0.7 * k, width);
-        c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(mx, my, ex, ey); c.stroke();
+        var bp = pathFor(width); bp.moveTo(x, y); bp.quadraticCurveTo(mx, my, ex, ey);
         /* bark hatching on thicker limbs */
         if (width > 2.2 * k) for (var hh = 0.2; hh < 0.9; hh += 0.18) {
           var hx = x + (ex - x) * hh, hy = y + (ey - y) * hh;
-          c.lineWidth = 0.6 * k; c.beginPath(); c.moveTo(hx - 2 * k, hy); c.lineTo(hx + 2 * k, hy + 1.5 * k); c.stroke();
+          thin.moveTo(hx - 2 * k, hy); thin.lineTo(hx + 2 * k, hy + 1.5 * k);
         }
         if (depth <= 0) { leaves(ex, ey, 9 * k); return; }
         var kids = 2 + (rnd() < 0.45 ? 1 : 0);
@@ -145,13 +148,12 @@
         if (depth <= 2) leaves(ex, ey, 7 * k);
       }
       function ground(x, y, wd) {
-        c.lineWidth = 0.7 * k;
         for (var i = 0; i < 9; i++) {
           var gx = x + rnd() * wd, gy = y + rnd() * 8 * k;
-          c.beginPath(); c.moveTo(gx, gy); c.lineTo(gx + (6 + rnd() * 10) * k, gy); c.stroke();
+          thin.moveTo(gx, gy); thin.lineTo(gx + (6 + rnd() * 10) * k, gy);
         }
         for (var j = 0; j < 6; j++) {
-          var tx = x + rnd() * wd; c.beginPath(); c.moveTo(tx, y); c.lineTo(tx + (rnd() - 0.5) * 4 * k, y - (5 + rnd() * 7) * k); c.stroke();
+          var tx = x + rnd() * wd; thin.moveTo(tx, y); thin.lineTo(tx + (rnd() - 0.5) * 4 * k, y - (5 + rnd() * 7) * k);
         }
       }
       var density = opts.density || 1;
@@ -164,6 +166,9 @@
         branch(x, y, size, -Math.PI / 2 + (rnd() - 0.5) * 0.35, 3, 3.2 * k);
         ground(x - 24 * k, y + 2 * k, 50 * k);
       }
+      c.lineWidth = 0.8 * k; c.stroke(thin);
+      c.lineWidth = 1.5 * k; c.stroke(mid);
+      c.lineWidth = 2.6 * k; c.stroke(thick);
       c.restore();
     }
     function toileTex(w, h, bg, ink, seed, opts) {
@@ -424,8 +429,12 @@
       if (o.userData.tick) o.userData.tick(sec);
       renderer.render(scene, camera);
     }
-    get('bag');
-    runWhenVisible(host, frame);
-    host.classList.add('ready');
+    /* Build and start only when the section comes near the screen, so the page loads fast */
+    var started = false;
+    function boot() { if (started) return; started = true; get(shown); runWhenVisible(host, frame); host.classList.add('ready'); }
+    if ('IntersectionObserver' in window) {
+      var bio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { bio.disconnect(); boot(); } }, { rootMargin: '400px 0px' });
+      bio.observe(host);
+    } else boot();
   })();
 })();

@@ -298,13 +298,13 @@ html:not(.js) .row-body { grid-template-rows: 1fr; }
    HOW WE WORK PAGE
    ========================================================= */
 .hw-hero-wrap { position: relative; overflow: hidden; min-height: calc(88svh - 78px); display: flex; align-items: flex-end; border-bottom: 1px solid var(--line); }
-.hw-hero-bg { position: absolute; inset: 0; background: url(assets/how-hero.jpg) 70% 28% / cover no-repeat;  transform: scale(1.06); animation: hw-drift 24s ease-in-out infinite alternate; }
+.hw-hero-bg { position: absolute; inset: 0; background: url(assets/how-hero.jpg) 60% 30% / cover no-repeat; opacity: .55; /* photo strength: raise for a clearer photo, lower for a softer one */  transform: scale(1.06); animation: hw-drift 24s ease-in-out infinite alternate; }
 .hw-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,0) 55%, #0A0A0A 100%), rgba(10,10,10,.62); /* full color photo under a black layer: change .62 to make it lighter or darker */ }
 @keyframes hw-drift { to { transform: scale(1.14) translate(-1.5%, -1%); } }
 @media (min-width: 901px) {
   /* Desktop: photo sits on the right, fading into black behind the headline */
-  .hw-hero-bg { left: 28%; background-position: 60% 30%; }
-  .hw-hero-bg::after { background: linear-gradient(90deg, #0A0A0A 0%, rgba(10,10,10,.75) 22%, rgba(10,10,10,.35) 60%, rgba(10,10,10,.45) 100%), linear-gradient(180deg, rgba(10,10,10,0) 60%, #0A0A0A 100%); }
+  .hw-hero-bg { left: 30%; background-position: 50% 30%; }
+  .hw-hero-bg::after { background: linear-gradient(90deg, #0A0A0A 0%, rgba(10,10,10,.7) 25%, rgba(10,10,10,.3) 60%, rgba(10,10,10,.4) 100%), linear-gradient(180deg, rgba(10,10,10,0) 55%, #0A0A0A 100%); }
 }
 .hw-hero { position: relative; z-index: 1; width: 100%; padding-top: 140px; padding-bottom: 96px; display: flex; flex-direction: column; gap: 26px; }
 .hw-title { font-size: clamp(42px, 6.4vw, 92px); line-height: 1; letter-spacing: -0.045em; max-width: 1100px; }

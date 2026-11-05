@@ -277,14 +277,15 @@
         }
         var geo = new THREE.ExtrudeGeometry(shape, { depth: 0.035, bevelEnabled: false, curveSegments: 4 });
         var top = canvasTex(1024, 1024, function (c, w) {
+          /* full-bleed illustrated print edge to edge */
           c.fillStyle = '#F1EBDF'; c.fillRect(0, 0, w, w);
-          /* toile only in the outer ring */
-          c.save(); c.beginPath(); c.arc(w / 2, w / 2, w * 0.5, 0, Math.PI * 2); c.arc(w / 2, w / 2, w * 0.3, 0, Math.PI * 2, true); c.clip();
-          c.globalAlpha = 0.9; toile(c, w, w, '#9A6F66', 5); c.restore();
-          c.strokeStyle = '#9A6F66'; c.lineWidth = 3;
-          c.beginPath(); c.arc(w / 2, w / 2, w * 0.3, 0, Math.PI * 2); c.stroke();
-          c.lineWidth = 1.5; c.beginPath(); c.arc(w / 2, w / 2, w * 0.285, 0, Math.PI * 2); c.stroke();
-          c.beginPath(); c.arc(w / 2, w / 2, w * 0.44, 0, Math.PI * 2); c.stroke();
+          c.globalAlpha = 0.95; toile(c, w, w, '#9A6F66', 5); c.globalAlpha = 1;
+          /* a cream panel where the printed wordmark sits on the real coaster (left blank: no brand) */
+          c.fillStyle = 'rgba(241,235,223,.92)';
+          c.beginPath(); c.ellipse(w / 2, w / 2, w * 0.2, w * 0.1, 0, 0, Math.PI * 2); c.fill();
+          c.strokeStyle = '#9A6F66'; c.lineWidth = 2;
+          c.beginPath(); c.ellipse(w / 2, w / 2, w * 0.2, w * 0.1, 0, 0, Math.PI * 2); c.stroke();
+          c.lineWidth = 1; c.beginPath(); c.ellipse(w / 2, w / 2, w * 0.19, w * 0.09, 0, 0, Math.PI * 2); c.stroke();
         });
         top.repeat.set(1 / (2 * R), 1 / (2 * R)); top.offset.set(0.5, 0.5);
         var face = new THREE.MeshStandardMaterial({ map: top, roughness: 0.9 });
@@ -299,13 +300,32 @@
         g.userData.tick = function (s) { if (!reduce) up.rotation.x = -0.18 + Math.sin(s * 1.1) * 0.05; };
         return g;
       },
-      ring: function () {
+      /* Stainless steel ornament: a cut-out letterform (two crossing curved strokes, like the
+         client's "X"), 2 mm thick, gold finish, hanging from a ribbon. No brand. */
+      xorn: function () {
         var g = new THREE.Group();
-        var mat = std(0x8FB8FF, { roughness: 0.4 });
-        var torus = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.22, 32, 96), mat);
-        torus.rotation.x = -0.35; g.add(torus);
-        var cold = new THREE.Color(0x8FB8FF), warm = new THREE.Color(0xFF9EC4);
-        g.userData.tick = function (s) { var k = reduce ? 0.5 : Math.sin(s * 0.9) * 0.5 + 0.5; mat.color.copy(cold).lerp(warm, k); };
+        /* one tapered curved stroke as a flat shape */
+        function stroke(p0, p1, p2, wMax) {
+          var curve = new THREE.QuadraticBezierCurve(new THREE.Vector2(p0[0], p0[1]), new THREE.Vector2(p1[0], p1[1]), new THREE.Vector2(p2[0], p2[1]));
+          var n = 48, left = [], right = [];
+          for (var i = 0; i <= n; i++) {
+            var t = i / n, p = curve.getPoint(t), d = curve.getTangent(t);
+            var w = wMax * (0.18 + 0.82 * Math.sin(Math.PI * t));
+            left.push(new THREE.Vector2(p.x - d.y * w, p.y + d.x * w));
+            right.push(new THREE.Vector2(p.x + d.y * w, p.y - d.x * w));
+          }
+          var sh = new THREE.Shape(left.concat(right.reverse()));
+          return new THREE.ExtrudeGeometry(sh, { depth: 0.035, bevelEnabled: true, bevelThickness: 0.008, bevelSize: 0.008, bevelSegments: 2, curveSegments: 8 });
+        }
+        var metal = std(0xC8A65E, { metalness: 0.45, roughness: 0.25, emissive: 0x2A1E08 });
+        var a = new THREE.Mesh(stroke([-0.78, 0.42], [0.05, 0.42], [0.62, -0.42], 0.07), metal);
+        var b = new THREE.Mesh(stroke([0.6, 0.86], [0.02, 0.12], [-0.6, -0.92], 0.065), metal);
+        b.position.z = 0.002;
+        var x = new THREE.Group(); x.add(a); x.add(b); x.position.z = -0.02; g.add(x);
+        /* hanging ribbon */
+        var rib = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.1, 0.008), std(0xC9A65A, { roughness: 0.45 }));
+        rib.position.set(0.02, 0.62, -0.03); g.add(rib);
+        g.userData.tick = function (s) { if (!reduce) g.rotation.z = Math.sin(s * 1.3) * 0.05; };
         return g;
       },
       ceramic: function () {

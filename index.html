@@ -75,43 +75,6 @@
       "publisher": {
         "@id": "https://consultnamu.com/#org"
       }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What do you source?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Branded and printed goods — apparel, promotional items, custom packaging, and branded hardware. Need something specific? Ask about a sourcing mission."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do you handle quality?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "By being physically present. We audit factories, approve samples, and inspect goods on the floor before they ship. One honest note: samples are often digitally printed, so color won't perfectly match production — that's why we run and approve test pieces with you before the full batch."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do you work with small businesses?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Startup, boutique brand, or established company — we tailor the work to your scale."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do you work with brand agencies?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, it's a big part of what we do. We act as your production partner: you own the design and the client relationship, we make sure what you designed is exactly what arrives."
-          }
-        }
-      ]
     }
   ]
 }
@@ -133,10 +96,11 @@
   <div class="wrap">
     <a href="index.html" class="wordmark">CONSULT <em>NAMU</em></a>
     <nav class="nav" aria-label="Main">
-      <a href="about.html">About</a>
-      <a href="#services">Services</a>
-      <a href="#agencies">Agencies</a>
-      <a href="#faq">FAQ</a>
+      <a href="about.html">About Samy</a>
+      <a href="how-we-work.html">How we work</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#agencies">Agencies</a>
+      <a href="how-we-work.html#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -150,11 +114,13 @@
   <div class="globe" id="globe" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <div class="hero-text">
+      <div class="label reveal">For brands and design agencies</div>
       <h1 class="reveal">Your eyes on the <em>ground.</em></h1>
       <p class="reveal">We source, produce and inspect your branded goods in Asia, and protect your brand before it ships.</p>
+      <a href="about.html" class="hero-founder reveal"><img src="assets/samy.jpeg" alt="" width="40" height="40"><span>Run by <b>Samy Naim</b>, 10+ years on the ground in Asia. Every client handled personally, inside the factories.</span></a>
       <div class="buttons reveal">
-        <a href="#contact" class="btn btn-solid">Book a sourcing call</a>
-        <a href="#how" class="btn btn-outline">How we work →</a>
+        <a href="#contact" class="btn btn-solid">Book a 20-minute call</a>
+        <a href="how-we-work.html" class="btn btn-outline">How we work →</a>
       </div>
     </div>
     <div class="route" aria-label="Route"><b>Bangkok · Shanghai</b> <span>→</span> <b>Hong Kong</b> <span>→</span> <b>Los Angeles</b> <span>→</span> <b>Your door</b></div>
@@ -169,14 +135,11 @@
       <div class="label reveal">How we work</div>
       <h2 class="h2 reveal">Most sourcing happens in email threads. Ours happens on the <em>factory floor.</em></h2>
       <ol class="visit">
-        <li class="reveal"><span class="num">01</span><div><h3>Samy goes to the factory</h3><p>In person, at every stage of production.</p></div></li>
-        <li class="reveal"><span class="num">02</span><div><h3>Checks it against your sample</h3><p>Color, foil, placement, finish.</p></div></li>
-        <li class="reveal"><span class="num">03</span><div><h3>Sends you samples if needed</h3><p>You approve before the full run ships.</p></div></li>
+        <li class="reveal"><span class="num">01</span><div><h3>We go to the factory</h3><p>In person, at every stage of production.</p></div></li>
+        <li class="reveal"><span class="num">02</span><div><h3>We check it against your sample</h3><p>Color, foil, placement, finish.</p></div></li>
+        <li class="reveal"><span class="num">03</span><div><h3>We send you samples if needed</h3><p>You approve before the full run ships.</p></div></li>
       </ol>
-      <a href="about.html" class="founder reveal">
-        <img src="assets/samy.jpeg" alt="" width="52" height="52">
-        <span><strong>Samy, Founder</strong>10+ years on the ground in Asia →</span>
-      </a>
+      <a href="how-we-work.html" class="engage-more reveal">See the full process →</a>
     </div>
 
     <!-- Inspection animation: the "nobody on the floor" side is shown first with its faults,
@@ -233,54 +196,54 @@
 </section>
 
 <!-- ===================== 3. SERVICES ===================== -->
-<!-- Scroll through the list: the panel on the left shows the service in view. -->
-<section id="services" class="section">
-  <div class="wrap services">
-    <div class="svc-side">
+<!-- The 3D stack of shipping containers is drawn by scenes.js: one container per service.
+     The container for the service you are reading slides out of the stack. -->
+<section id="services" class="section svc-section">
+  <div class="wrap svc3">
+    <div class="svc3-side">
       <div class="label reveal">Services</div>
       <h2 class="h2 reveal">Every service. Boots on the <em>ground.</em></h2>
-      <div class="svc-panel" aria-hidden="true">
-        <div class="svc-icon" id="svcIcon"></div>
-        <div class="svc-count"><span id="svcNum">01</span> / 05</div>
-        <div class="svc-ticks"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+      <div class="svc3-stage" id="containers" aria-hidden="true">
+        <div class="svc3-readout"><span id="svcNum">01</span> / 05 <i id="svcName">Sourcing &amp; Supplier Vetting</i></div>
       </div>
+      <a href="how-we-work.html" class="engage-more reveal">See how we work →</a>
     </div>
-    <ol class="svc-list">
-      <li class="svc-item">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="14" cy="14" r="8"/><path d="M20 20l7 7"/></svg>
-        <span class="num">01</span>
-        <h3>Sourcing &amp; Supplier Vetting</h3>
-        <p>We find factories that match your specs, price, and quality bar — then walk through them in person before we recommend one.</p>
-      </li>
-      <li class="svc-item">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z"/><path d="M11 16l4 4 7-8"/></svg>
-        <span class="num">02</span>
-        <h3>On-Site Quality Assurance</h3>
-        <p>Factory audits, inline checks, and pre-shipment inspection. We're there at every stage, so you don't have to be.</p>
-      </li>
-      <li class="svc-item">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4l12 6-12 6-12-6z"/><path d="M4 16l12 6 12-6"/><path d="M4 22l12 6 12-6"/></svg>
-        <span class="num">03</span>
-        <h3>Product Development &amp; Private Label</h3>
-        <p>From spec sheet to first production run. Custom and white-label products that carry your brand the way you'd carry it yourself.</p>
-      </li>
-      <li class="svc-item">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="10" width="24" height="14"/><path d="M10 10v14M16 10v14M22 10v14"/></svg>
-        <span class="num">04</span>
-        <h3>Import &amp; Logistics</h3>
-        <p>Shipping, customs, and documentation — coordinated with licensed partners. One contact from the factory floor to your warehouse door.</p>
-      </li>
-      <li class="svc-item">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 18l26-10-8 18-5-7z"/><path d="M16 19l13-11"/></svg>
-        <span class="num">05</span>
-        <h3>Sourcing Missions</h3>
-        <p>The one-off, the niche, the urgent. When you need someone to fly in, get it done, and report back.</p>
-      </li>
+    <ol class="svc3-list">
+      <li class="svc3-item"><span class="num">01</span><div><h3>Sourcing &amp; Supplier Vetting</h3><p>We find factories that match your specs, price, and quality bar, then walk through them in person before we recommend one.</p></div></li>
+      <li class="svc3-item"><span class="num">02</span><div><h3>On-Site Quality Assurance</h3><p>Factory audits, inline checks, and pre-shipment inspection. We're there at every stage, so you don't have to be.</p></div></li>
+      <li class="svc3-item"><span class="num">03</span><div><h3>Product Development &amp; Private Label</h3><p>From spec sheet to first production run. Custom and white-label products that carry your brand the way you'd carry it yourself.</p></div></li>
+      <li class="svc3-item"><span class="num">04</span><div><h3>Import &amp; Logistics</h3><p>Shipping, customs, and documentation, coordinated with licensed partners. One contact from the factory floor to your warehouse door.</p></div></li>
+      <li class="svc3-item"><span class="num">05</span><div><h3>Sourcing Missions</h3><p>The one-off, the niche, the urgent. When you need someone to fly in, get it done, and report back.</p></div></li>
     </ol>
   </div>
 </section>
 
-<!-- ===================== 4. FOR BRAND AGENCIES ===================== -->
+<!-- ===================== 4. WHAT WE MAKE (from real projects, client names kept confidential) ===================== -->
+<!-- The 3D product on the left is drawn by scenes.js. Pick a project to see it; drag to turn it. -->
+<section id="work" class="section">
+  <div class="wrap make">
+    <div class="make-head">
+      <div class="label reveal">What we make</div>
+      <h2 class="h2 reveal">From recent projects. <em>Client names kept confidential.</em></h2>
+    </div>
+    <div class="make-body">
+      <div class="make-stage reveal" id="products" aria-hidden="true">
+        <div class="make-tag"><span id="makeKind">Retail packaging</span><b id="makeQty">5,000 units</b></div>
+        <div class="make-hint">Drag to turn</div>
+      </div>
+      <ul class="make-list" role="list">
+        <li><button class="make-item" data-obj="bag"><span class="make-k">Retail packaging</span><h3>Printed paper bags</h3><p>Gold foil logo, grosgrain ribbon handles, uncoated stock.</p><span class="make-q">5,000 units</span></button></li>
+        <li><button class="make-item" data-obj="box"><span class="make-k">Gift boxes</span><h3>Suede cylinder boxes</h3><p>Lift-off lid, gold branding on lid and body, made by hand.</p><span class="make-q">300 units</span></button></li>
+        <li><button class="make-item" data-obj="ornament"><span class="make-k">Holiday</span><h3>Branded ornaments</h3><p>8 cm printed glass balls and stainless steel ornaments.</p><span class="make-q">1,000 per design</span></button></li>
+        <li><button class="make-item" data-obj="ribbon"><span class="make-k">Trims</span><h3>Custom printed ribbon</h3><p>Gold-stamped ribbon in three widths.</p><span class="make-q">50 rolls per width</span></button></li>
+        <li><button class="make-item" data-obj="ring"><span class="make-k">Product development</span><h3>Color-changing silicone</h3><p>Thermochromic shower ring, from the client's CAD file to factory samples.</p><span class="make-q">Prototype stage</span></button></li>
+        <li><button class="make-item" data-obj="ceramic"><span class="make-k">Tableware</span><h3>Custom ceramics</h3><p>Ceramic tableware made in Thailand. Custom sizes, shapes and colors.</p><span class="make-q">Made to order</span></button></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. FOR BRAND AGENCIES ===================== -->
 <section id="agencies" class="section agency-section">
   <div class="wrap agency">
     <div class="agency-top">
@@ -306,47 +269,28 @@
       </figure>
     </div>
 
-    <div class="agency-points">
-      <div class="reveal"><h3>Spec-accurate</h3><p>Pantone, foil, stock and finish matched to your file. Test pieces approved with you before the full run.</p></div>
-      <div class="reveal"><h3>Your client stays yours</h3><p>We never contact your clients without your OK. You lead the account. We deliver behind you.</p></div>
-      <div class="reveal"><h3>One contact, start to finish</h3><p>Samy handles your account personally, from the first sample to the final box. No hand-offs.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 5. FAQ (click a question to open it) ===================== -->
-<section id="faq" class="section">
-  <div class="wrap faq">
-    <div class="faq-head">
-      <div class="label reveal">FAQ</div>
-      <h2 class="h2 reveal">Good <em>questions.</em></h2>
-    </div>
-    <div class="faq-list acc">
-      <div class="faq-item reveal">
-        <button class="row-btn" aria-expanded="false"><h3>What do you source?</h3><i class="plus"></i></button>
-        <div class="row-body"><p>Branded and printed goods — apparel, promotional items, custom packaging, and branded hardware. Need something specific? Ask about a sourcing mission.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="row-btn" aria-expanded="false"><h3>How do you handle quality?</h3><i class="plus"></i></button>
-        <div class="row-body"><p>By being physically present. We audit factories, approve samples, and inspect goods on the floor before they ship. One honest note: samples are often digitally printed, so color won't perfectly match production — that's why we run and approve test pieces with you before the full batch.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="row-btn" aria-expanded="false"><h3>Do you work with small businesses?</h3><i class="plus"></i></button>
-        <div class="row-body"><p>Yes. Startup, boutique brand, or established company — we tailor the work to your scale.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="row-btn" aria-expanded="false"><h3>Do you work with brand agencies?</h3><i class="plus"></i></button>
-        <div class="row-body"><p>Yes, it's a big part of what we do. We act as your production partner: you own the design and the client relationship, we make sure what you designed is exactly what arrives.</p></div>
-      </div>
-    </div>
+    <!-- Three promises, shown as a pipeline: your file → our floor → your client -->
+    <ol class="agency-flow">
+      <li class="reveal"><span class="flow-node">Your file</span><h3>Spec-accurate</h3><p>Pantone, foil, stock and finish matched to your file. Test pieces approved with you before the full run.</p></li>
+      <li class="reveal"><span class="flow-node">Behind you</span><h3>Your client stays yours</h3><p>We never contact your clients without your OK, and we ship blind. You lead the account. We deliver behind you.</p></li>
+      <li class="reveal"><span class="flow-node">One contact</span><h3>One contact, start to finish</h3><p>Your account is handled personally, from the first sample to the final box. No hand-offs.</p></li>
+    </ol>
   </div>
 </section>
 
 <!-- ===================== 6. CONTACT ===================== -->
+<!-- Styled as a shipping label: from your brand, to the factory floor. -->
 <section id="contact" class="section">
   <div class="wrap contact">
     <h2 class="reveal">Ready to source with someone who <em>shows up?</em></h2>
     <p class="reveal">Tell us what you're sourcing. We'll tell you what it takes to get it done right.</p>
+    <div class="label-card reveal" aria-hidden="true">
+      <div class="lc-row"><span class="lc-k">From</span><span class="lc-v">Your brand, USA</span></div>
+      <div class="lc-arrow">→</div>
+      <div class="lc-row"><span class="lc-k">To</span><span class="lc-v">The factory floor, Asia</span></div>
+      <div class="lc-bar"></div>
+      <div class="lc-meta">Handled by Samy · Bangkok · Hong Kong · Shanghai</div>
+    </div>
     <div class="buttons reveal">
       <a href="mailto:samy@consultnamu.com?subject=Call%20request%20(homepage)" class="btn btn-solid">Book a 20-minute call</a>
       <a href="mailto:samy@consultnamu.com?subject=Website%20inquiry" class="btn btn-outline btn-email">samy@consultnamu.com</a>
@@ -369,11 +313,12 @@
 <!-- Phones only: a "Book a call" bar that appears after the hero -->
 <a href="mailto:samy@consultnamu.com?subject=Call%20request%20(homepage)" class="mobile-cta" id="mobileCta">Book a 20-minute call</a>
 
-<!-- 3D globe: Three.js library, land dots, then the globe itself -->
+<!-- 3D: Three.js library, the globe (hero), then the containers and products (scenes.js) -->
 <script src="vendor/three.min.js" defer></script>
 <script src="globe-land.js" defer></script>
 <script src="globe.js" defer></script>
-<!-- Small effects: header, compare slider, spec ticks, fade-ins -->
+<script src="scenes.js" defer></script>
+<!-- Small effects: header, compare slider, spec ticks, services, fade-ins -->
 <script src="interactions.js" defer></script>
 
 </body>

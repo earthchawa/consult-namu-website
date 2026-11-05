@@ -114,26 +114,62 @@
     }
   }
 
-  /* ---------- Services: panel shows the service you are reading ----------
-     A service becomes active once its top passes 40% of the screen height,
-     so each one stays on the panel for a full stretch of scrolling. */
-  var svcItems = $$('.svc-item'), svcIcon = $('#svcIcon'), svcNum = $('#svcNum'), ticks = $$('.svc-ticks i');
+  /* ---------- Services: the container for the service you are reading slides out ----------
+     A service becomes active once its top passes 45% of the screen height.
+     Pointing at a service also selects it. scenes.js draws the containers. */
+  var svcItems = $$('.svc3-item'), svcNum = $('#svcNum'), svcName = $('#svcName');
+  var svcNow = -1, svcHover = -1;
   function setSvc(i) {
+    if (i === svcNow) return;
+    svcNow = i;
     svcItems.forEach(function (it, k) { it.classList.toggle('active', k === i); });
-    ticks.forEach(function (t, k) { t.classList.toggle('on', k <= i); });
     if (svcNum) svcNum.textContent = ('0' + (i + 1)).slice(-2);
-    if (svcIcon) svcIcon.innerHTML = $('svg', svcItems[i]).outerHTML;
+    if (svcName) svcName.textContent = $('h3', svcItems[i]).textContent;
+    if (window.NAMU_setService) window.NAMU_setService(i);
   }
   if (svcItems.length) {
-    var svcNow = -1;
     function svcTrack() {
-      var line = window.innerHeight * 0.4, idx = 0;
+      if (svcHover >= 0) return;
+      var line = window.innerHeight * 0.45, idx = 0;
       svcItems.forEach(function (it, k) { if (it.getBoundingClientRect().top < line) idx = k; });
-      if (idx !== svcNow) { svcNow = idx; setSvc(idx); }
+      setSvc(idx);
     }
+    svcItems.forEach(function (it, k) {
+      it.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { svcHover = k; setSvc(k); } });
+      it.addEventListener('pointerleave', function () { svcHover = -1; });
+    });
     window.addEventListener('scroll', svcTrack, { passive: true });
     window.addEventListener('resize', svcTrack);
+    window.addEventListener('load', function () { var i = svcNow; svcNow = -1; setSvc(Math.max(0, i)); });
     svcTrack();
+  }
+
+  /* ---------- What we make: pick a project to see it in 3D ----------
+     Cycles through the projects on its own until someone picks one. */
+  var makeItems = $$('.make-item'), makeKind = $('#makeKind'), makeQty = $('#makeQty');
+  if (makeItems.length) {
+    var makeNow = 0, picked = false, cycle = null;
+    function setMake(i) {
+      makeNow = i;
+      makeItems.forEach(function (b, k) { b.classList.toggle('active', k === i); b.setAttribute('aria-pressed', k === i); });
+      if (makeKind) makeKind.textContent = $('.make-k', makeItems[i]).textContent;
+      if (makeQty) makeQty.textContent = $('.make-q', makeItems[i]).textContent;
+      if (window.NAMU_setProduct) window.NAMU_setProduct(makeItems[i].dataset.obj);
+    }
+    makeItems.forEach(function (b, k) {
+      b.addEventListener('click', function () { picked = true; setMake(k); });
+      b.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { picked = true; setMake(k); } });
+      b.addEventListener('focus', function () { picked = true; setMake(k); });
+    });
+    var stage = $('#products');
+    if (stage) stage.addEventListener('pointerdown', function () { picked = true; });
+    setMake(0);
+    if (!reduce && hasIO) {
+      new IntersectionObserver(function (es) {
+        clearInterval(cycle);
+        if (es[0].isIntersecting) cycle = setInterval(function () { if (!picked) setMake((makeNow + 1) % makeItems.length); }, 4200);
+      }, { threshold: 0.4 }).observe($('.make-body'));
+    }
   }
 
   /* ---------- FAQ: open / close ---------- */

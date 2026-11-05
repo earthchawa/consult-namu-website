@@ -268,28 +268,39 @@
       /* Coasters: scalloped die-cut paper, toile border, plain center (no logo) */
       coaster: function () {
         var g = new THREE.Group();
-        var R = 0.72, N = 16;
+        /* 12 deep scallops, like the client's coaster */
+        var R = 0.74, N = 12;
+        function scallop(t) { return 0.86 + 0.14 * Math.abs(Math.cos(N * t / 2)); }
         var shape = new THREE.Shape();
-        for (var i = 0; i <= 256; i++) {
-          var t = i / 256 * Math.PI * 2, rr = R * (0.93 + 0.07 * Math.abs(Math.cos(N * t / 2)));
+        for (var i = 0; i <= 360; i++) {
+          var t = i / 360 * Math.PI * 2, rr = R * scallop(t);
           var x = Math.cos(t) * rr, y = Math.sin(t) * rr;
           if (i === 0) shape.moveTo(x, y); else shape.lineTo(x, y);
         }
         var geo = new THREE.ExtrudeGeometry(shape, { depth: 0.035, bevelEnabled: false, curveSegments: 4 });
         var top = canvasTex(1024, 1024, function (c, w) {
-          /* full-bleed illustrated print edge to edge */
-          c.fillStyle = '#F1EBDF'; c.fillRect(0, 0, w, w);
-          c.globalAlpha = 0.95; toile(c, w, w, '#9A6F66', 5); c.globalAlpha = 1;
-          /* a cream panel where the printed wordmark sits on the real coaster (left blank: no brand) */
-          c.fillStyle = 'rgba(241,235,223,.92)';
-          c.beginPath(); c.ellipse(w / 2, w / 2, w * 0.2, w * 0.1, 0, 0, Math.PI * 2); c.fill();
-          c.strokeStyle = '#9A6F66'; c.lineWidth = 2;
-          c.beginPath(); c.ellipse(w / 2, w / 2, w * 0.2, w * 0.1, 0, 0, Math.PI * 2); c.stroke();
-          c.lineWidth = 1; c.beginPath(); c.ellipse(w / 2, w / 2, w * 0.19, w * 0.09, 0, 0, Math.PI * 2); c.stroke();
+          /* white stock, dense rose-brown toile around the edge that fades to a clean center */
+          c.fillStyle = '#F7F5F0'; c.fillRect(0, 0, w, w);
+          toile(c, w, w, '#A06F63', 5);
+          toile(c, w, w, '#A9786C', 19);
+          toile(c, w, w, '#B58A7F', 41);
+          var fade = c.createRadialGradient(w / 2, w / 2, w * 0.06, w / 2, w / 2, w * 0.27);
+          fade.addColorStop(0, 'rgba(247,245,240,1)'); fade.addColorStop(0.5, 'rgba(247,245,240,.85)'); fade.addColorStop(1, 'rgba(247,245,240,0)');
+          c.fillStyle = fade; c.fillRect(0, 0, w, w);
+          /* thin dark-green scalloped line set in from the edge */
+          c.strokeStyle = '#1F3D2C'; c.lineWidth = 6;
+          c.beginPath();
+          for (var j = 0; j <= 360; j++) {
+            var a = j / 360 * Math.PI * 2, r = R * scallop(a) * 0.8;
+            var px = (Math.cos(a) * r / (2 * R) + 0.5) * w, py = (0.5 - Math.sin(a) * r / (2 * R)) * w;
+            if (j === 0) c.moveTo(px, py); else c.lineTo(px, py);
+          }
+          c.stroke();
+          /* the center is left blank where the real coaster carries the wordmark (no brand) */
         });
         top.repeat.set(1 / (2 * R), 1 / (2 * R)); top.offset.set(0.5, 0.5);
         var face = new THREE.MeshStandardMaterial({ map: top, roughness: 0.9 });
-        var edgeM = std(0xE4DCCD, { roughness: 0.95 });
+        var edgeM = std(0xEDEAE3, { roughness: 0.95 });
         function coaster(x, y, z, rx, rz) {
           var m = new THREE.Mesh(geo, [face, edgeM]);
           m.position.set(x, y, z); m.rotation.set(rx, 0, rz); g.add(m); return m;

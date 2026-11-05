@@ -294,8 +294,8 @@ html:not(.js) .row-body { grid-template-rows: 1fr; }
    HOW WE WORK PAGE
    ========================================================= */
 .hw-hero-wrap { position: relative; overflow: hidden; min-height: calc(88svh - 78px); display: flex; align-items: flex-end; border-bottom: 1px solid var(--line); }
-.hw-hero-bg { position: absolute; inset: 0; background: url(assets/how-hero.jpg) center 40% / cover no-repeat; filter: grayscale(.85) contrast(1.05) brightness(.55); transform: scale(1.06); animation: hw-drift 24s ease-in-out infinite alternate; }
-.hw-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,.55) 0%, rgba(10,10,10,.35) 35%, rgba(10,10,10,.92) 85%, #0A0A0A 100%), linear-gradient(90deg, rgba(10,10,10,.8) 0%, rgba(10,10,10,0) 70%); }
+.hw-hero-bg { position: absolute; inset: 0; background: url(assets/how-hero.jpg) center 40% / cover no-repeat;  transform: scale(1.06); animation: hw-drift 24s ease-in-out infinite alternate; }
+.hw-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,0) 55%, #0A0A0A 100%), rgba(10,10,10,.62); /* full color photo under a black layer: change .62 to make it lighter or darker */ }
 @keyframes hw-drift { to { transform: scale(1.14) translate(-1.5%, -1%); } }
 .hw-hero { position: relative; z-index: 1; width: 100%; padding-top: 140px; padding-bottom: 96px; display: flex; flex-direction: column; gap: 26px; }
 .hw-title { font-size: clamp(42px, 6.4vw, 92px); line-height: 1; letter-spacing: -0.045em; max-width: 1100px; }

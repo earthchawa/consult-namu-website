@@ -427,11 +427,19 @@
         var x = new THREE.Group();
         x.add(new THREE.Mesh(stroke([-0.92, 0.5], [0.0, 0.42], [0.78, -0.56], 0.11), metal));
         var b = new THREE.Mesh(stroke([0.7, 1.0], [0.06, 0.1], [-0.7, -1.04], 0.1), metal); b.position.z = 0.001; x.add(b);
+        /* small ring at the crossing, part of the same 2 mm sheet; the ribbon threads through it */
+        var ringShape = new THREE.Shape(); ringShape.absarc(0, 0, 0.085, 0, Math.PI * 2, false);
+        var hole = new THREE.Path(); hole.absarc(0, 0, 0.048, 0, Math.PI * 2, true); ringShape.holes.push(hole);
+        var ring = new THREE.Mesh(new THREE.ExtrudeGeometry(ringShape, { depth: 0.035, bevelEnabled: false, curveSegments: 32 }), metal);
+        ring.position.set(0.0, 0.36, 0); x.add(ring);
         x.position.set(0, -0.15, -0.015); g.add(x);
         /* satin ribbon: two thin strips meeting at a small hole near the crossing */
         var sat = std(0xCDAE6A, { roughness: 0.35, metalness: 0.2, side: THREE.DoubleSide, envMapIntensity: 0.8 });
-        g.add(ribbonStrip([new THREE.Vector3(0.02, 0.05, 0.02), new THREE.Vector3(0.0, 0.5, 0.01), new THREE.Vector3(-0.02, 1.1, 0)], 0.045, sat));
-        g.add(ribbonStrip([new THREE.Vector3(0.02, 0.05, -0.02), new THREE.Vector3(0.04, 0.5, -0.01), new THREE.Vector3(0.0, 1.1, 0)], 0.045, sat));
+        /* the ribbon loops through the ring: one side in front of the sheet, one behind */
+        g.add(ribbonStrip([new THREE.Vector3(0, 0.22, 0.03), new THREE.Vector3(0.0, 0.6, 0.02), new THREE.Vector3(-0.02, 1.15, 0)], 0.04, sat));
+        g.add(ribbonStrip([new THREE.Vector3(0, 0.22, -0.03), new THREE.Vector3(0.03, 0.6, -0.02), new THREE.Vector3(0.0, 1.15, 0)], 0.04, sat));
+        /* the fold of ribbon passing through the hole */
+        var fold = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.006, 8, 24, Math.PI), sat); fold.rotation.y = Math.PI / 2; fold.position.set(0, 0.22, 0); g.add(fold);
         g.userData.sway = true;
         return g;
       },

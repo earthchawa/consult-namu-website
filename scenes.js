@@ -411,35 +411,57 @@
          stroke, like the client's "X"), polished gold finish, hung on a satin ribbon. No brand. */
       xorn: function () {
         var g = new THREE.Group();
-        function stroke(p0, p1, p2, wMax) {
-          var curve = new THREE.QuadraticBezierCurve(new THREE.Vector2(p0[0], p0[1]), new THREE.Vector2(p1[0], p1[1]), new THREE.Vector2(p2[0], p2[1]));
-          var n = 72, left = [], right = [];
+        /* Upright, symmetric letterform: two mirrored S-curves crossing in the middle, each end
+           flaring out sideways (the infinity-like look). Tapers to sharp points, crisp cut edges. */
+        var WMAX = 0.1;
+        function widthAt(t) { return WMAX * Math.pow(Math.sin(Math.PI * t), 0.55); }
+        function curveFor(sgn) {   /* sgn 1: top-left to bottom-right, -1: its mirror */
+          return new THREE.CubicBezierCurve(
+            new THREE.Vector2(-0.88 * sgn, 0.78), new THREE.Vector2(-0.3 * sgn, 0.8),
+            new THREE.Vector2(0.3 * sgn, -0.8), new THREE.Vector2(0.88 * sgn, -0.78));
+        }
+        function stroke(curve) {
+          var n = 96, left = [], right = [];
           for (var i = 0; i <= n; i++) {
-            var t = i / n, p = curve.getPoint(t), d = curve.getTangent(t);
-            var w = wMax * Math.pow(Math.sin(Math.PI * t), 0.55);   /* tapers to sharp points */
+            var t = i / n, p = curve.getPoint(t), d = curve.getTangent(t), w = widthAt(t);
             left.push(new THREE.Vector2(p.x - d.y * w, p.y + d.x * w));
             right.push(new THREE.Vector2(p.x + d.y * w, p.y - d.x * w));
           }
           return new THREE.ExtrudeGeometry(new THREE.Shape(left.concat(right.reverse())),
-            { depth: 0.035, bevelEnabled: false, curveSegments: 12 });   /* crisp cut edges */
+            { depth: 0.035, bevelEnabled: false, curveSegments: 12 });
         }
         var metal = std(0xF0D18C, { metalness: 0.75, roughness: 0.18, envMapIntensity: 2.4, emissive: 0x241A06, flatShading: true });
         var x = new THREE.Group();
-        x.add(new THREE.Mesh(stroke([-0.92, 0.5], [0.0, 0.42], [0.78, -0.56], 0.11), metal));
-        var b = new THREE.Mesh(stroke([0.7, 1.0], [0.06, 0.1], [-0.7, -1.04], 0.1), metal); b.position.z = 0.001; x.add(b);
-        /* small ring at the crossing, part of the same 2 mm sheet; the ribbon threads through it */
-        var ringShape = new THREE.Shape(); ringShape.absarc(0, 0, 0.085, 0, Math.PI * 2, false);
-        var hole = new THREE.Path(); hole.absarc(0, 0, 0.048, 0, Math.PI * 2, true); ringShape.holes.push(hole);
-        var ring = new THREE.Mesh(new THREE.ExtrudeGeometry(ringShape, { depth: 0.035, bevelEnabled: false, curveSegments: 32 }), metal);
-        ring.position.set(0.0, 0.36, 0); x.add(ring);
-        x.position.set(0, -0.15, -0.015); g.add(x);
-        /* satin ribbon: two thin strips meeting at a small hole near the crossing */
+        var cA = curveFor(1), cB = curveFor(-1);
+        x.add(new THREE.Mesh(stroke(cA), metal));
+        var b = new THREE.Mesh(stroke(cB), metal); b.position.z = 0.001; x.add(b);
+
+        /* Ring, top center, sitting in the gap above the crossing and touching both strokes.
+           Find the height where the clearance to the stroke edge equals the ring's outer radius. */
+        var RO = 0.085, RI = 0.048;
+        function clearance(yc) {
+          var best = 1e9;
+          for (var i = 0; i <= 200; i++) {
+            var t = i / 200, p = cA.getPoint(t);
+            best = Math.min(best, Math.hypot(p.x, p.y - yc) - widthAt(t));
+          }
+          return best;
+        }
+        var yc = 0.02;
+        while (yc < 0.7 && clearance(yc) < RO) yc += 0.002;
+        var ringShape = new THREE.Shape(); ringShape.absarc(0, 0, RO, 0, Math.PI * 2, false);
+        var hole = new THREE.Path(); hole.absarc(0, 0, RI, 0, Math.PI * 2, true); ringShape.holes.push(hole);
+        var ring = new THREE.Mesh(new THREE.ExtrudeGeometry(ringShape, { depth: 0.035, bevelEnabled: false, curveSegments: 40 }), metal);
+        ring.position.set(0, yc - 0.004, 0); x.add(ring);      /* a hair lower so the ring meets the strokes */
+        x.position.set(0, -0.12, -0.0175); g.add(x);
+
+        /* Satin ribbon looped through the ring: one side in front of the sheet, one behind */
+        var top = -0.12 + yc + RI * 0.4;
         var sat = std(0xCDAE6A, { roughness: 0.35, metalness: 0.2, side: THREE.DoubleSide, envMapIntensity: 0.8 });
-        /* the ribbon loops through the ring: one side in front of the sheet, one behind */
-        g.add(ribbonStrip([new THREE.Vector3(0, 0.22, 0.03), new THREE.Vector3(0.0, 0.6, 0.02), new THREE.Vector3(-0.02, 1.15, 0)], 0.04, sat));
-        g.add(ribbonStrip([new THREE.Vector3(0, 0.22, -0.03), new THREE.Vector3(0.03, 0.6, -0.02), new THREE.Vector3(0.0, 1.15, 0)], 0.04, sat));
-        /* the fold of ribbon passing through the hole */
-        var fold = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.006, 8, 24, Math.PI), sat); fold.rotation.y = Math.PI / 2; fold.position.set(0, 0.22, 0); g.add(fold);
+        g.add(ribbonStrip([new THREE.Vector3(0, top, 0.03), new THREE.Vector3(0, top + 0.45, 0.02), new THREE.Vector3(0, 1.2, 0)], 0.04, sat));
+        g.add(ribbonStrip([new THREE.Vector3(0, top, -0.03), new THREE.Vector3(0, top + 0.45, -0.02), new THREE.Vector3(0, 1.2, 0)], 0.04, sat));
+        var fold = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.006, 8, 24, Math.PI), sat);
+        fold.rotation.y = Math.PI / 2; fold.position.set(0, top, 0); g.add(fold);
         g.userData.sway = true;
         return g;
       },

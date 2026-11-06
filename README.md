@@ -34,6 +34,15 @@ This website was crafted with a **"Black Minimalist"** design philosophy to refl
 * `dist/consultnamu-preview.zip` for `preview.consultnamu.com` (marked noindex)
 * `dist/consultnamu-live.zip` for `consultnamu.com`
 
+### 3D print textures
+
+The printed patterns on the 3D paper bag and coasters are pre-rendered images in `assets/3d/`.
+After changing the print style in `tools/toile.js` or `tools/bake-textures.js`, regenerate them:
+
+```sh
+node tools/bake-textures.js
+```
+
 ### Deploy (Plesk pulls these branches from GitHub)
 
 ```sh

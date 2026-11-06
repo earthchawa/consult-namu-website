@@ -3,7 +3,7 @@
 #   dist/consultnamu-preview.zip  -> for preview.consultnamu.com (hidden from Google)
 #   dist/consultnamu-live.zip     -> for consultnamu.com when the client approves
 set -e
-FILES="index.html about.html how-we-work.html samy.html samy.vcf styles.css interactions.js globe.js globe-land.js scenes.js vendor/three.min.js assets/samy.jpeg assets/favicon.png assets/social-cover.png assets/wechat-qr.png assets/how-hero.jpg"
+FILES="index.html about.html how-we-work.html samy.html samy.vcf styles.css interactions.js globe.js globe-land.js scenes.js vendor/three.min.js assets/samy.jpeg assets/favicon.png assets/social-cover.png assets/wechat-qr.png assets/how-hero.jpg assets/3d/bag-front.jpg assets/3d/bag-back.jpg assets/3d/bag-side-1.jpg assets/3d/bag-side-2.jpg assets/3d/coaster.jpg"
 mkdir -p dist
 TMP=$(mktemp -d)
 for f in $FILES robots.txt sitemap.xml; do mkdir -p "$TMP/live/$(dirname $f)" "$TMP/preview/$(dirname $f)"; cp "$f" "$TMP/live/$f"; done

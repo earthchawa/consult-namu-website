@@ -114,7 +114,7 @@
       opts = opts || {};
       var s = seed || 7;
       function rnd() { s = (s * 16807) % 2147483647; return s / 2147483647; }
-      var k = (opts.scale || 1) * w / 1024;
+      var k = opts.k || (opts.scale || 1) * w / 1024;
       c.save();
       c.strokeStyle = ink; c.fillStyle = ink; c.lineCap = 'round'; c.lineJoin = 'round';
       c.globalAlpha = opts.alpha || 0.9;
@@ -145,7 +145,7 @@
           var spread = (i - (kids - 1) / 2) * (0.45 + rnd() * 0.25);
           branch(ex, ey, len * (0.66 + rnd() * 0.12), ang + spread, depth - 1, width * 0.62);
         }
-        if (depth <= 2) leaves(ex, ey, 7 * k);
+        if (depth <= 2) { leaves(ex, ey, 9 * k); if (opts.bushy) leaves(ex, ey, 14 * k); }
       }
       function ground(x, y, wd) {
         for (var i = 0; i < 9; i++) {
@@ -156,6 +156,40 @@
           var tx = x + rnd() * wd; thin.moveTo(tx, y); thin.lineTo(tx + (rnd() - 0.5) * 4 * k, y - (5 + rnd() * 7) * k);
         }
       }
+      /* architecture, like the print on the client's bag: a block with rows of windows, an archway, palms */
+      function building(x, y) {
+        var bw = (70 + rnd() * 50) * k * (opts.big || 1), bh = (80 + rnd() * 60) * k * (opts.big || 1);
+        mid.rect(x, y - bh, bw, bh);
+        for (var fy = y - bh + 8 * k; fy < y - 6 * k; fy += 10 * k) {
+          thin.moveTo(x, fy); thin.lineTo(x + bw, fy);
+          for (var fx = x + 4 * k; fx < x + bw - 6 * k; fx += 9 * k) thin.rect(fx, fy + 2 * k, 4 * k, 5 * k);
+        }
+        thin.moveTo(x - 4 * k, y - bh); thin.lineTo(x + bw + 4 * k, y - bh);
+      }
+      function archway(x, y) {
+        var aw = (34 + rnd() * 14) * k, ah = (46 + rnd() * 16) * k;
+        mid.moveTo(x, y); mid.lineTo(x, y - ah * 0.6); mid.arc(x + aw / 2, y - ah * 0.6, aw / 2, Math.PI, 0); mid.lineTo(x + aw, y);
+        mid.rect(x - 9 * k, y - ah - 6 * k, aw + 18 * k, ah + 6 * k);
+        for (var r = 0; r < 4; r++) { thin.moveTo(x + 3 * k + r * 3 * k, y - 4 * k); thin.lineTo(x + 3 * k + r * 3 * k, y - ah * 0.5); }
+      }
+      function palm(x, y) {
+        var th = (50 + rnd() * 30) * k;
+        mid.moveTo(x, y); mid.quadraticCurveTo(x + 6 * k, y - th / 2, x + 2 * k, y - th);
+        for (var f = 0; f < 9; f++) {
+          var a = -Math.PI / 2 + (f - 4) * 0.38, len = (22 + rnd() * 12) * k;
+          var ex = x + 2 * k + Math.cos(a) * len, ey = y - th + Math.sin(a) * len * 0.8 + len * 0.25;
+          thin.moveTo(x + 2 * k, y - th); thin.quadraticCurveTo(x + 2 * k + Math.cos(a) * len * 0.5, y - th + Math.sin(a) * len * 0.6, ex, ey);
+          for (var l = 0.3; l < 1; l += 0.15) { var lx = x + 2 * k + (ex - x - 2 * k) * l, ly = y - th + (ey - y + th) * l; thin.moveTo(lx, ly); thin.lineTo(lx + 3 * k, ly + 4 * k); }
+        }
+      }
+      if (opts.scenery) {
+        var nb = Math.round((w * h) / (opts.sceneryEvery || 420) / (opts.sceneryEvery || 420) / (k * k));
+        for (var q = 0; q < nb; q++) {
+          var bx = rnd() * w, by = rnd() * h + 60 * k, pick = rnd();
+          if (pick < 0.4) building(bx, by); else if (pick < 0.7) archway(bx, by); else palm(bx, by);
+          ground(bx - 30 * k, by + 2 * k, 90 * k);
+        }
+      }
       var density = opts.density || 1;
       var n = Math.round((w * h) / (190 * 190 * k * k) * density);
       for (var t = 0; t < n; t++) {
@@ -163,7 +197,7 @@
         if (opts.edge) { /* keep trees toward the outside of a round piece */
           var dx = x - w / 2, dy = y - h / 2; if (Math.sqrt(dx * dx + dy * dy) < w * opts.edge) continue;
         }
-        branch(x, y, size, -Math.PI / 2 + (rnd() - 0.5) * 0.35, 3, 3.2 * k);
+        branch(x, y, size * (opts.tree || 1), -Math.PI / 2 + (rnd() - 0.5) * 0.35, opts.bushy ? 4 : 3, 3.2 * k * (opts.tree || 1));
         ground(x - 24 * k, y + 2 * k, 50 * k);
       }
       c.lineWidth = 0.8 * k; c.stroke(thin);
@@ -193,43 +227,59 @@
 
     /* ---------- The products ---------- */
     var builders = {
-      /* Printed paper bag: uncoated stock with an engraved toile print, green grosgrain
-         ribbon handles, side gussets and a small gold foil mark (no brand) */
+      /* Printed paper bag: uncoated stock, toile print with trees, buildings, archways and palms
+         on every side, sides folded in (V-gusset), green grosgrain handles, small gold foil mark */
       bag: function () {
         var g = new THREE.Group();
-        var W = 1.9, H = 1.5, D = 0.62;
-        var BG = '#EFE9DE', INK = '#9B7369';
-        function face(w, h, seed, gusset) {
+        var W = 1.9, H = 1.5, D = 0.62, C = 0.16;           /* C: how far the gussets fold in */
+        var BG = '#EFE9DC', INK = '#8E6A5F', PX = 540;       /* PX: canvas pixels per unit, same everywhere */
+        var K = 1.05;
+        function print(wu, hu, seed) {
+          var w = Math.round(wu * PX), h = Math.round(hu * PX);
           return canvasTex(w, h, function (c) {
             c.fillStyle = BG; c.fillRect(0, 0, w, h);
-            toile(c, w, h, INK, seed, { alpha: 0.9, scale: w > 600 ? 1.15 : 0.75, density: 2.6 });
-            /* top turn-over fold */
-            c.strokeStyle = 'rgba(0,0,0,.12)'; c.lineWidth = 2; c.beginPath(); c.moveTo(0, h * 0.07); c.lineTo(w, h * 0.07); c.stroke();
-            if (gusset) { /* side pleat: centre fold and the V at the bottom */
-              c.strokeStyle = 'rgba(0,0,0,.16)'; c.lineWidth = 2.5;
-              c.beginPath(); c.moveTo(w / 2, h * 0.07); c.lineTo(w / 2, h * 0.86); c.lineTo(0, h); c.moveTo(w / 2, h * 0.86); c.lineTo(w, h); c.stroke();
-            }
+            toile(c, w, h, INK, seed, { k: K, alpha: 0.9, density: 1.25, scenery: true, sceneryEvery: 200, big: 1.5, tree: 1.5, bushy: true });
+            c.strokeStyle = 'rgba(0,0,0,.10)'; c.lineWidth = 2; c.beginPath(); c.moveTo(0, h * 0.06); c.lineTo(w, h * 0.06); c.stroke();
           });
         }
+        function quad(p, u0, u1, mat) {   /* p: bottom-left, bottom-right, top-right, top-left */
+          var geo = new THREE.BufferGeometry();
+          geo.setAttribute('position', new THREE.Float32BufferAttribute([].concat(p[0], p[1], p[2], p[3]), 3));
+          geo.setAttribute('uv', new THREE.Float32BufferAttribute([u0, 0, u1, 0, u1, 1, u0, 1], 2));
+          geo.setIndex([0, 1, 2, 0, 2, 3]); geo.computeVertexNormals();
+          return new THREE.Mesh(geo, mat);
+        }
         var paper = function (t) { return new THREE.MeshStandardMaterial({ map: t, roughness: 0.92, envMapIntensity: 0.35 }); };
-        var inside = std(0xCFC6B6, { roughness: 0.95 }), bottom = std(0xDAD2C4, { roughness: 0.95 });
-        var body = new THREE.Mesh(new THREE.BoxGeometry(W, H, D),
-          [paper(face(320, 760, 23, true)), paper(face(320, 760, 29, true)), inside, bottom, paper(face(1024, 820, 11)), paper(face(1024, 820, 37))]);
-        g.add(body);
-        /* gold foil mark in place of the logo: two fine rules and a small diamond */
+        var inner = new THREE.MeshStandardMaterial({ color: 0xE2DACB, roughness: 0.95, side: THREE.BackSide, envMapIntensity: 0.2 });
+        var x = W / 2, z = D / 2, y0 = -H / 2, y1 = H / 2;
+        var sideLen = Math.hypot(C, z);
+        var panels = [
+          { p: [[-x, y0, z], [x, y0, z], [x, y1, z], [-x, y1, z]], t: print(W, H, 11), u: [0, 1] },            /* front */
+          { p: [[x, y0, -z], [-x, y0, -z], [-x, y1, -z], [x, y1, -z]], t: print(W, H, 37), u: [0, 1] }         /* back */
+        ];
+        [1, -1].forEach(function (sgn, i) {     /* each gusset: two panels meeting at a fold */
+          var t = print(sideLen * 2, H, 23 + i * 6);
+          panels.push({ p: [[sgn * x, y0, sgn * z], [sgn * (x - C), y0, 0], [sgn * (x - C), y1, 0], [sgn * x, y1, sgn * z]], t: t, u: [0, 0.5] });
+          panels.push({ p: [[sgn * (x - C), y0, 0], [sgn * x, y0, -sgn * z], [sgn * x, y1, -sgn * z], [sgn * (x - C), y1, 0]], t: t, u: [0.5, 1] });
+        });
+        panels.forEach(function (pn) {
+          var m = paper(pn.t); g.add(quad(pn.p, pn.u[0], pn.u[1], m)); g.add(quad(pn.p, pn.u[0], pn.u[1], inner));
+        });
+        /* bottom */
+        g.add(quad([[-x, y0, -z], [x, y0, -z], [x, y0, z], [-x, y0, z]], 0, 1, std(0xDDD5C6, { roughness: 0.95, side: THREE.DoubleSide })));
+        /* gold foil mark in place of the logo */
         var foil = std(FOIL.color, FOIL);
         [[0.5, 0.008, 0.02], [0.26, 0.006, -0.06]].forEach(function (r) {
-          var m = new THREE.Mesh(new THREE.BoxGeometry(r[0], r[1], 0.003), foil); m.position.set(0, r[2], D / 2 + 0.002); g.add(m);
+          var m = new THREE.Mesh(new THREE.BoxGeometry(r[0], r[1], 0.003), foil); m.position.set(0, r[2], z + 0.002); g.add(m);
         });
-        var dia = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.045, 0.003), foil); dia.rotation.z = Math.PI / 4; dia.position.set(0, 0.02, D / 2 + 0.003); g.add(dia);
-        /* grosgrain ribbon handles: flat strips that dip into the bag */
-        var rib = std(GREEN, { roughness: 0.42, side: THREE.DoubleSide, envMapIntensity: 0.6 });
-        [D / 2 - 0.05, -D / 2 + 0.05].forEach(function (z) {
-          var top = H / 2;
+        var dia = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.045, 0.003), foil); dia.rotation.z = Math.PI / 4; dia.position.set(0, 0.02, z + 0.003); g.add(dia);
+        /* grosgrain handles: flat ribbon, ends tucked inside the bag */
+        var rib = std(0x08521F, { roughness: 0.5, side: THREE.DoubleSide, envMapIntensity: 0.5 });
+        [z - 0.03, -z + 0.03].forEach(function (zz) {
           g.add(ribbonStrip([
-            new THREE.Vector3(-0.42, top - 0.14, z), new THREE.Vector3(-0.43, top + 0.18, z), new THREE.Vector3(-0.3, top + 0.52, z),
-            new THREE.Vector3(0, top + 0.62, z), new THREE.Vector3(0.3, top + 0.52, z), new THREE.Vector3(0.43, top + 0.18, z), new THREE.Vector3(0.42, top - 0.14, z)
-          ], 0.075, rib));
+            new THREE.Vector3(-0.4, y1 - 0.3, zz), new THREE.Vector3(-0.41, y1 + 0.12, zz), new THREE.Vector3(-0.3, y1 + 0.5, zz),
+            new THREE.Vector3(0, y1 + 0.62, zz), new THREE.Vector3(0.3, y1 + 0.5, zz), new THREE.Vector3(0.41, y1 + 0.12, zz), new THREE.Vector3(0.4, y1 - 0.3, zz)
+          ], 0.1, rib));
         });
         g.userData.y = -0.3; g.userData.sway = true;
         return g;
@@ -366,17 +416,17 @@
           var n = 72, left = [], right = [];
           for (var i = 0; i <= n; i++) {
             var t = i / n, p = curve.getPoint(t), d = curve.getTangent(t);
-            var w = wMax * (0.12 + 0.88 * Math.pow(Math.sin(Math.PI * t), 0.7));
+            var w = wMax * Math.pow(Math.sin(Math.PI * t), 0.55);   /* tapers to sharp points */
             left.push(new THREE.Vector2(p.x - d.y * w, p.y + d.x * w));
             right.push(new THREE.Vector2(p.x + d.y * w, p.y - d.x * w));
           }
           return new THREE.ExtrudeGeometry(new THREE.Shape(left.concat(right.reverse())),
-            { depth: 0.03, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.008, bevelSegments: 3, curveSegments: 12 });
+            { depth: 0.035, bevelEnabled: false, curveSegments: 12 });   /* crisp cut edges */
         }
-        var metal = std(0xF0D18C, { metalness: 0.7, roughness: 0.22, envMapIntensity: 2.2, emissive: 0x241A06 });
+        var metal = std(0xF0D18C, { metalness: 0.75, roughness: 0.18, envMapIntensity: 2.4, emissive: 0x241A06, flatShading: true });
         var x = new THREE.Group();
-        x.add(new THREE.Mesh(stroke([-0.86, 0.46], [0.02, 0.48], [0.7, -0.5], 0.06), metal));
-        var b = new THREE.Mesh(stroke([0.66, 0.96], [0.02, 0.14], [-0.66, -1.0], 0.055), metal); b.position.z = 0.001; x.add(b);
+        x.add(new THREE.Mesh(stroke([-0.92, 0.5], [0.0, 0.42], [0.78, -0.56], 0.11), metal));
+        var b = new THREE.Mesh(stroke([0.7, 1.0], [0.06, 0.1], [-0.7, -1.04], 0.1), metal); b.position.z = 0.001; x.add(b);
         x.position.set(0, -0.15, -0.015); g.add(x);
         /* satin ribbon: two thin strips meeting at a small hole near the crossing */
         var sat = std(0xCDAE6A, { roughness: 0.35, metalness: 0.2, side: THREE.DoubleSide, envMapIntensity: 0.8 });

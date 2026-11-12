@@ -95,13 +95,14 @@
 <header class="header">
   <div class="wrap">
     <a href="index.html" class="wordmark">CONSULT <em>NAMU</em></a>
-    <nav class="nav" aria-label="Main">
-      <a href="about.html">About Samy</a>
-      <a href="how-we-work.html">How we work</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu"><span></span><span></span></button>
+    <nav class="nav" id="mainNav" aria-label="Main">
       <a href="index.html#services">Services</a>
+      <a href="how-we-work.html">How we work</a>
       <a href="index.html#agencies">Agencies</a>
+      <a href="about.html">About Samy</a>
       <a href="how-we-work.html#faq">FAQ</a>
-      <a href="#contact">Contact</a>
+      <a href="mailto:samy@consultnamu.com?subject=Call%20request" class="nav-cta">Book a call</a>
     </nav>
   </div>
 </header>
@@ -213,30 +214,115 @@
   </div>
 </section>
 
-<!-- ===================== 4. WHAT WE MAKE (from real projects, client names kept confidential) ===================== -->
-<!-- The 3D product on the left is drawn by scenes.js. Pick a project to see it; drag to turn it. -->
+<!-- ===================== 4. WHAT WE MAKE (categories + line drawings) ===================== -->
 <section id="work" class="section">
-  <div class="wrap make">
-    <div class="make-head">
+  <div class="wrap mk">
+    <div class="mk-head">
       <div class="label reveal">What we make</div>
-      <h2 class="h2 reveal">From recent projects. <em>Client names kept confidential.</em></h2>
+      <h2 class="h2 reveal">If it carries your name, <em>we can make it.</em></h2>
     </div>
-    <div class="make-body">
-      <div class="make-stage reveal" id="products" aria-hidden="true">
-        <div class="make-tag"><span id="makeKind">Retail packaging</span><b id="makeQty">5,000 units</b></div>
-        <div class="make-hint">Drag to turn</div>
-      </div>
-      <ul class="make-list" role="list">
-        <li><button class="make-item" data-obj="bag"><span class="make-k">Retail packaging</span><h3>Printed paper bags</h3><p>Gold foil logo, grosgrain ribbon handles, uncoated stock.</p><span class="make-q">5,000 units</span></button></li>
-        <li><button class="make-item" data-obj="box"><span class="make-k">Gift boxes</span><h3>Suede cylinder boxes</h3><p>Suede wrap, lift-off lid, gold branding on lid and body.</p><span class="make-q">300 units</span></button></li>
-        <li><button class="make-item" data-obj="ornament"><span class="make-k">Holiday</span><h3>Glass ornaments</h3><p>8 cm printed glass balls, custom designs.</p><span class="make-q">2,000 units</span></button></li>
-        <li><button class="make-item" data-obj="xorn"><span class="make-k">Holiday</span><h3>Stainless steel ornaments</h3><p>8 × 8 cm, 2 mm stainless steel, custom letterform.</p><span class="make-q">500 pieces</span></button></li>
-        <li><button class="make-item" data-obj="ribbon"><span class="make-k">Trims</span><h3>Custom printed ribbon</h3><p>Gold stamping, three widths, 100-yard rolls.</p><span class="make-q">100 rolls</span></button></li>
-        <li><button class="make-item" data-obj="coaster"><span class="make-k">Tabletop</span><h3>Die-cut paper coasters</h3><p>Scalloped shape, full-bleed illustrated print, printed wordmark.</p><span class="make-q">10,000 units</span></button></li>
-        <li><button class="make-item" data-obj="ceramic"><span class="make-k">Tableware</span><h3>Custom ceramics</h3><p>Custom sizes, shapes and colors, made in Thailand.</p><span class="make-q">5,000 pieces</span></button></li>
-      </ul>
+    <div class="mk-grid">
+      <figure class="mk-panel reveal"><span class="mk-cap" id="mkCap">Retail packaging</span><svg class="mk-fig on" data-i="0" viewBox="0 0 400 400" aria-hidden="true"><path class="crop" d="M4 22V4H22M378 4H396V22M396 378V396H378M22 396H4V378"/><path pathLength="1" class="faint" d="M204 134C194 56 264 56 254 134"/>
+<path pathLength="1" class="solid" d="M120 140L164 122H294L250 140Z"/>
+<path pathLength="1" class="solid" d="M250 140L294 122V312L250 330Z"/>
+<clipPath id="hc1"><path d="M250 140L294 122V312L250 330Z"/></clipPath><path class="hatch late" clip-path="url(#hc1)" d="M250 122L42 330M256 122L48 330M262 122L54 330M268 122L60 330M274 122L66 330M280 122L72 330M286 122L78 330M292 122L84 330M298 122L90 330M304 122L96 330M310 122L102 330M316 122L108 330M322 122L114 330M328 122L120 330M334 122L126 330M340 122L132 330M346 122L138 330M352 122L144 330M358 122L150 330M364 122L156 330M370 122L162 330M376 122L168 330M382 122L174 330M388 122L180 330M394 122L186 330M400 122L192 330M406 122L198 330M412 122L204 330M418 122L210 330M424 122L216 330M430 122L222 330M436 122L228 330M442 122L234 330M448 122L240 330M454 122L246 330M460 122L252 330M466 122L258 330M472 122L264 330M478 122L270 330M484 122L276 330M490 122L282 330M496 122L288 330M502 122L294 330"/>
+<path pathLength="1" class="faint" d="M272 131V296L250 330M272 296L294 312M250 160L294 142"/>
+<path pathLength="1" class="solid" d="M120 140H250V330H120Z"/>
+<path pathLength="1" class="faint" d="M120 160H250"/>
+<path pathLength="1" d="M160 152C150 70 220 70 210 152"/>
+<circle cx="160" cy="152" r="3"/><circle cx="210" cy="152" r="3"/>
+<path class="logo late"  transform="translate(146.20 243.03) scale(0.02048)" d="M221 -474 147 -629H140L144 -474V0H88V-698H163L411 -224L485 -69H492L488 -224V-698H544V0H469Z M1534.0 0 1466.0 -219H1201.0L1134.0 0H1075.0L1296.0 -698H1372.0L1593.0 0ZM1369.0 -535 1337.0 -647H1330.0L1297.0 -535L1215.0 -266H1453.0Z M2618.0 -490 2623.0 -630H2615.0L2548.0 -490L2400.0 -196L2252.0 -490L2184.0 -628H2177.0L2181.0 -490V0H2125.0V-698H2204.0L2336.0 -431L2397.0 -290H2402.0L2464.0 -431L2595.0 -698H2674.0V0H2618.0Z M3323.0 -698V-248Q3323.0 -194 3331.0 -154.5Q3339.0 -115 3357.5 -89.5Q3376.0 -64 3406.5 -52.0Q3437.0 -40 3483.0 -40Q3529.0 -40 3559.5 -52.0Q3590.0 -64 3608.5 -89.5Q3627.0 -115 3635.0 -154.5Q3643.0 -194 3643.0 -248V-698H3701.0V-257Q3701.0 -186 3689.5 -135.5Q3678.0 -85 3652.5 -52.0Q3627.0 -19 3585.5 -3.5Q3544.0 12 3483.0 12Q3422.0 12 3380.5 -3.5Q3339.0 -19 3313.5 -52.0Q3288.0 -85 3276.5 -135.5Q3265.0 -186 3265.0 -257V-698Z"/><path class="faint late" d="M163 254H207"/>
+<path pathLength="1" class="faint" d="M160 152Q150 172 143 186"/>
+<rect pathLength="1" class="solid" x="135" y="186" width="16" height="25" rx="1.5" transform="rotate(10 143 186)"/>
+<path pathLength="1" class="solid" d="M52 270L76 260H140L116 270Z"/><path pathLength="1" class="solid" d="M116 270L140 260V320L116 330Z"/>
+<clipPath id="hc2"><path d="M116 270L140 260V320L116 330Z"/></clipPath><path class="hatch late" clip-path="url(#hc2)" d="M116 260L46 330M121 260L51 330M126 260L56 330M131 260L61 330M136 260L66 330M141 260L71 330M146 260L76 330M151 260L81 330M156 260L86 330M161 260L91 330M166 260L96 330M171 260L101 330M176 260L106 330M181 260L111 330M186 260L116 330M191 260L121 330M196 260L126 330M201 260L131 330M206 260L136 330"/>
+<path pathLength="1" class="solid" d="M52 270H116V330H52Z"/>
+<path pathLength="1" class="faint" d="M52 286H116L140 276M78 270V330M90 270V330M78 270L102 260M90 270L114 260"/>
+<path class="ground late" d="M30 338H330"/>
+<g class="co late"><circle cx="158" cy="118" r="2"/><path d="M158 118L104 82H92"/><text x="88" y="84.8" style="text-anchor:end">ROPE HANDLE</text></g><g class="co late"><circle cx="283" cy="226" r="2"/><path d="M283 226L316 204H328"/><text x="332" y="206.8" style="text-anchor:start">GUSSET</text></g><g class="co late"><circle cx="222" cy="236" r="2"/><path d="M222 236L316 262H328"/><text x="332" y="264.8" style="text-anchor:start">FOIL</text></g><text class="fig" x="392" y="392">FIG. 01</text></svg><svg class="mk-fig" data-i="1" viewBox="0 0 400 400" aria-hidden="true"><path class="crop" d="M4 22V4H22M378 4H396V22M396 378V396H378M22 396H4V378"/><path pathLength="1" class="faint dash" d="M200 58V352"/>
+<ellipse pathLength="1" class="solid faint" cx="200" cy="236" rx="80" ry="20.5"/>
+<path pathLength="1" class="solid" d="M120 236V320A80 20.5 0 0 0 280 320V236A80 20.5 0 0 1 120 236Z"/>
+<path class="hatch late" d="M246 252.8V336.8M257 250.4V334.4M265 248.0V332.0M271 245.4V329.4M276 242.4V326.4"/>
+<path pathLength="1" class="solid" d="M126 222V236A74 19 0 0 0 274 236V222"/>
+<ellipse pathLength="1" class="solid" cx="200" cy="222" rx="74" ry="19"/><ellipse pathLength="1" class="faint" cx="200" cy="222" rx="67" ry="16.6"/>
+<path pathLength="1" class="solid" d="M114 112V142A86 22 0 0 0 286 142V112"/>
+<path class="hatch late" d="M250 129.9V159.9M261 127.5V157.5M270 124.8V154.8M277 121.8V151.8M282 118.6V148.6"/>
+<ellipse pathLength="1" class="solid" cx="200" cy="112" rx="86" ry="22"/>
+<ellipse pathLength="1" class="faint" cx="200" cy="112" rx="34" ry="8.7"/><ellipse pathLength="1" class="faint" cx="200" cy="112" rx="27" ry="6.9"/>
+<path class="logo late"  transform="translate(165.59 295.51) scale(0.01605)" d="M221 -474 147 -629H140L144 -474V0H88V-698H163L411 -224L485 -69H492L488 -224V-698H544V0H469Z M1534.0 0 1466.0 -219H1201.0L1134.0 0H1075.0L1296.0 -698H1372.0L1593.0 0ZM1369.0 -535 1337.0 -647H1330.0L1297.0 -535L1215.0 -266H1453.0Z M2618.0 -490 2623.0 -630H2615.0L2548.0 -490L2400.0 -196L2252.0 -490L2184.0 -628H2177.0L2181.0 -490V0H2125.0V-698H2204.0L2336.0 -431L2397.0 -290H2402.0L2464.0 -431L2595.0 -698H2674.0V0H2618.0Z M3323.0 -698V-248Q3323.0 -194 3331.0 -154.5Q3339.0 -115 3357.5 -89.5Q3376.0 -64 3406.5 -52.0Q3437.0 -40 3483.0 -40Q3529.0 -40 3559.5 -52.0Q3590.0 -64 3608.5 -89.5Q3627.0 -115 3635.0 -154.5Q3643.0 -194 3643.0 -248V-698H3701.0V-257Q3701.0 -186 3689.5 -135.5Q3678.0 -85 3652.5 -52.0Q3627.0 -19 3585.5 -3.5Q3544.0 12 3483.0 12Q3422.0 12 3380.5 -3.5Q3339.0 -19 3313.5 -52.0Q3288.0 -85 3276.5 -135.5Q3265.0 -186 3265.0 -257V-698Z"/>
+<path class="faint late" d="M92 204V168M86 176L92 166L98 176" style="stroke-width:1"/>
+<path class="ground late" d="M70 350H330"/>
+<g class="co late"><circle cx="268" cy="130" r="2"/><path d="M268 130L304 100H316"/><text x="320" y="102.8" style="text-anchor:start">LIFT-OFF LID</text></g><g class="co late"><circle cx="140" cy="286" r="2"/><path d="M140 286L96 262H84"/><text x="80" y="264.8" style="text-anchor:end">SUEDE WRAP</text></g><g class="co late"><circle cx="262" cy="226" r="2"/><path d="M262 226L304 206H316"/><text x="320" y="208.8" style="text-anchor:start">NECK</text></g><text class="fig" x="392" y="392">FIG. 02</text></svg><svg class="mk-fig" data-i="2" viewBox="0 0 400 400" aria-hidden="true"><path class="crop" d="M4 22V4H22M378 4H396V22M396 378V396H378M22 396H4V378"/><path pathLength="1" class="solid faint" d="M178.0 211.0 L177.8 211.7 L177.4 212.4 L176.7 213.1 L175.7 213.7 L174.5 214.3 L173.1 214.9 L171.6 215.5 L170.0 216.0 L170.8 216.7 L171.5 217.5 L172.1 218.3 L172.5 219.0 L172.6 219.8 L172.5 220.5 L172.1 221.2 L171.5 221.8 L170.5 222.5 L169.3 223.0 L167.9 223.5 L166.3 223.9 L164.5 224.3 L162.5 224.6 L160.5 224.8 L158.5 225.0 L158.4 225.8 L158.2 226.6 L157.8 227.4 L157.3 228.2 L156.6 228.9 L155.6 229.5 L154.5 230.1 L153.2 230.5 L151.6 230.9 L149.9 231.2 L148.1 231.4 L146.1 231.6 L144.1 231.6 L142.0 231.5 L139.9 231.4 L137.8 231.3 L136.8 232.0 L135.7 232.7 L134.5 233.3 L133.2 233.9 L131.7 234.4 L130.1 234.8 L128.5 235.2 L126.7 235.4 L124.9 235.5 L123.0 235.5 L121.1 235.3 L119.2 235.1 L117.3 234.8 L115.5 234.4 L113.7 234.0 L112.0 233.5 L110.3 234.0 L108.5 234.4 L106.7 234.8 L104.8 235.1 L102.9 235.3 L101.0 235.5 L99.1 235.5 L97.3 235.4 L95.5 235.2 L93.9 234.8 L92.3 234.4 L90.8 233.9 L89.5 233.3 L88.3 232.7 L87.2 232.0 L86.2 231.3 L84.1 231.4 L82.0 231.5 L79.9 231.6 L77.9 231.6 L75.9 231.4 L74.1 231.2 L72.4 230.9 L70.8 230.5 L69.5 230.1 L68.4 229.5 L67.4 228.9 L66.7 228.2 L66.2 227.4 L65.8 226.6 L65.6 225.8 L65.5 225.0 L63.5 224.8 L61.5 224.6 L59.5 224.3 L57.7 223.9 L56.1 223.5 L54.7 223.0 L53.5 222.5 L52.5 221.8 L51.9 221.2 L51.5 220.5 L51.4 219.8 L51.5 219.0 L51.9 218.3 L52.5 217.5 L53.2 216.7 L54.0 216.0 L52.4 215.5 L50.9 214.9 L49.5 214.3 L48.3 213.7 L47.3 213.1 L46.6 212.4 L46.2 211.7 L46.0 211.0 L46.2 210.3 L46.6 209.6 L47.3 208.9 L48.3 208.3 L49.5 207.7 L50.9 207.1 L52.4 206.5 L54.0 206.0 L53.2 205.3 L52.5 204.5 L51.9 203.7 L51.5 203.0 L51.4 202.2 L51.5 201.5 L51.9 200.8 L52.5 200.2 L53.5 199.5 L54.7 199.0 L56.1 198.5 L57.7 198.1 L59.5 197.7 L61.5 197.4 L63.5 197.2 L65.5 197.0 L65.6 196.2 L65.8 195.4 L66.2 194.6 L66.7 193.8 L67.4 193.1 L68.4 192.5 L69.5 191.9 L70.8 191.5 L72.4 191.1 L74.1 190.8 L75.9 190.6 L77.9 190.4 L79.9 190.4 L82.0 190.5 L84.1 190.6 L86.2 190.7 L87.2 190.0 L88.3 189.3 L89.5 188.7 L90.8 188.1 L92.3 187.6 L93.9 187.2 L95.5 186.8 L97.3 186.6 L99.1 186.5 L101.0 186.5 L102.9 186.7 L104.8 186.9 L106.7 187.2 L108.5 187.6 L110.3 188.0 L112.0 188.5 L113.7 188.0 L115.5 187.6 L117.3 187.2 L119.2 186.9 L121.1 186.7 L123.0 186.5 L124.9 186.5 L126.7 186.6 L128.5 186.8 L130.1 187.2 L131.7 187.6 L133.2 188.1 L134.5 188.7 L135.7 189.3 L136.8 190.0 L137.8 190.7 L139.9 190.6 L142.0 190.5 L144.1 190.4 L146.1 190.4 L148.1 190.6 L149.9 190.8 L151.6 191.1 L153.2 191.5 L154.5 191.9 L155.6 192.5 L156.6 193.1 L157.3 193.8 L157.8 194.6 L158.2 195.4 L158.4 196.2 L158.5 197.0 L160.5 197.2 L162.5 197.4 L164.5 197.7 L166.3 198.1 L167.9 198.5 L169.3 199.0 L170.5 199.5 L171.5 200.2 L172.1 200.8 L172.5 201.5 L172.6 202.2 L172.5 203.0 L172.1 203.7 L171.5 204.5 L170.8 205.3 L170.0 206.0 L171.6 206.5 L173.1 207.1 L174.5 207.7 L175.7 208.3 L176.7 208.9 L177.4 209.6 L177.8 210.3 L178.0 211.0Z"/>
+<path pathLength="1" class="solid" d="M178.0 206.0 L177.8 206.7 L177.4 207.4 L176.7 208.1 L175.7 208.7 L174.5 209.3 L173.1 209.9 L171.6 210.5 L170.0 211.0 L170.8 211.7 L171.5 212.5 L172.1 213.3 L172.5 214.0 L172.6 214.8 L172.5 215.5 L172.1 216.2 L171.5 216.8 L170.5 217.5 L169.3 218.0 L167.9 218.5 L166.3 218.9 L164.5 219.3 L162.5 219.6 L160.5 219.8 L158.5 220.0 L158.4 220.8 L158.2 221.6 L157.8 222.4 L157.3 223.2 L156.6 223.9 L155.6 224.5 L154.5 225.1 L153.2 225.5 L151.6 225.9 L149.9 226.2 L148.1 226.4 L146.1 226.6 L144.1 226.6 L142.0 226.5 L139.9 226.4 L137.8 226.3 L136.8 227.0 L135.7 227.7 L134.5 228.3 L133.2 228.9 L131.7 229.4 L130.1 229.8 L128.5 230.2 L126.7 230.4 L124.9 230.5 L123.0 230.5 L121.1 230.3 L119.2 230.1 L117.3 229.8 L115.5 229.4 L113.7 229.0 L112.0 228.5 L110.3 229.0 L108.5 229.4 L106.7 229.8 L104.8 230.1 L102.9 230.3 L101.0 230.5 L99.1 230.5 L97.3 230.4 L95.5 230.2 L93.9 229.8 L92.3 229.4 L90.8 228.9 L89.5 228.3 L88.3 227.7 L87.2 227.0 L86.2 226.3 L84.1 226.4 L82.0 226.5 L79.9 226.6 L77.9 226.6 L75.9 226.4 L74.1 226.2 L72.4 225.9 L70.8 225.5 L69.5 225.1 L68.4 224.5 L67.4 223.9 L66.7 223.2 L66.2 222.4 L65.8 221.6 L65.6 220.8 L65.5 220.0 L63.5 219.8 L61.5 219.6 L59.5 219.3 L57.7 218.9 L56.1 218.5 L54.7 218.0 L53.5 217.5 L52.5 216.8 L51.9 216.2 L51.5 215.5 L51.4 214.8 L51.5 214.0 L51.9 213.3 L52.5 212.5 L53.2 211.7 L54.0 211.0 L52.4 210.5 L50.9 209.9 L49.5 209.3 L48.3 208.7 L47.3 208.1 L46.6 207.4 L46.2 206.7 L46.0 206.0 L46.2 205.3 L46.6 204.6 L47.3 203.9 L48.3 203.3 L49.5 202.7 L50.9 202.1 L52.4 201.5 L54.0 201.0 L53.2 200.3 L52.5 199.5 L51.9 198.7 L51.5 198.0 L51.4 197.2 L51.5 196.5 L51.9 195.8 L52.5 195.2 L53.5 194.5 L54.7 194.0 L56.1 193.5 L57.7 193.1 L59.5 192.7 L61.5 192.4 L63.5 192.2 L65.5 192.0 L65.6 191.2 L65.8 190.4 L66.2 189.6 L66.7 188.8 L67.4 188.1 L68.4 187.5 L69.5 186.9 L70.8 186.5 L72.4 186.1 L74.1 185.8 L75.9 185.6 L77.9 185.4 L79.9 185.4 L82.0 185.5 L84.1 185.6 L86.2 185.7 L87.2 185.0 L88.3 184.3 L89.5 183.7 L90.8 183.1 L92.3 182.6 L93.9 182.2 L95.5 181.8 L97.3 181.6 L99.1 181.5 L101.0 181.5 L102.9 181.7 L104.8 181.9 L106.7 182.2 L108.5 182.6 L110.3 183.0 L112.0 183.5 L113.7 183.0 L115.5 182.6 L117.3 182.2 L119.2 181.9 L121.1 181.7 L123.0 181.5 L124.9 181.5 L126.7 181.6 L128.5 181.8 L130.1 182.2 L131.7 182.6 L133.2 183.1 L134.5 183.7 L135.7 184.3 L136.8 185.0 L137.8 185.7 L139.9 185.6 L142.0 185.5 L144.1 185.4 L146.1 185.4 L148.1 185.6 L149.9 185.8 L151.6 186.1 L153.2 186.5 L154.5 186.9 L155.6 187.5 L156.6 188.1 L157.3 188.8 L157.8 189.6 L158.2 190.4 L158.4 191.2 L158.5 192.0 L160.5 192.2 L162.5 192.4 L164.5 192.7 L166.3 193.1 L167.9 193.5 L169.3 194.0 L170.5 194.5 L171.5 195.2 L172.1 195.8 L172.5 196.5 L172.6 197.2 L172.5 198.0 L172.1 198.7 L171.5 199.5 L170.8 200.3 L170.0 201.0 L171.6 201.5 L173.1 202.1 L174.5 202.7 L175.7 203.3 L176.7 203.9 L177.4 204.6 L177.8 205.3 L178.0 206.0Z"/>
+<ellipse pathLength="1" class="faint dash" cx="112" cy="206" rx="49" ry="18"/>
+<path pathLength="1" class="solid" d="M82 118L90 200A22 7.5 0 0 0 134 200L142 118"/>
+<ellipse pathLength="1" class="solid" cx="112" cy="118" rx="30" ry="10"/>
+<ellipse pathLength="1" class="faint" cx="112" cy="142" rx="27.7" ry="9.2"/>
+<path pathLength="1" class="faint" d="M89 189A22.6 7.6 0 0 0 135 189M92 128L97 184"/>
+<g transform="translate(8 10)"><path pathLength="1" class="solid" d="M112 272V279A128 47 0 0 0 368 279V272"/>
+<ellipse pathLength="1" class="solid" cx="240" cy="272" rx="128" ry="47"/>
+<ellipse pathLength="1" class="faint dash" cx="240" cy="272" rx="113" ry="41"/>
+<ellipse pathLength="1" cx="240" cy="271" rx="94" ry="33.5"/>
+<ellipse pathLength="1" class="faint" cx="240" cy="275" rx="62" ry="21"/>
+<path class="hatch late" d="M300 262A62 21 0 0 1 262 295M306 268A62 21 0 0 1 276 293"/>
+</g>
+<path pathLength="1" class="faint" d="M250 182L340 196L352 130"/>
+<path pathLength="1" class="solid" d="M262 112L352 126L340 192L250 178Z"/>
+<path pathLength="1" class="faint" d="M300 118L288 184M314 120.2L302 186.2"/>
+<g class="co late"><circle cx="64" cy="192" r="2"/><path d="M64 192L40 150H40"/><text x="26" y="142" style="text-anchor:start">DIE-CUT</text></g>
+<g class="co late"><circle cx="346" cy="253" r="2"/><path d="M346 253L364 222H364"/><text x="348" y="215" style="text-anchor:start">CERAMIC</text></g>
+<g class="co late"><circle cx="330" cy="140" r="2"/><path d="M330 140L356 98H356"/><text x="344" y="91" style="text-anchor:start">LINEN</text></g>
+<g class="dim late"><path d="M120 345V355M376 345V355M120 350H376M126 347L120 350L126 353M370 347L376 350L370 353"/><text x="248.0" y="366">Ø</text></g><text class="fig" x="392" y="392">FIG. 03</text></svg><svg class="mk-fig" data-i="3" viewBox="0 0 400 400" aria-hidden="true"><path class="crop" d="M4 22V4H22M378 4H396V22M396 378V396H378M22 396H4V378"/><path pathLength="1" class="faint" d="M160 117V36M284 166V36"/>
+<circle pathLength="1" class="solid" cx="160" cy="214" r="70"/>
+<path class="hatch late" d="M221.4 222.6A62 62 0 0 1 177.1 273.6M212.4 227.1A54 54 0 0 1 180.2 264.1M202.7 231.2A46 46 0 0 1 183.0 253.8"/>
+<path pathLength="1" class="faint" d="M92 198C125 212 195 212 228 198M92.4 232C125 246 195 246 227.6 232"/>
+<path pathLength="1" class="faint" d="M102.3 197.5A60 60 0 0 1 126.4 164.3"/>
+<path class="logo late"  transform="translate(127.49 220.89) scale(0.01716)" d="M221 -474 147 -629H140L144 -474V0H88V-698H163L411 -224L485 -69H492L488 -224V-698H544V0H469Z M1534.0 0 1466.0 -219H1201.0L1134.0 0H1075.0L1296.0 -698H1372.0L1593.0 0ZM1369.0 -535 1337.0 -647H1330.0L1297.0 -535L1215.0 -266H1453.0Z M2618.0 -490 2623.0 -630H2615.0L2548.0 -490L2400.0 -196L2252.0 -490L2184.0 -628H2177.0L2181.0 -490V0H2125.0V-698H2204.0L2336.0 -431L2397.0 -290H2402.0L2464.0 -431L2595.0 -698H2674.0V0H2618.0Z M3323.0 -698V-248Q3323.0 -194 3331.0 -154.5Q3339.0 -115 3357.5 -89.5Q3376.0 -64 3406.5 -52.0Q3437.0 -40 3483.0 -40Q3529.0 -40 3559.5 -52.0Q3590.0 -64 3608.5 -89.5Q3627.0 -115 3635.0 -154.5Q3643.0 -194 3643.0 -248V-698H3701.0V-257Q3701.0 -186 3689.5 -135.5Q3678.0 -85 3652.5 -52.0Q3627.0 -19 3585.5 -3.5Q3544.0 12 3483.0 12Q3422.0 12 3380.5 -3.5Q3339.0 -19 3313.5 -52.0Q3288.0 -85 3276.5 -135.5Q3265.0 -186 3265.0 -257V-698Z"/>
+<rect pathLength="1" class="solid" x="148" y="131" width="24" height="14" rx="1.5"/><path pathLength="1" class="faint" d="M154 131V145M160 131V145M166 131V145"/>
+<circle pathLength="1" cx="160" cy="124" r="7"/>
+<path pathLength="1" class="faint" transform="translate(4 4)" d="M276 176H292L306 194L320 176H336L315 206L336 236H320L306 218L292 236H276L297 206Z"/>
+<path pathLength="1" class="solid" d="M276 176H292L306 194L320 176H336L315 206L336 236H320L306 218L292 236H276L297 206Z"/>
+<circle pathLength="1" cx="284" cy="170" r="4"/>
+<path pathLength="1" class="solid" d="M70 316C110 292 150 338 190 314S270 302 300 312L290 320L300 328C270 318 230 306 190 330S110 308 70 332L80 324Z"/>
+<path pathLength="1" class="faint dash" d="M80 324C114 302 150 344 190 322S266 310 290 320"/>
+<g class="co late"><circle cx="112" cy="166" r="2"/><path d="M112 166L82 128H70"/><text x="66" y="130.8" style="text-anchor:end">GLASS</text></g><g class="co late"><circle cx="328" cy="200" r="2"/><path d="M328 200L350 166H350"/><text x="338" y="159" style="text-anchor:start">STEEL</text></g><g class="co late"><circle cx="296" cy="320" r="2"/><path d="M296 320L326 346H338"/><text x="342" y="348.8" style="text-anchor:start">RIBBON</text></g><text class="fig" x="392" y="392">FIG. 04</text></svg><svg class="mk-fig" data-i="4" viewBox="0 0 400 400" aria-hidden="true"><path class="crop" d="M4 22V4H22M378 4H396V22M396 378V396H378M22 396H4V378"/><path pathLength="1" d="M130 110C145 103 175 103 190 110"/>
+<path pathLength="1" class="solid" d="M130 110L100 124L70 170L98 186L112 166V310H208V166L222 186L250 170L220 124L190 110C184 128 136 128 130 110Z"/>
+<path pathLength="1" class="faint" d="M126.5 111.5C133 134 187 134 193.5 111.5"/>
+<path pathLength="1" class="faint dash" d="M76 161L104 177M244 161L216 177M112 301H208"/>
+<rect pathLength="1" class="faint" x="154" y="105" width="12" height="7" rx="1"/>
+<rect pathLength="1" class="faint dash" x="126" y="170" width="68" height="40"/>
+<path class="logo late"  transform="translate(131.68 195.13) scale(0.01495)" d="M221 -474 147 -629H140L144 -474V0H88V-698H163L411 -224L485 -69H492L488 -224V-698H544V0H469Z M1534.0 0 1466.0 -219H1201.0L1134.0 0H1075.0L1296.0 -698H1372.0L1593.0 0ZM1369.0 -535 1337.0 -647H1330.0L1297.0 -535L1215.0 -266H1453.0Z M2618.0 -490 2623.0 -630H2615.0L2548.0 -490L2400.0 -196L2252.0 -490L2184.0 -628H2177.0L2181.0 -490V0H2125.0V-698H2204.0L2336.0 -431L2397.0 -290H2402.0L2464.0 -431L2595.0 -698H2674.0V0H2618.0Z M3323.0 -698V-248Q3323.0 -194 3331.0 -154.5Q3339.0 -115 3357.5 -89.5Q3376.0 -64 3406.5 -52.0Q3437.0 -40 3483.0 -40Q3529.0 -40 3559.5 -52.0Q3590.0 -64 3608.5 -89.5Q3627.0 -115 3635.0 -154.5Q3643.0 -194 3643.0 -248V-698H3701.0V-257Q3701.0 -186 3689.5 -135.5Q3678.0 -85 3652.5 -52.0Q3627.0 -19 3585.5 -3.5Q3544.0 12 3483.0 12Q3422.0 12 3380.5 -3.5Q3339.0 -19 3313.5 -52.0Q3288.0 -85 3276.5 -135.5Q3265.0 -186 3265.0 -257V-698Z"/>
+<path pathLength="1" d="M278 222C276 150 338 150 336 222"/><path pathLength="1" class="faint" d="M288 222C287 166 327 166 326 222"/>
+<path pathLength="1" class="solid" d="M262 222H352L346 334H268Z"/>
+<path pathLength="1" class="faint" d="M276 222V234H290V222M324 222V234H338V222M276 222L290 234M290 222L276 234M324 222L338 234M338 222L324 234M267 322H347"/>
+<path class="logo late"  transform="translate(282.88 282.37) scale(0.01273)" d="M221 -474 147 -629H140L144 -474V0H88V-698H163L411 -224L485 -69H492L488 -224V-698H544V0H469Z M1534.0 0 1466.0 -219H1201.0L1134.0 0H1075.0L1296.0 -698H1372.0L1593.0 0ZM1369.0 -535 1337.0 -647H1330.0L1297.0 -535L1215.0 -266H1453.0Z M2618.0 -490 2623.0 -630H2615.0L2548.0 -490L2400.0 -196L2252.0 -490L2184.0 -628H2177.0L2181.0 -490V0H2125.0V-698H2204.0L2336.0 -431L2397.0 -290H2402.0L2464.0 -431L2595.0 -698H2674.0V0H2618.0Z M3323.0 -698V-248Q3323.0 -194 3331.0 -154.5Q3339.0 -115 3357.5 -89.5Q3376.0 -64 3406.5 -52.0Q3437.0 -40 3483.0 -40Q3529.0 -40 3559.5 -52.0Q3590.0 -64 3608.5 -89.5Q3627.0 -115 3635.0 -154.5Q3643.0 -194 3643.0 -248V-698H3701.0V-257Q3701.0 -186 3689.5 -135.5Q3678.0 -85 3652.5 -52.0Q3627.0 -19 3585.5 -3.5Q3544.0 12 3483.0 12Q3422.0 12 3380.5 -3.5Q3339.0 -19 3313.5 -52.0Q3288.0 -85 3276.5 -135.5Q3265.0 -186 3265.0 -257V-698Z"/>
+<path class="ground late" d="M50 340H370"/>
+<g class="co late"><circle cx="128" cy="202" r="2"/><path d="M128 202L86 236H74"/><text x="70" y="238.8" style="text-anchor:end">PRINT</text></g><g class="co late"><circle cx="166" cy="108" r="2"/><path d="M166 108L196 74H208"/><text x="212" y="76.8" style="text-anchor:start">WOVEN LABEL</text></g><g class="co late"><circle cx="307" cy="168" r="2"/><path d="M307 168L330 142H342"/><text x="346" y="144.8" style="text-anchor:start">CANVAS</text></g><text class="fig" x="392" y="392">FIG. 05</text></svg><svg class="mk-fig" data-i="5" viewBox="0 0 400 400" aria-hidden="true"><path class="crop" d="M4 22V4H22M378 4H396V22M396 378V396H378M22 396H4V378"/><path pathLength="1" class="faint dash" d="M48 170H272M160 58V282M72 170V300M248 170V300"/>
+<circle pathLength="1" cx="160" cy="170" r="88"/><circle pathLength="1" cx="160" cy="170" r="64"/>
+<circle pathLength="1" class="faint dash" cx="160" cy="170" r="76"/>
+<rect pathLength="1" class="solid" x="72" y="300" width="176" height="26" rx="13"/>
+<path pathLength="1" class="faint dash" d="M96 300V326M224 300V326M60 313H260"/>
+<circle pathLength="1" class="faint" cx="218" cy="121" r="13"/><path pathLength="1" class="faint" d="M230 116L274 104"/>
+<circle pathLength="1" class="solid" cx="322" cy="96" r="50"/>
+<path pathLength="1" d="M298 64H326A16 16 0 0 1 342 80V112A16 16 0 0 1 326 128H298Z"/><clipPath id="hc3"><path d="M298 64H326A16 16 0 0 1 342 80V112A16 16 0 0 1 326 128H298Z"/></clipPath><path class="hatch late" clip-path="url(#hc3)" d="M298 64L234 128M304 64L240 128M310 64L246 128M316 64L252 128M322 64L258 128M328 64L264 128M334 64L270 128M340 64L276 128M346 64L282 128M352 64L288 128M358 64L294 128M364 64L300 128M370 64L306 128M376 64L312 128M382 64L318 128M388 64L324 128M394 64L330 128M400 64L336 128M406 64L342 128"/>
+<path class="co late" d="M342 80L356 66" style="stroke:#7a7a7a;stroke-width:.8"/>
+<g class="co late"><text x="362" y="64" style="text-anchor:start">R</text><text x="322" y="162">DETAIL A</text><text x="42" y="173">A</text><text x="280" y="173">A</text></g>
+<g class="dim late"><path d="M72 343V353M248 343V353M72 348H248M78 345L72 348L78 351M242 345L248 348L242 351"/><text x="160.0" y="364">Ø</text></g><text class="fig" x="392" y="392">FIG. 06</text></svg></figure>
+      <ol class="mk-list">
+        <li class="mk-row on" data-i="0" tabindex="0"><span class="mk-n">01</span><div><h3>Retail packaging</h3><span class="mk-tags">Bags · Boxes · Inserts</span></div></li>
+        <li class="mk-row" data-i="1" tabindex="0"><span class="mk-n">02</span><div><h3>Gift &amp; presentation</h3><span class="mk-tags">Rigid boxes · Suede · Lift-off lids</span></div></li>
+        <li class="mk-row" data-i="2" tabindex="0"><span class="mk-n">03</span><div><h3>Hospitality &amp; tabletop</h3><span class="mk-tags">Coasters · Napkins · Ceramics</span></div></li>
+        <li class="mk-row" data-i="3" tabindex="0"><span class="mk-n">04</span><div><h3>Holiday &amp; seasonal</h3><span class="mk-tags">Ornaments · Ribbon · Gift sets</span></div></li>
+        <li class="mk-row" data-i="4" tabindex="0"><span class="mk-n">05</span><div><h3>Merch &amp; apparel</h3><span class="mk-tags">Textiles · Embroidery · Print</span></div></li>
+        <li class="mk-row" data-i="5" tabindex="0"><span class="mk-n">06</span><div><h3>Product development</h3><span class="mk-tags">Prototypes · Molds · Samples</span></div></li>
+      </ol>
+    </div>
+    <div class="mk-foot reveal">
+      <p>Selected work is shared privately, <em>on request.</em></p>
+      <a href="mailto:samy@consultnamu.com?subject=Portfolio%20request" class="engage-more">Request our portfolio →</a>
     </div>
   </div>
+  <div class="ed-marquee" aria-hidden="true"><div class="ed-track"><span>Hot foil · Emboss · Deboss · Spot UV · Soft-touch · Grosgrain · Suede · Glass · Stainless steel · Ceramic · Silicone · Pantone matched · Hot foil · Emboss · Deboss · Spot UV · Soft-touch · Grosgrain · Suede · Glass · Stainless steel · Ceramic · Silicone · Pantone matched · </span><span>Hot foil · Emboss · Deboss · Spot UV · Soft-touch · Grosgrain · Suede · Glass · Stainless steel · Ceramic · Silicone · Pantone matched · Hot foil · Emboss · Deboss · Spot UV · Soft-touch · Grosgrain · Suede · Glass · Stainless steel · Ceramic · Silicone · Pantone matched · </span></div></div>
 </section>
 
 <!-- ===================== 5. FOR BRAND AGENCIES ===================== -->
@@ -301,13 +387,25 @@
 <!-- Phones only: a "Book a call" bar that appears after the hero -->
 <a href="mailto:samy@consultnamu.com?subject=Call%20request%20(homepage)" class="mobile-cta" id="mobileCta">Book a 20-minute call</a>
 
-<!-- 3D: Three.js library, the globe (hero), then the product viewer (scenes.js) -->
+<!-- Three.js library and the globe (hero) -->
 <script src="vendor/three.min.js" defer></script>
 <script src="globe-land.js" defer></script>
 <script src="globe.js" defer></script>
-<script src="scenes.js" defer></script>
 <!-- Small effects: header, compare slider, spec ticks, services, fade-ins -->
 <script src="interactions.js" defer></script>
 
+<script>
+(function(){var b=document.querySelector('.nav-toggle'),h=document.querySelector('.header');if(!b)return;
+b.addEventListener('click',function(){var o=h.classList.toggle('menu-open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');document.body.style.overflow=o?'hidden':'';});
+document.querySelectorAll('#mainNav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('menu-open');document.body.style.overflow='';});});})();
+</script>
+<script>
+(function(){var rows=[].slice.call(document.querySelectorAll('.mk-row')),figs=[].slice.call(document.querySelectorAll('.mk-fig')),cap=document.getElementById('mkCap');if(!rows.length)return;
+var cur=0,timer,hold=false,reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function show(i){cur=i;rows.forEach(function(r,k){r.classList.toggle('on',k===i)});figs.forEach(function(f,k){f.classList.toggle('on',k===i);if(k===i&&!reduce){f.querySelectorAll('[pathLength]').forEach(function(e){if(e.classList.contains('dash'))return;e.style.animation='none';void e.getBoundingClientRect();e.style.animation='mkDraw 1.6s cubic-bezier(.6,0,.2,1) forwards';});}});cap.innerHTML=rows[i].querySelector('h3').innerHTML;}
+rows.forEach(function(r,i){r.addEventListener('mouseenter',function(){hold=true;show(i)});r.addEventListener('focus',function(){hold=true;show(i)});r.addEventListener('click',function(){hold=true;clearInterval(timer);show(i)});});
+document.querySelector('.mk-list').addEventListener('mouseleave',function(){hold=false});
+if(!reduce)timer=setInterval(function(){if(!hold)show((cur+1)%rows.length)},3600);})();
+</script>
 </body>
 </html>

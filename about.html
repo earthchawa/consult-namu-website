@@ -93,13 +93,14 @@
 <header class="header">
   <div class="wrap">
     <a href="index.html" class="wordmark">CONSULT <em>NAMU</em></a>
-    <nav class="nav" aria-label="Main">
-      <a href="about.html" aria-current="page">About Samy</a>
-      <a href="how-we-work.html">How we work</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu"><span></span><span></span></button>
+    <nav class="nav" id="mainNav" aria-label="Main">
       <a href="index.html#services">Services</a>
+      <a href="how-we-work.html">How we work</a>
       <a href="index.html#agencies">Agencies</a>
+      <a href="about.html" aria-current="page">About Samy</a>
       <a href="how-we-work.html#faq">FAQ</a>
-      <a href="#contact">Contact</a>
+      <a href="mailto:samy@consultnamu.com?subject=Call%20request" class="nav-cta">Book a call</a>
     </nav>
   </div>
 </header>
@@ -194,5 +195,10 @@
 </footer>
 
 <script src="interactions.js" defer></script>
+<script>
+(function(){var b=document.querySelector('.nav-toggle'),h=document.querySelector('.header');if(!b)return;
+b.addEventListener('click',function(){var o=h.classList.toggle('menu-open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');document.body.style.overflow=o?'hidden':'';});
+document.querySelectorAll('#mainNav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('menu-open');document.body.style.overflow='';});});})();
+</script>
 </body>
 </html>

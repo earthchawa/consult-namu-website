@@ -8,8 +8,13 @@ mkdir -p dist
 TMP=$(mktemp -d)
 for f in $FILES robots.txt sitemap.xml; do mkdir -p "$TMP/live/$(dirname $f)" "$TMP/preview/$(dirname $f)"; cp "$f" "$TMP/live/$f"; done
 for f in $FILES; do cp "$f" "$TMP/preview/$f"; done
+# Version stamp on styles.css and the scripts, so browsers fetch the new copy after every update
+V=$(git rev-parse --short HEAD 2>/dev/null || date +%s)
+for d in live preview; do
+  sed -i -E 's#(href|src)="([a-z/.-]+\.(css|js))"#\1="\2?v='"$V"'"#g' "$TMP/$d"/*.html
+done
 # Preview: tell search engines not to index anything
-sed -i 's#<meta name="robots" content="index, follow">#<meta name="robots" content="noindex, nofollow">#' "$TMP/preview/index.html" "$TMP/preview/about.html"
+sed -i 's#<meta name="robots" content="index, follow">#<meta name="robots" content="noindex, nofollow">#' "$TMP/preview/"*.html
 printf 'User-agent: *\nAllow: /\n' > "$TMP/preview/robots.txt"  # let crawlers read the noindex tag
 (cd "$TMP/preview" && zip -qr - .) > dist/consultnamu-preview.zip
 (cd "$TMP/live" && zip -qr - .) > dist/consultnamu-live.zip

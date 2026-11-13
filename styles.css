@@ -517,8 +517,6 @@ html:not(.js) .row-body { grid-template-rows: 1fr; }
 .mk-tags { display: block; margin-top: 10px; font-size: 11px; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s, opacity .4s; }
 .mk-row.on h3 { color: var(--white); font-style: italic; transform: translateX(10px); }
 .mk-row.on .mk-tags { max-height: 40px; opacity: 1; color: var(--white); transform: translateX(10px); }
-.mk-foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 20px; }
-.mk-foot p { font-family: 'Syne', sans-serif; font-size: 24px; letter-spacing: -0.02em; color: var(--body); }
 .ed-marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 0; margin-bottom: 70px; }
 .ed-track { display: flex; width: max-content; animation: edScroll 60s linear infinite; }
 .ed-track span { white-space: nowrap; font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
@@ -530,7 +528,6 @@ html:not(.js) .row-body { grid-template-rows: 1fr; }
   .mk-panel { position: relative; top: 0; }
   .mk-row { grid-template-columns: 40px 1fr; padding: 20px 0; }
   .mk-n { padding-top: 6px; }
-  .mk-foot p { font-size: 20px; }
 }
 
 

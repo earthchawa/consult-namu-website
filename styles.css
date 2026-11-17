@@ -546,3 +546,9 @@ html:not(.js) .row-body { grid-template-rows: 1fr; }
 .mk-fig .co text { font-size: 7.5px; letter-spacing: 1.6px; fill: #a8a8a8; }
 .mk-fig .dim path { fill: none; }
 /* end mk-fig v2 */
+
+/* What we make: every row keeps the same height while the categories cycle,
+   so the page below never shifts (that shift made the header bounce and the page jump) */
+.mk-tags { height: 16px; max-height: none; line-height: 16px; white-space: nowrap; transition: opacity .4s, transform .45s cubic-bezier(.2,.8,.2,1); }
+.mk-row.on .mk-tags { max-height: none; }
+@media (max-width: 420px) { .mk-tags { font-size: 10px; letter-spacing: .14em; text-overflow: ellipsis; } }

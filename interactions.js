@@ -94,21 +94,35 @@
     } else { play(); }
   }
 
-  /* ---------- Spec sheets tick off row by row (agencies card, inspection report) ---------- */
+  /* ---------- Spec sheets tick off row by row (agencies card, inspection report) ----------
+     Runs again every few seconds while the card is on screen, pauses when it scrolls away.
+     Only the text and colors change, never the size, so the page does not move. */
   $$('.spec[data-tick]').forEach(function (spec) {
-    var oks = $$('.spec-ok', spec);
+    var oks = $$('.spec-ok', spec), timers = [], visible = false;
+    oks.forEach(function (o) { o.dataset.wait = o.textContent; });
     function finish(i) {
       oks[i].textContent = oks[i].dataset.ok;
       oks[i].classList.add('done');
       if (i === oks.length - 1) spec.classList.add('signed');
     }
+    function reset() {
+      oks.forEach(function (o) { o.textContent = o.dataset.wait; o.classList.remove('done'); });
+      spec.classList.remove('signed');
+    }
+    function stop() { timers.forEach(clearTimeout); timers = []; }
+    function run() {
+      stop(); reset();
+      oks.forEach(function (o, i) { timers.push(setTimeout(function () { finish(i); }, 500 + i * 450)); });
+      /* hold the signed-off sheet for a few seconds, then check it again */
+      timers.push(setTimeout(function () { timers = []; if (visible && !document.hidden) run(); }, 500 + oks.length * 450 + 4000));
+    }
     if (reduce || !hasIO) { oks.forEach(function (o, i) { finish(i); }); return; }
-    var so = new IntersectionObserver(function (es) {
-      if (!es[0].isIntersecting) return;
-      so.disconnect();
-      oks.forEach(function (o, i) { setTimeout(function () { finish(i); }, 500 + i * 450); });
-    }, { threshold: 0.5 });
-    so.observe(spec);
+    new IntersectionObserver(function (es) {
+      visible = es[0].isIntersecting;
+      if (visible && !timers.length) run();
+      if (!visible) { stop(); oks.forEach(function (o, i) { finish(i); }); }
+    }, { threshold: 0.5 }).observe(spec);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden && visible && !timers.length) run(); });
   });
 
   /* ---------- How we work page: progress bar across the five stages ----------
